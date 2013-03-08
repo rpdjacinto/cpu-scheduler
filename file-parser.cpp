@@ -17,7 +17,7 @@ int FileParser::getNumberOfPCBData(){
 	return numberOfPCBData;
 }
 
-vector<string> FileParser::getPCBData(int index){
+vector<int> FileParser::getPCBData(int index){
 	return PCBData[index];
 }
 
@@ -25,7 +25,7 @@ int FileParser::parseFile(){
 
 	string tempLine;
 	string tempChar;
-	vector<string> pushVector;
+	vector<int> pushVector;
 	int count = 0;
 	int lineCount = 0;
 	
@@ -38,7 +38,7 @@ int FileParser::parseFile(){
 		stringstream   linestream(tempLine);
 
 		while(getline(linestream, tempLine, '\t')){
-			PCBData[count].push_back(tempLine);
+			PCBData[count].push_back(atoi(tempLine.c_str()));
 		}
 
 		count++;

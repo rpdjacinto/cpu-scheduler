@@ -10,7 +10,7 @@ class FileParser {
 
 	string fileName;
 	ifstream inputFile;
-	vector<vector<string>> PCBData;
+	vector<vector<int>> PCBData;
 	int numberOfPCBData;
 
 	public:
@@ -20,7 +20,7 @@ class FileParser {
 
 	string getFilename();
 	int getNumberOfPCBData();
-	vector<string> getPCBData(int);
+	vector<int> getPCBData(int);
 
 	//ToMake
 	int makePCBs();
