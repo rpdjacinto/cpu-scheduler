@@ -1,7 +1,10 @@
 # include <stdio.h>
 # include <string>
+# include <string.h>
 # include <iostream>
 # include <map>
+
+# include "file-parser.h"
 
 using namespace std;
 
@@ -68,7 +71,10 @@ int main(int argc, char *argv[])
 	 */
 	else
 	{
-
+		FileParser testParse(workload);
+		string hold;
+		cout << "\nFile name: " << testParse.getFilename() << "\nNumber of PCBs: " << testParse.getNumberOfPCBData() << "\n";
+		cin >> hold;
 	}
 
 
