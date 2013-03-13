@@ -1,19 +1,29 @@
 # include <stdio.h>
 # include <string.h>
 # include <iostream>
+# include <map>
 
 using namespace std;
 
 
-void printHelp()
-{
-	cout<<"\ncpu-scheduler: A post-mortem utility designed to analyze the quality of CPU-scheduling algorithms.";
-	cout<<"\nUsage:";
-	cout<<"\n\tcpusched -w [text file with workload] -a [scheduling algorithm]"; 
-	cout<<"\n\t\t[-p] parameter for algorithm (if required)";
-	cout<<"\n\t\t[-h] print help";
-	cout<<"\n\t\t[-v] verbose";
-}
+/*
+ * Global Variables
+ */
+
+map <char, string> options;
+
+
+
+
+/*
+ * Function declarations
+ */
+
+void printHelp();
+void commandLine(int, char **);
+
+
+
 
 /* 
  * MAIN
@@ -22,7 +32,8 @@ void printHelp()
 int main(int argc, char *argv[])
 {
 
-	// From command line
+	/* From command line
+	 */
 	string workload;
 	string scheduling_algorithm;
 	string parameter;
@@ -32,19 +43,12 @@ int main(int argc, char *argv[])
 
 	/* Read command line options
  	 */
-	int c;
-	while ((c = getopt(argc,argv,"a:w:p:v:h")) != -1)
-	{
-		switch(c)
-		{
-	        	case 'a': scheduling_algorithm = optarg;  break;
-			case 'w': workload = optarg;  break;
-			case 'p': parameter = optarg;  break;
-			case 'v': verbose = 1; break;
-			case 'h': help = 1; break;
-		}
-	}
-
+	commandLine(argc, argv);
+	workload = options['w'];
+	scheduling_algorithm = options['a'];
+	parameter = options['p'];
+	help = (options['h'] == "1") ? 1 : 0;
+	verbose = (options['v'] == "1") ? 1 : 0;
 
 	/* Print help information
 	 */
@@ -71,3 +75,63 @@ int main(int argc, char *argv[])
 
 	return 0;
 }
+
+
+/*
+ * Function that prints help information
+ */
+
+void printHelp()
+{
+        cout<<"\ncpu-scheduler: A post-mortem utility designed to analyze the quality of CPU-scheduling algorithms.";
+        cout<<"\nUsage:";
+        cout<<"\n\tcpusched -w [text file with workload] -a [scheduling algorithm]";
+        cout<<"\n\t\t[-p] parameter for algorithm (if required)";
+        cout<<"\n\t\t[-h] print help";
+        cout<<"\n\t\t[-v] verbose";
+
+}
+
+/*
+ * Command Line Parsing
+ */
+
+void commandLine(int argc, char *argv[])
+{
+
+	char *setOptions = "vh";
+	char *argOptions = "awp";
+
+	/* Set default
+         */
+        options['v'] = "0";
+        options['h'] = "0";
+	options['w'] = "";
+	options['a'] = "";
+	options['p'] = "";
+
+	/* Read argv
+         */
+        for (int i = 0; i<argc; i++)
+        {
+                if (argv[i][0] == '-')
+                {
+			char c = argv[i][1];
+			if (strchr(setOptions, c))
+			{
+				options[c] = "1";
+			}
+			else if (strchr(argOptions, c))
+			{
+				if (argv[i+1] != NULL)
+				{
+					options[c] = argv[i+1];
+				}
+
+
+			}
+                }
+        }
+}
+
+
