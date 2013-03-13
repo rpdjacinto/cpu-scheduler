@@ -1,5 +1,5 @@
 # include <stdio.h>
-# include <string.h>
+# include <string>
 # include <iostream>
 # include <map>
 
@@ -121,7 +121,7 @@ void commandLine(int argc, char *argv[])
 		cout<<"\nExtra parameter required for this algorithm (y/n) ? ";
 		char c;
 		cin>>c;
-		if (c == 'y' or c == 'Y')
+		if (c == 'y' || c == 'Y')
 		{
 			cout<<"\nEnter parameter for algorithm: ";
 			cin>>options['p'];
