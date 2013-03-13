@@ -112,26 +112,45 @@ void commandLine(int argc, char *argv[])
 
 	/* Read argv
          */
-        for (int i = 0; i<argc; i++)
-        {
-                if (argv[i][0] == '-')
-                {
-			char c = argv[i][1];
-			if (strchr(setOptions, c))
-			{
-				options[c] = "1";
-			}
-			else if (strchr(argOptions, c))
-			{
-				if (argv[i+1] != NULL)
+	if (argc == 1)
+	{
+		cout<<"\nEnter filename containing workload description: ";
+		cin>>options['w'];
+		cout<<"\nEnter algorithm: ";
+		cin>>options['a'];
+		cout<<"\nExtra parameter required for this algorithm (y/n) ? ";
+		char c;
+		cin>>c;
+		if (c == 'y' or c == 'Y')
+		{
+			cout<<"\nEnter parameter for algorithm: ";
+			cin>>options['p'];
+		}
+	}
+	else
+	{
+        	for (int i = 0; i<argc; i++)
+        	{
+                	if (argv[i][0] == '-')
+                	{
+				char c = argv[i][1];
+				if (strchr(setOptions, c))
 				{
-					options[c] = argv[i+1];
+					options[c] = "1";
 				}
+				else if (strchr(argOptions, c))
+				{
+					if (argv[i+1] != NULL)
+					{
+						options[c] = argv[i+1];
+					}
 
+				}
+                	}
+        	}
 
-			}
-                }
-        }
+	}
 }
+
 
 
