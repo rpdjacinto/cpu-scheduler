@@ -85,7 +85,9 @@ void printHelp()
 {
         cout<<"\ncpu-scheduler: A post-mortem utility designed to analyze the quality of CPU-scheduling algorithms.";
         cout<<"\nUsage:";
-        cout<<"\n\tcpusched -w [text file with workload] -a [scheduling algorithm]";
+	cout<<"\n\tcpusched";
+	cout<<"\n\t\twhen no arguments are provided, program will interactively ask for information";
+        cout<<"\n\n\tcpusched -w [text file with workload] -a [scheduling algorithm]";
         cout<<"\n\t\t[-p] parameter for algorithm (if required)";
         cout<<"\n\t\t[-h] print help";
         cout<<"\n\t\t[-v] verbose";
