@@ -29,7 +29,7 @@ int FileParser::parseFile(){
 	int count = 0;
 	int lineCount = 0;
 	
-	inputFile.open("example-input.txt");
+	inputFile.open(fileName);
 
 	while(getline(inputFile, tempLine)){
 
