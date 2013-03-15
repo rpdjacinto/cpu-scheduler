@@ -1,16 +1,9 @@
-#include <vector>
+#include "pcb.h"
 
-using namespace std;
-
-class Pcb {
-
-public:
-
-private:
-	int pid;
-	int tarq;
-	int priority;
-	int cpuBursts;
-	vector<int> cpuBursts;
-	vector<int> ioBursts;
+Pcb::Pcb(int pid, int tarq, int priority, vector<int> cpuBursts, vector<int> ioBursts){
+	pid = pid;
+	tarq = tarq;
+	priority = priority;
+	cpuBursts = cpuBursts;
+	ioBursts = ioBursts;
 };
