@@ -5,6 +5,7 @@ using namespace std;
 class Pcb {
 
 public:
+	Pcb(int pid, int tarq, int priority, vector<int> cpuBursts, vector<int> ioBursts);
 
 private:
 	int pid;
@@ -12,5 +13,4 @@ private:
 	int priority;
 	vector<int> cpuBursts;
 	vector<int> ioBursts;
-	
 };
