@@ -1,5 +1,8 @@
 #include <vector>
 
+#ifndef PCB_H
+#define PCB_H
+
 using namespace std;
 
 class Pcb {
@@ -14,3 +17,5 @@ private:
 	vector<int> cpuBursts;
 	vector<int> ioBursts;
 };
+
+#endif
