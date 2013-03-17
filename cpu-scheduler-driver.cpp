@@ -4,6 +4,7 @@
 # include <iostream>
 # include <map>
 # include "file-parser.h"
+# include "shortest-previous-burst.h"
 # include "pcb.h"
 
 using namespace std;
@@ -34,7 +35,6 @@ void commandLine(int, char **);
 
 int main(int argc, char *argv[])
 {
-
 	/* From command line
 	 */
 	string workload;

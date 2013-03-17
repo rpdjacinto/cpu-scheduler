@@ -1,4 +1,4 @@
-#include "SchedulingAlgorithm.h"
+#include "scheduling-algorithm.h"
 
 #ifndef FIRSTINFIRSTOUT_H
 #define FIRSTINFIRSTOUT_H
