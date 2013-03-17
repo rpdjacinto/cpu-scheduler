@@ -49,9 +49,9 @@ void FileParser::makePCBs(){
 	int tempPid;
 	int tempPriority;
 	int tempTarq;
-
 	for(pcbCount = 0 ; pcbCount < getNumberOfPCBData() ; pcbCount++){
-		
+		tempCPUBursts.clear();
+		tempIOBursts.clear();
 		tempPid = PCBData[pcbCount][0];
 		tempTarq = PCBData[pcbCount][1];
 		tempPriority = PCBData[pcbCount][2];
