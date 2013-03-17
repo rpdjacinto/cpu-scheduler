@@ -52,3 +52,23 @@ vector<Pcb> SchedulingAlgorithm::getWaitingQueue() {
 vector<Pcb> SchedulingAlgorithm::getCompletedProcesses() {
 	return this->completedProcesses;
 }
+
+void SchedulingAlgorithm::setProcesses(vector<Pcb> processes){
+	this->processes = processes;
+}
+
+void SchedulingAlgorithm::setInactiveProcesses(vector<Pcb> processes){
+	this->inactiveProcesses = processes;
+}
+
+void SchedulingAlgorithm::setReadyQueue(vector<Pcb> processes){
+	this->readyQueue = processes;
+}
+
+void SchedulingAlgorithm::setWaitingQueue(vector<Pcb> processes){
+	this->waitingQueue = processes;
+}
+
+void SchedulingAlgorithm::setcompletedProcesses(vector<Pcb> processes){
+	this->completedProcesses = processes;
+}

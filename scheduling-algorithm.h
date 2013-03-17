@@ -18,6 +18,12 @@ public:
 	vector<Pcb> getWaitingQueue();
 	vector<Pcb> getCompletedProcesses();
 
+	void setProcesses(vector<Pcb>);
+	void setInactiveProcesses(vector<Pcb>);
+	void setReadyQueue(vector<Pcb>);
+	void setWaitingQueue(vector<Pcb>);
+	void setcompletedProcesses(vector<Pcb>);
+
 private:
 	
 	//All Processes
