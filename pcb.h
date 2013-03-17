@@ -13,7 +13,7 @@ public:
 	float getAverageBursts();
 	void setAverageBursts( float averageBursts );
 
-private:
+
 	int pid;
 	int status;
 	int tarq;
