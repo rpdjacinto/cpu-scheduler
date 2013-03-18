@@ -16,6 +16,8 @@ public:
 	int getTarq();
 	int getPriority();
 	float getAverageBursts();
+	int getCurrentCpuBurst();
+	int getCurrentIoBurst();
 	vector<int> getCpuBursts();
 	vector<int> getIoBursts();
 
@@ -24,6 +26,8 @@ public:
 	void setTarq( int tarq );
 	void setPriority( int setPriority );
 	void setAverageBursts( float averageBursts );
+	void setCurrentCpuBurst( int currentCpuBurst );
+	void setCurrentIoBurst( int ioBurst );
 	void setCpuBursts( vector<int> cpuBursts );
 	void setIoBursts( vector<int> cpuBursts );
 
@@ -32,6 +36,8 @@ private:
 	int status;
 	int tarq;
 	int priority;
+	int currentCpuBurst;
+	int currentIoBurst;
 	float averageBursts;
 	vector<int> cpuBursts;
 	vector<int> ioBursts;
