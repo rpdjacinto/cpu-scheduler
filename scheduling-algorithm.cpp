@@ -37,7 +37,7 @@ void SchedulingAlgorithm::startProcesses() {
 void SchedulingAlgorithm::cpuBurst() {
 	currentProcess.getCpuBursts()[currentProcess.getCurrentCpuBurst]--;
 	if(currentProcess.getCpuBursts()[currentProcess.getCurrentCpuBurst] == 0){
-		if(currentProcess.getIoBursts().size() == 0){
+		if(currentProcess.getIoBursts().size() == currentProcess.getCurrentIoBurst() + 1){
 			completedProcesses.push_back(currentProcess);
 		}else{
 			Pcb tempCurrentProcess = currentProcess;
