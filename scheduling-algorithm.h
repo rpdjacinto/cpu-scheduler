@@ -46,7 +46,7 @@ private:
 	// Number of completed processes
 	float throughput;
 	// Average turnaround time for a process?
-	float tournaround;
+	float turnaround;
 	// Check if all processes terminated
 	bool allProcessesCompleted();
 	// Add inactive processes to ready queue
