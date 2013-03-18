@@ -1,8 +1,8 @@
 CC = g++
 CFLAGS = -c -Wall
 LDFLAGS =
-SOURCES = cpu-scheduler-driver.cpp file-parser.cpp Pcb.cpp scheduling-algorithm.cpp shortest-previous-burst.cpp first-in-first-out.cpp
-INCLUDES = file-parser.h pcb.h scheduling-algorithm.h shortest-previous-burst.h first-in-first-out.h
+SOURCES = cpu-scheduler-driver.cpp file-parser.cpp Pcb.cpp scheduling-algorithm.cpp shortest-previous-burst.cpp first-in-first-out.cpp gantt.cpp
+INCLUDES = file-parser.h pcb.h scheduling-algorithm.h shortest-previous-burst.h first-in-first-out.h gantt.h
 OBJECTS = $(SOURCES:.cpp=.o)
 EXECUTABLE = cpusched
 
