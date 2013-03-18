@@ -7,6 +7,8 @@
 # include "shortest-previous-burst.h"
 # include "first-in-first-out.h"
 # include "pcb.h"
+# include "gantt.h"
+
 
 using namespace std;
 
@@ -93,8 +95,8 @@ int main(int argc, char *argv[])
 
 			ShortestPreviousBurst spb(testParse.getPCBs());
 		}	
-		
-		
+	
+
 		/* End of program
 		 */
 		cout << "\n\nPress any key to continue..";	

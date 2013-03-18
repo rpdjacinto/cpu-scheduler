@@ -1,15 +1,27 @@
 # include <iostream>
 # include <stdio.h>
+# include <vector>
+# include "pcb.h"
 
-#ifndef PCB_H
-#define PCB_H
+
+#ifndef GANTT_H
+#define GANTT_H
 
 using namespace std;
 
-class gantt
+class Gantt
 {
+	public:
+		bool put(Pcb);
+		bool put(int);
 
+		bool printGantt();
+		bool printStats();
+		bool print();
 
+	
+	private:
+		vector<int> pidList;
 
 
 };
