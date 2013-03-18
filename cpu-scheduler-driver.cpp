@@ -93,13 +93,15 @@ int main(int argc, char *argv[])
 		{
 			printVerbose("Shortest Previous Burst (SPB) selected");
 
-			ShortestPreviousBurst spb(testParse.getPCBs());
+			ShortestPreviousBurst spb(testParse.getPCBs(), 0.5);
+			spb.run();
 		}	
 	
 
 		/* End of program
 		 */
 		cout << "\n\nPress any key to continue..";	
+		getchar();
 		getchar();
 	}
 

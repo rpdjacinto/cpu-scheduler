@@ -2,6 +2,10 @@
 
 ShortestPreviousBurst::ShortestPreviousBurst( vector<Pcb> processes, float weight ) {
 	this->weight = weight;
+	setProcesses(processes);
+	setInactiveProcesses(processes);
+	setWaitingQueue(processes);
+	setTime(0);
 }
 
 void ShortestPreviousBurst::selectProcess() {
