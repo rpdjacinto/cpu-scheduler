@@ -22,8 +22,8 @@ int SchedulingAlgorithm::run() {
 }
 
 void SchedulingAlgorithm::startProcesses() {
-	for( int i = 0; i < inactiveProcesses.size; i++ ) {
-		if( this.time == inactiveProcesses[i].getTarq() ) this.readyQueue.push_back( inactiveProcesses[i] );
+	for( int i = 0; i < this->inactiveProcesses.size; i++ ) {
+		if( this->time == inactiveProcesses[i].getTarq() ) this->readyQueue.push_back( inactiveProcesses[i] );
 	}
 }
 
@@ -40,7 +40,7 @@ void SchedulingAlgorithm::output() {
 }
 
 bool SchedulingAlgorithm::allProcessesCompleted() {
-	if( processes.size == completedProcesses.size ) return true;
+	if( this->processes.size == this->completedProcesses.size ) return true;
 	else return false;
 }
 
@@ -49,6 +49,10 @@ bool SchedulingAlgorithm::allProcessesCompleted() {
 /*
  * Accessor methods
  */
+
+int SchedulingAlgorithm::getTime() {
+	return this->time;
+}
 
 vector<Pcb> SchedulingAlgorithm::getProcesses() {
 	return this->processes;
@@ -73,6 +77,10 @@ vector<Pcb> SchedulingAlgorithm::getCompletedProcesses() {
 /*
  * Mutator methods
  */
+
+void SchedulingAlgorithm::setTime( int time ) { 
+	this->time = time;
+}
 
 void SchedulingAlgorithm::setProcesses(vector<Pcb> processes){
 	this->processes = processes;

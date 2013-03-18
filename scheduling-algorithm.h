@@ -12,12 +12,14 @@ public:
 	// Run Scheduling Simulation
 	int run();
 
+	int getTime();
 	vector<Pcb> getProcesses();
 	vector<Pcb> getInactiveProcesses();
 	vector<Pcb> getReadyQueue();
 	vector<Pcb> getWaitingQueue();
 	vector<Pcb> getCompletedProcesses();
 
+	void setTime( int time );
 	void setProcesses(vector<Pcb>);
 	void setInactiveProcesses(vector<Pcb>);
 	void setReadyQueue(vector<Pcb>);
@@ -37,6 +39,8 @@ private:
 	//List of completed Processes
 	vector<Pcb> completedProcesses;
 
+	// Time units elapsed
+	int time;
 	// Average Waiting Time for each process
 	float averageWaitingTime;
 	// Number of completed processes

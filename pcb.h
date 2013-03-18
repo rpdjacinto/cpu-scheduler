@@ -10,8 +10,6 @@ class Pcb {
 
 public:
 	Pcb(int pid, int tarq, int priority, vector<int> cpuBursts, vector<int> ioBursts);
-	float getAverageBursts();
-	void setAverageBursts( float averageBursts );
 
 	int getPid();
 	int getStatus();

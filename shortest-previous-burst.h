@@ -1,4 +1,3 @@
-#include "pcb.h"
 #include "scheduling-algorithm.h"
 
 #ifndef	SHORTESTPREVIOUSBURST_H
