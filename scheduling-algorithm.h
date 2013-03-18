@@ -52,11 +52,11 @@ private:
 	// Add inactive processes to ready queue
 	void startProcesses();
 	// Simulate CPU burst
-	void cpuBurst();
+	void cpuBurst(int pid);
 	// Simulate IO Burst
 	void ioBurst();
 	// Select next process to run
-	virtual void selectProcess() = 0;
+	virtual int selectProcess() = 0;
 	// Produce Gantt Chart
 	void output();
 
