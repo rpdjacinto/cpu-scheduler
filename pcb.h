@@ -20,6 +20,8 @@ public:
 	int getCurrentIoBurst();
 	vector<int> getCpuBursts();
 	vector<int> getIoBursts();
+	int getCpuBurst(int index);
+
 
 	void setPid( int pid );
 	void setStatus( int Status );
@@ -30,6 +32,7 @@ public:
 	void setCurrentIoBurst( int ioBurst );
 	void setCpuBursts( vector<int> cpuBursts );
 	void setIoBursts( vector<int> cpuBursts );
+	void setCpuBurst (int burst, int index);
 
 private:
 	int pid;
