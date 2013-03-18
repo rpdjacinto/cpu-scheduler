@@ -4,15 +4,16 @@
 #ifndef FIRSTINFIRSTOUT_H
 #define FIRSTINFIRSTOUT_H
 
-class firstInFirstOut : public SchedulingAlgorithm {
+class FirstInFirstOut : public SchedulingAlgorithm {
 
 public:
 
-	firstInFirstOut(vector<Pcb> processes);
+	FirstInFirstOut(vector<Pcb> processes);
 
 private:
 
 	void startProcesses();
+	void selectProcess();
 	void cpuBurst();
 	void ioBurst();
 	void output();

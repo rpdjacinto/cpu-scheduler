@@ -1,19 +1,24 @@
 #include "first-in-first-out.h"
 
-firstInFirstOut::firstInFirstOut(vector<Pcb> processes){
+FirstInFirstOut::FirstInFirstOut(vector<Pcb> processes){
 	setProcesses(processes);
 	setReadyQueue(processes);
 }
 
-void firstInFirstOut::startProcesses() {
+void FirstInFirstOut::startProcesses() {
 		
 }
 
-void firstInFirstOut::cpuBurst() {
+void FirstInFirstOut::selectProcess()
+{
+
 }
 
-void firstInFirstOut::ioBurst() {
+void FirstInFirstOut::cpuBurst() {
 }
 
-void firstInFirstOut::output() {
+void FirstInFirstOut::ioBurst() {
+}
+
+void FirstInFirstOut::output() {
 }
