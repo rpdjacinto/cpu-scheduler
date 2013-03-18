@@ -13,9 +13,9 @@ int ShortestPreviousBurst::selectProcess() {
 	for( int i = 0; i < readyQueue.size(); i++ ) {
 		int burst = 0;
 		vector<Pcb> processes = getProcesses();
-		for( int i = 0; i < processes.size(); i++ ) {
-			if( processes[i].getPid == readyQueue[i].getPid )
-				burst = processes[i].getCpuBursts[processes[i].getCurrentCpuBurst()];
+		for( int j = 0; j < processes.size(); j++ ) {
+			if( processes[j].getPid() == readyQueue[i].getPid() )
+				burst = processes[j].getCpuBursts()[processes[j].getCurrentCpuBurst()];
 		}
 		calculateAverageBursts( burst, readyQueue[i] );
 	}
