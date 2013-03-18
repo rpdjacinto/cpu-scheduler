@@ -7,6 +7,6 @@ FirstInFirstOut::FirstInFirstOut(vector<Pcb> processes){
 	this->timeCount = 0;
 }
 
-void FirstInFirstOut::selectProcess(){
+int FirstInFirstOut::selectProcess(){
 
 }
