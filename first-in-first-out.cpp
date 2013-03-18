@@ -3,6 +3,7 @@
 FirstInFirstOut::FirstInFirstOut(vector<Pcb> processes){
 	setProcesses(processes);
 	setReadyQueue(processes);
+<<<<<<< HEAD
 	setWaitingQueue(processes);
 	this->timeCount = 0;
 }
@@ -19,10 +20,12 @@ void FirstInFirstOut::startProcesses() {
 		
 	}
 	return 0;
+=======
+>>>>>>> parent of 250b72f... Added some functionality to FIFO.
 }
 
 void firstInFirstOut::startProcesses() {
-	
+		
 }
 
 void FirstInFirstOut::selectProcess()
@@ -35,34 +38,10 @@ void FirstInFirstOut::cpuBurst() {
 
 <<<<<<< HEAD
 void firstInFirstOut::ioBurst() {
-	
-	if(getWaitingQueue().size() != 0){
-
-		vector<Pcb> tempWaitingQueue = getWaitingQueue();
-
-		if(tempWaitingQueue[0].ioBursts[0] != 0){
-			tempWaitingQueue[0].ioBursts[0] = tempWaitingQueue[0].ioBursts[0] - 1;
-			if(tempWaitingQueue[0].ioBursts[0] != 0){
-				if(tempWaitingQueue[0].cpuBursts.size() != 0){
-					vector<Pcb> tempReadyQueue = getReadyQueue();
-					//tempReadyQueue.push_back(tempWaitingQueue[0]);
-					tempWaitingQueue.push_back(tempWaitingQueue[0]);
-					setReadyQueue(tempReadyQueue);
-				}else{
-					vector<Pcb> tempCompletedProcesses = getCompletedProcesses();
-					tempCompletedProcesses.push_back(tempWaitingQueue[0]);
-					setcompletedProcesses(tempCompletedProcesses);
-				}
-				tempWaitingQueue.erase(tempWaitingQueue.begin());
-				tempWaitingQueue.shrink_to_fit();
-			}	
-		}
-		this->timeCount++;
-		setWaitingQueue(tempWaitingQueue);
-	}
 }
 
 void firstInFirstOut::output() {
+<<<<<<< HEAD
 }
 
 void firstInFirstOut::selectProcess(){
@@ -75,3 +54,6 @@ void FirstInFirstOut::ioBurst() {
 void FirstInFirstOut::output() {
 }
 >>>>>>> 0f416ea7263977f1a3f32d942dfcb0e2faaba27e
+=======
+}
+>>>>>>> parent of 250b72f... Added some functionality to FIFO.

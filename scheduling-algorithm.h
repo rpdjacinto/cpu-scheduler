@@ -1,4 +1,4 @@
-#include "Pcb.h"
+#include "pcb.h"
 
 #ifndef SCHEDULINGALGORITHM_H
 #define SCHEDULINGALGORITHM_H
@@ -43,6 +43,8 @@ private:
 	float throughput;
 	// Average turnaround time for a process?
 	float tournaround;
+	// Check if all processes terminated
+	bool allProcessesCompleted();
 	// Add inactive processes to ready queue
 	void startProcesses();
 	// Simulate CPU burst

@@ -11,7 +11,7 @@ SchedulingAlgorithm::SchedulingAlgorithm( vector<Pcb> processes ) {
 
 
 int SchedulingAlgorithm::run() {
-	while(1) {
+	while( !allProcessesCompleted() ) {
 		startProcesses();
 		selectProcess();
 		cpuBurst();
@@ -22,15 +22,26 @@ int SchedulingAlgorithm::run() {
 }
 
 void SchedulingAlgorithm::startProcesses() {
+	for( int i = 0; i < inactiveProcesses.size; i++ ) {
+		if( this.time == inactiveProcesses[i].getTarq() ) this.readyQueue.push_back( inactiveProcesses[i] );
+	}
 }
 
 void SchedulingAlgorithm::cpuBurst() {
+
 }
 
 void SchedulingAlgorithm::ioBurst() {
+
 }
 
 void SchedulingAlgorithm::output() {
+
+}
+
+bool SchedulingAlgorithm::allProcessesCompleted() {
+	if( processes.size == completedProcesses.size ) return true;
+	else return false;
 }
 
 

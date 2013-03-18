@@ -8,10 +8,46 @@ Pcb::Pcb(int pid, int tarq, int priority, vector<int> cpuBursts, vector<int> ioB
 	this->ioBursts = ioBursts;
 };
 
+int Pcb::getPid() {
+	return this->getPid();
+}
+int Pcb::getStatus() {
+	return this->status;
+}
+int Pcb::getTarq() {
+	return this->tarq;
+}
+int Pcb::getPriority() {
+	return this->priority;
+}
 float Pcb::getAverageBursts() {
 	return this->averageBursts;
 }
+vector<int> Pcb::getCpuBursts() {
+	return this->cpuBursts;
+}
+vector<int> Pcb::getIoBursts() {
+	return this->ioBursts;
+}
 
+void Pcb::setPid( int pid ) {
+	this->pid = pid;
+}
+void Pcb::setStatus( int status ) {
+	this->status = status;
+}
+void Pcb::setTarq( int tarq ) {
+	this->tarq = tarq;
+}
+void Pcb::setPriority( int priority ) {
+	this->priority = priority;
+}
 void Pcb::setAverageBursts( float averageBursts ) {
 	this->averageBursts = averageBursts;
+}
+void Pcb::setCpuBursts( vector<int> cpuBursts ) {
+	this->cpuBursts = cpuBursts;
+}
+void Pcb::setIoBursts( vector<int> ioBursts ) {
+	this->ioBursts = ioBursts;
 }
