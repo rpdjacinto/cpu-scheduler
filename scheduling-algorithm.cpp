@@ -12,7 +12,7 @@ SchedulingAlgorithm::SchedulingAlgorithm( vector<Pcb> processes ) {
 
 
 int SchedulingAlgorithm::run() {
-	while( getTime() < 20 ) {
+	while( !allProcessesCompleted() ) {
 		startProcesses();
 		selectProcess();
 		cpuBurst();
