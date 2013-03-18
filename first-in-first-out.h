@@ -12,7 +12,7 @@ public:
 private:
 
 	void startProcesses();
-	void selectProcess();
+	int selectProcess();
 	void cpuBurst();
 	void ioBurst();
 	void output();

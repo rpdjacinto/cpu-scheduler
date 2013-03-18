@@ -14,7 +14,7 @@ public:
 private:
 	float weight;
 	float currentBurst;
-	void selectProcess();
+	int selectProcess();
 	void calculateAverageBursts(  int burstLength, Pcb &pcb );
 };
 

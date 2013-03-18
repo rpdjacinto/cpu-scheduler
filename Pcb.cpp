@@ -6,6 +6,8 @@ Pcb::Pcb(int pid, int tarq, int priority, vector<int> cpuBursts, vector<int> ioB
 	this->priority = priority;
 	this->cpuBursts = cpuBursts;
 	this->ioBursts = ioBursts;
+	this->currentCpuBurst = 0;
+	this->currentIoBurst = 0;
 };
 
 int Pcb::getPid() {
@@ -35,6 +37,9 @@ vector<int> Pcb::getCpuBursts() {
 vector<int> Pcb::getIoBursts() {
 	return this->ioBursts;
 }
+int Pcb::getCpuBurst(int index) {
+	return this->cpuBursts[index];
+}
 void Pcb::setPid( int pid ) {
 	this->pid = pid;
 }
@@ -61,4 +66,7 @@ void Pcb::setCpuBursts( vector<int> cpuBursts ) {
 }
 void Pcb::setIoBursts( vector<int> ioBursts ) {
 	this->ioBursts = ioBursts;
+}
+void Pcb::setCpuBurst(int burst, int index) {
+	this->cpuBursts[index] = burst;
 }
