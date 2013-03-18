@@ -10,6 +10,9 @@ public:
 
 	firstInFirstOut(vector<Pcb> processes);
 
+	int run();
+	void selectProcess();
+
 private:
 
 	void startProcesses();
