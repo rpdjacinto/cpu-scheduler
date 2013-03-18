@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdlib.h>
 #include <string>
 #include <fstream>
 #include <vector>
@@ -14,7 +15,7 @@ class FileParser {
 
 	string fileName;
 	ifstream inputFile;
-	vector<vector<int>> PCBData;
+	vector<vector<int> > PCBData;
 	vector<Pcb> pcbs;
 	int numberOfPCBData;
 

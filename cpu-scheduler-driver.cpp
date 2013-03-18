@@ -71,9 +71,9 @@ int main(int argc, char *argv[])
 	 */
 	else
 	{
-		FileParser testParse(workload);
+//		FileParser testParse(workload);
 		string hold;
-		cout << "\nFile name: " << testParse.getFilename() << "\nNumber of PCBs: " << testParse.getNumberOfPCBData() << "\n";
+//		cout << "\nFile name: " << testParse.getFilename() << "\nNumber of PCBs: " << testParse.getNumberOfPCBData() << "\n";
 		cin >> hold;
 	}
 

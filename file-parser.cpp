@@ -28,7 +28,7 @@ int FileParser::parseFile(){
 	vector<int> pushVector;
 	int count = 0;
 	int lineCount = 0;
-	inputFile.open(fileName);
+	inputFile.open(fileName.c_str());
 	while(getline(inputFile, tempLine)){
 		PCBData.push_back(pushVector);
 		stringstream   linestream(tempLine);
