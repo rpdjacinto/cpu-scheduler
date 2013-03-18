@@ -9,7 +9,7 @@ void ShortestPreviousBurst::selectProcess() {
 	if( readyQueue.size() > 0 ) {
 		int selectedProcessIndex = 0;
 		float shortestBurst = readyQueue.front().getAverageBursts();
-		for( int i = 0; i < readyQueue.size; i++) {
+		for( int i = 0; i < readyQueue.size(); i++) {
 			if( readyQueue[i].getAverageBursts() < shortestBurst ) {
 				shortestBurst = readyQueue[i].getAverageBursts();
 				selectedProcessIndex = i;
