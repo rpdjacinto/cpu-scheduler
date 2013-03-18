@@ -18,6 +18,8 @@ int SchedulingAlgorithm::run() {
 		cpuBurst();
 		ioBurst();
 		setTime( getTime() + 1 );
+		cout << "\nTime: " << getTime() << "\n";
+		
 	}
 	output();
 	return 0;
@@ -25,7 +27,10 @@ int SchedulingAlgorithm::run() {
 
 void SchedulingAlgorithm::startProcesses() {
 	for( int i = 0; i < this->inactiveProcesses.size(); i++ ) {
-		if( this->time == inactiveProcesses[i].getTarq() ) this->readyQueue.push_back( inactiveProcesses[i] );
+		if( this->time == inactiveProcesses[i].getTarq() ) {
+			this->readyQueue.push_back( inactiveProcesses[i] );
+			this->inactiveProcesses.erase( this->inactiveProcesses.begin() + i );
+		}
 	}
 }
 
@@ -34,17 +39,24 @@ void SchedulingAlgorithm::cpuBurst() {
 }
 
 void SchedulingAlgorithm::ioBurst() {
+	
 	vector<Pcb> tempWaitingQueue = getWaitingQueue();
 	vector<Pcb> tempReadyQueue = getReadyQueue();
 	for( int i = 0; i < tempWaitingQueue.size(); i++ ) {
+		cout << "\nStarting Iteration\n";
+		cout << "\nWaiting Queue Size: " << tempWaitingQueue.size() << "\n";
 		vector<int> ioBursts = tempWaitingQueue[i].getIoBursts();
-		ioBursts[tempWaitingQueue[i].getCurrentIoBurst()]--;
+		ioBursts[tempWaitingQueue[i].getCurrentIoBurst()]--;	
+		cout << "\nIO Bursts: " << ioBursts[0] << "\n";
 		tempWaitingQueue[i].setIoBursts( ioBursts );
+		
 		if( tempWaitingQueue[i].getIoBursts()[tempWaitingQueue[i].getCurrentIoBurst()] == 0 ) {
+			
 			tempWaitingQueue[i].setCurrentIoBurst( tempWaitingQueue[i].getCurrentIoBurst() + 1 );
 			tempReadyQueue.push_back( tempWaitingQueue[i] );
-			tempWaitingQueue.erase( tempReadyQueue.begin() + i );
+			tempWaitingQueue.erase( tempWaitingQueue.begin() + i );
 		}
+
 		setWaitingQueue( tempWaitingQueue );
 		setReadyQueue( tempReadyQueue );
 	}
