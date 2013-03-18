@@ -6,10 +6,10 @@ ShortestPreviousBurst::ShortestPreviousBurst( vector<Pcb> processes, float weigh
 
 void ShortestPreviousBurst::selectProcess() {
 	vector<Pcb> readyQueue = getReadyQueue();
-	if( readyQueue.size > 0 ) {
+	if( readyQueue.size() > 0 ) {
 		int selectedProcessIndex = 0;
-		float shortestBurst = readyQueue.front.getAverageBursts();
-		for( int i = 0; i < readyQueue.size; i++) {
+		float shortestBurst = readyQueue.front().getAverageBursts();
+		for( int i = 0; i < readyQueue.size(); i++) {
 			if( readyQueue[i].getAverageBursts() < shortestBurst ) {
 				shortestBurst = readyQueue[i].getAverageBursts();
 				selectedProcessIndex = i;

@@ -33,6 +33,12 @@ void SchedulingAlgorithm::ioBurst() {
 void SchedulingAlgorithm::output() {
 }
 
+
+
+/*
+ * Accessor methods
+ */
+
 vector<Pcb> SchedulingAlgorithm::getProcesses() {
 	return this->processes;
 }
@@ -52,6 +58,10 @@ vector<Pcb> SchedulingAlgorithm::getWaitingQueue() {
 vector<Pcb> SchedulingAlgorithm::getCompletedProcesses() {
 	return this->completedProcesses;
 }
+
+/*
+ * Mutator methods
+ */
 
 void SchedulingAlgorithm::setProcesses(vector<Pcb> processes){
 	this->processes = processes;

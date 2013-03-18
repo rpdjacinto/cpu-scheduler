@@ -15,7 +15,7 @@ using namespace std;
  */
 
 map <char, string> options;
-
+char verbose = 1;
 
 
 
@@ -25,7 +25,7 @@ map <char, string> options;
 
 void printHelp();
 void commandLine(int, char **);
-
+void printVerbose(string);
 
 
 
@@ -40,7 +40,6 @@ int main(int argc, char *argv[])
 	string workload;
 	string scheduling_algorithm;
 	string parameter;
-	char verbose = 0;
 	char help = 0;
 
 
@@ -51,7 +50,7 @@ int main(int argc, char *argv[])
 	scheduling_algorithm = options['a'];
 	parameter = options['p'];
 	help = (options['h'] == "1") ? 1 : 0;
-	verbose = (options['v'] == "1") ? 1 : 0;
+//	verbose = (options['v'] == "1") ? 1 : 0;
 
 	/* Print help information
 	 */
@@ -71,9 +70,29 @@ int main(int argc, char *argv[])
 	 */
 	else
 	{
-//		FileParser testParse(workload);
+		/* Parse workload
+		 */
+		FileParser testParse(workload);
+		cout << "\nFile name: " << testParse.getFilename() << "\nNumber of PCBs: " << testParse.getNumberOfPCBData() << "\n";
+		
+		
+		/* Choose appropriate algorithm
+		 */
+		if (scheduling_algorithm.compare("fifo") == 0 || scheduling_algorithm.compare("fcfs") == 0)
+		{
+			printVerbose("FIFO/FCFS selected");
+		}
+		
+		if (scheduling_algorithm.compare("spb") == 0)
+		{
+			printVerbose("Shortest Previous Burst (SPB) selected");
+		}	
+		
+		
+		/* End of program
+		 */
+		cout << "\n\nPress any key to continue..";	
 		string hold;
-//		cout << "\nFile name: " << testParse.getFilename() << "\nNumber of PCBs: " << testParse.getNumberOfPCBData() << "\n";
 		cin >> hold;
 	}
 
@@ -161,4 +180,14 @@ void commandLine(int argc, char *argv[])
 }
 
 
+/*
+ * Function to print information if verbose option is selected
+ */
+void printVerbose(string message)
+{
 
+	if (verbose == 1)
+	{
+		cout<<"\n[cpu-driver-scheduler.cpp]: "<<message;
+	}
+}
