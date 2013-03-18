@@ -8,7 +8,7 @@ ShortestPreviousBurst::ShortestPreviousBurst( vector<Pcb> processes, float weigh
 	setTime(0);
 }
 
-void ShortestPreviousBurst::selectProcess() {
+int ShortestPreviousBurst::selectProcess() {
 	vector<Pcb> readyQueue = getReadyQueue();
 	if( readyQueue.size() > 0 ) {
 		int selectedProcessIndex = 0;

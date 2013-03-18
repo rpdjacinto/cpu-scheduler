@@ -14,7 +14,8 @@ SchedulingAlgorithm::SchedulingAlgorithm( vector<Pcb> processes ) {
 int SchedulingAlgorithm::run() {
 	while( !allProcessesCompleted() ) {
 		startProcesses();
-		cpuBurst(selectProcess());
+		selectProcess();
+		cpuBurst();
 		ioBurst();
 		setTime( getTime() + 1 );
 		cout << "\nTime: " << getTime() << "\n";
@@ -33,8 +34,18 @@ void SchedulingAlgorithm::startProcesses() {
 	}
 }
 
-void SchedulingAlgorithm::cpuBurst(int pid) {
-
+void SchedulingAlgorithm::cpuBurst() {
+	currentProcess.getCpuBursts()[currentProcess.getCurrentCpuBurst]--;
+	if(currentProcess.getCpuBursts()[currentProcess.getCurrentCpuBurst] == 0){
+		if(currentProcess.getIoBursts().size() == 0){
+			completedProcesses.push_back(currentProcess);
+		}else{
+			Pcb tempCurrentProcess = currentProcess;
+			int tempCpuBurst = tempCurrentProcess.getCurrentCpuBurst();
+			tempCurrentProcess.setCurrentCpuBurst(++tempCpuBurst);
+			waitingQueue.push_back(tempCurrentProcess);
+		}
+	}
 }
 
 void SchedulingAlgorithm::ioBurst() {

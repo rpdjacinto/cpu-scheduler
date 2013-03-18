@@ -38,6 +38,8 @@ private:
 	vector<Pcb> waitingQueue;
 	//List of completed Processes
 	vector<Pcb> completedProcesses;
+	//Process in CPU
+	Pcb currentProcess;
 
 	// Time units elapsed
 	int time;
@@ -52,7 +54,7 @@ private:
 	// Add inactive processes to ready queue
 	void startProcesses();
 	// Simulate CPU burst
-	void cpuBurst(int pid);
+	void cpuBurst();
 	// Simulate IO Burst
 	void ioBurst();
 	// Select next process to run
