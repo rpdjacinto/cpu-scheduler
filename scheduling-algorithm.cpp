@@ -32,7 +32,15 @@ void SchedulingAlgorithm::cpuBurst() {
 }
 
 void SchedulingAlgorithm::ioBurst() {
-
+	vector<Pcb> tempWaitingQueue = getWaitingQueue();
+	vector<Pcb> tempReadyQueue = getReadyQueue();
+	for( int i = 0; i < tempWaitingQueue.size(); i++ ) {
+		if( tempWaitingQueue[i].getIoBursts()[tempWaitingQueue[i].getCurrentIoBurst()] == 0 ) {
+			tempWaitingQueue[i].setCurrentIoBurst( tempWaitingQueue[i].getCurrentIoBurst() + 1 );
+			tempReadyQueue.push_back( tempWaitingQueue[i] );
+			tempReadyQueue.erase( tempReadyQueue.begin() + i );
+		}
+	}
 }
 
 void SchedulingAlgorithm::output() {
