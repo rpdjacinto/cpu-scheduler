@@ -10,7 +10,7 @@ class ShortestJobFirst : public SchedulingAlgorithm {
 	        ShortestJobFirst(vector<Pcb> processes);
 
 	private:
-	        void selectProcess();
+	        int selectProcess();
 };
 
 #endif
