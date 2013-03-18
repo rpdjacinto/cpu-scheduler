@@ -25,7 +25,10 @@ int SchedulingAlgorithm::run() {
 
 void SchedulingAlgorithm::startProcesses() {
 	for( int i = 0; i < this->inactiveProcesses.size(); i++ ) {
-		if( this->time == inactiveProcesses[i].getTarq() ) this->readyQueue.push_back( inactiveProcesses[i] );
+		if( this->time == inactiveProcesses[i].getTarq() ) {
+			this->readyQueue.push_back( inactiveProcesses[i] );
+			this->inactiveProcesses.erase( this->inactiveProcesses.begin() + i );
+		}
 	}
 }
 
