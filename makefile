@@ -1,15 +1,21 @@
-CC        = g++
-CCFLAGS   = -ansi -g  
+CC = g++
+CFLAGS = -c -Wall
+LDFLAGS =
+SOURCES = cpu-scheduler-driver.cpp file-parser.cpp Pcb.cpp scheduling-algorithm.cpp shortest-previous-burst.cpp first-in-first-out.cpp
+INCLUDES = file-parser.h pcb.h scheduling-algorithm.h shortest-previous-burst.h first-in-first-out.h
+OBJECTS = $(SOURCES:.cpp=.o)
+EXECUTABLE = cpusched
 
-LINK      = g++
+all: $(SOURCES) $(EXECUTABLE)
+		
+$(EXECUTABLE): $(OBJECTS) 
+	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
+	rm -rf *.o
 
-cpusched: cpusched.o
-	$(LINK) cpusched.o -o cpusched
-	rm cpusched.o
-
-cpusched.o: cpu-scheduler-driver.cpp
-	$(CC) $(CCFLAGS) -c cpu-scheduler-driver.cpp -o cpusched.o
+.cpp.o:
+	$(CC) $(CFLAGS) $< -o $@
 
 clean:
-	rm -f *.o
-	rm -f cpusched
+	rm -rf *.o
+	rm -rf cpusched
+

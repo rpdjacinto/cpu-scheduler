@@ -5,6 +5,7 @@
 # include <map>
 # include "file-parser.h"
 # include "shortest-previous-burst.h"
+# include "first-in-first-out.h"
 # include "pcb.h"
 
 using namespace std;
@@ -15,8 +16,7 @@ using namespace std;
  */
 
 map <char, string> options;
-
-
+char verbose = 1;
 
 
 /*
@@ -25,8 +25,8 @@ map <char, string> options;
 
 void printHelp();
 void commandLine(int, char **);
-
-
+void printVerbose(string);
+void printVerbose(string, string);
 
 
 /* 
@@ -40,7 +40,6 @@ int main(int argc, char *argv[])
 	string workload;
 	string scheduling_algorithm;
 	string parameter;
-	char verbose = 0;
 	char help = 0;
 
 
@@ -51,7 +50,7 @@ int main(int argc, char *argv[])
 	scheduling_algorithm = options['a'];
 	parameter = options['p'];
 	help = (options['h'] == "1") ? 1 : 0;
-	verbose = (options['v'] == "1") ? 1 : 0;
+//	verbose = (options['v'] == "1") ? 1 : 0;
 
 	/* Print help information
 	 */
@@ -71,10 +70,35 @@ int main(int argc, char *argv[])
 	 */
 	else
 	{
+		/* Parse workload
+		 */
 		FileParser testParse(workload);
-		string hold;
-		cout << "\nFile name: " << testParse.getFilename() << "\nNumber of PCBs: " << testParse.getNumberOfPCBData() << "\n";
-		cin >> hold;
+		printVerbose("Filename:", testParse.getFilename());
+		stringstream ss;
+		ss << testParse.getNumberOfPCBData();
+		printVerbose("Number of PCBs:", ss.str());
+		
+		/* Choose appropriate algorithm
+		 */
+		if (scheduling_algorithm.compare("fifo") == 0 || scheduling_algorithm.compare("fcfs") == 0)
+		{
+			printVerbose("FIFO/FCFS selected");
+
+			FirstInFirstOut fifo(testParse.getPCBs());
+		}
+		
+		if (scheduling_algorithm.compare("spb") == 0)
+		{
+			printVerbose("Shortest Previous Burst (SPB) selected");
+
+			ShortestPreviousBurst spb(testParse.getPCBs());
+		}	
+		
+		
+		/* End of program
+		 */
+		cout << "\n\nPress any key to continue..";	
+		getchar();
 	}
 
 
@@ -91,7 +115,9 @@ void printHelp()
 {
         cout<<"\ncpu-scheduler: A post-mortem utility designed to analyze the quality of CPU-scheduling algorithms.";
         cout<<"\nUsage:";
-        cout<<"\n\tcpusched -w [text file with workload] -a [scheduling algorithm]";
+	cout<<"\n\tcpusched";
+	cout<<"\n\t\twhen no arguments are provided, program will interactively ask for information";
+        cout<<"\n\n\tcpusched -w [text file with workload] -a [scheduling algorithm]";
         cout<<"\n\t\t[-p] parameter for algorithm (if required)";
         cout<<"\n\t\t[-h] print help";
         cout<<"\n\t\t[-v] verbose";
@@ -159,4 +185,24 @@ void commandLine(int argc, char *argv[])
 }
 
 
+/*
+ * Functions to print information if verbose option is selected
+ */
 
+void printVerbose(string message)
+{
+
+	if (verbose == 1)
+	{
+		cout<<"\n[cpu-driver-scheduler.cpp] "<<message;
+	}
+}
+
+void printVerbose(string message1, string message2)
+{
+
+	if (verbose == 1)
+        {
+                cout<<"\n[cpu-driver-scheduler.cpp] "<<message1<<" "<<message2;
+        }
+}

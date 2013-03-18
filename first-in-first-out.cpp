@@ -1,17 +1,21 @@
 #include "first-in-first-out.h"
 
-firstInFirstOut::firstInFirstOut(vector<Pcb> processes){
+FirstInFirstOut::FirstInFirstOut(vector<Pcb> processes){
 	setProcesses(processes);
 	setReadyQueue(processes);
 	setWaitingQueue(processes);
 	this->timeCount = 0;
 }
 
+<<<<<<< HEAD
 int firstInFirstOut::run(){
 	while(getWaitingQueue().size() != 0){
 		cout << "\nWaiting Queue: " << getWaitingQueue().size() << "\nIO Bursts:" << getWaitingQueue()[0].ioBursts[0] << "\n" << "\nPID:" << getWaitingQueue()[0].pid << "\n";
 		ioBurst();
 		//cpuBurst();
+=======
+void FirstInFirstOut::startProcesses() {
+>>>>>>> 0f416ea7263977f1a3f32d942dfcb0e2faaba27e
 		
 	}
 	return 0;
@@ -21,9 +25,15 @@ void firstInFirstOut::startProcesses() {
 	
 }
 
-void firstInFirstOut::cpuBurst() {
+void FirstInFirstOut::selectProcess()
+{
+
 }
 
+void FirstInFirstOut::cpuBurst() {
+}
+
+<<<<<<< HEAD
 void firstInFirstOut::ioBurst() {
 	
 	if(getWaitingQueue().size() != 0){
@@ -58,3 +68,10 @@ void firstInFirstOut::output() {
 void firstInFirstOut::selectProcess(){
 
 }
+=======
+void FirstInFirstOut::ioBurst() {
+}
+
+void FirstInFirstOut::output() {
+}
+>>>>>>> 0f416ea7263977f1a3f32d942dfcb0e2faaba27e
