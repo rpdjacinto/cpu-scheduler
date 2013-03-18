@@ -7,6 +7,7 @@ SchedulingAlgorithm::SchedulingAlgorithm() {
 
 SchedulingAlgorithm::SchedulingAlgorithm( vector<Pcb> processes ) {
 	this->processes = processes;
+	this->time = 0;
 }
 
 
@@ -16,6 +17,7 @@ int SchedulingAlgorithm::run() {
 		selectProcess();
 		cpuBurst();
 		ioBurst();
+		setTime( getTime() + 1 );
 	}
 	output();
 	return 0;
@@ -35,11 +37,16 @@ void SchedulingAlgorithm::ioBurst() {
 	vector<Pcb> tempWaitingQueue = getWaitingQueue();
 	vector<Pcb> tempReadyQueue = getReadyQueue();
 	for( int i = 0; i < tempWaitingQueue.size(); i++ ) {
+		vector<int> ioBursts = tempWaitingQueue[i].getIoBursts();
+		ioBursts[tempWaitingQueue[i].getCurrentIoBurst()]--;
+		tempWaitingQueue[i].setIoBursts( ioBursts );
 		if( tempWaitingQueue[i].getIoBursts()[tempWaitingQueue[i].getCurrentIoBurst()] == 0 ) {
 			tempWaitingQueue[i].setCurrentIoBurst( tempWaitingQueue[i].getCurrentIoBurst() + 1 );
 			tempReadyQueue.push_back( tempWaitingQueue[i] );
-			tempReadyQueue.erase( tempReadyQueue.begin() + i );
+			tempWaitingQueue.erase( tempReadyQueue.begin() + i );
 		}
+		setWaitingQueue( tempWaitingQueue );
+		setReadyQueue( tempReadyQueue );
 	}
 }
 
