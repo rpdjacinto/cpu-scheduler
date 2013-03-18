@@ -4,10 +4,12 @@
 void ShortestJobFirst::selectProcess() 
 {
 	        vector<Pcb> readyQueue = getReadyQueue();
-	        
+
+	        int pidOfSelectedProcess = -1; 
+		
 		if( readyQueue.size() > 0 ) 
 		{
-	                int selectedProcess = 0;
+	                pidOfSelectedProcess = 0;
 	                
 			int shortestBurst = readyQueue.front().getCpuBurst(readyQueue.front().getCurrentCpuBurst());
 	                
@@ -16,7 +18,7 @@ void ShortestJobFirst::selectProcess()
 	                        if( readyQueue[i].getCpuBurst(readyQueue[i].getCurrentCpuBurst()) < shortestBurst ) 
 				{
 	                                shortestBurst = readyQueue[i].getCpuBurst(readyQueue[i].getCurrentCpuBurst());
-	                                selectedProcess = i;
+	                                pidOfSelectedProcess = readyQueue[i].getPid();
 	                        }
 	                }
 	        }
