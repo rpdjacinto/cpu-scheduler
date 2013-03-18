@@ -33,3 +33,23 @@ bool Gantt::printGantt ()
 	return true;
 }
 
+
+bool Gantt::printStats()
+{
+
+
+
+
+
+
+	return true;
+}
+
+
+bool Gantt::print()
+{
+	printGantt();
+	printStats();
+
+	return true;
+}
