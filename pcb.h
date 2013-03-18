@@ -9,8 +9,8 @@ using namespace std;
 class Pcb {
 
 public:
+	Pcb();
 	Pcb(int pid, int tarq, int priority, vector<int> cpuBursts, vector<int> ioBursts);
-
 	int getPid();
 	int getStatus();
 	int getTarq();

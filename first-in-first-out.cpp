@@ -8,5 +8,5 @@ FirstInFirstOut::FirstInFirstOut(vector<Pcb> processes){
 }
 
 int FirstInFirstOut::selectProcess(){
-
+	return -1;
 }

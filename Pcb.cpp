@@ -1,5 +1,8 @@
 #include "pcb.h"
 
+
+Pcb::Pcb() {
+}
 Pcb::Pcb(int pid, int tarq, int priority, vector<int> cpuBursts, vector<int> ioBursts){
 	this->pid = pid;
 	this->tarq = tarq;
@@ -9,7 +12,6 @@ Pcb::Pcb(int pid, int tarq, int priority, vector<int> cpuBursts, vector<int> ioB
 	this->currentCpuBurst = 0;
 	this->currentIoBurst = 0;
 };
-
 int Pcb::getPid() {
 	return this->pid;
 }
