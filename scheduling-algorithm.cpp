@@ -7,6 +7,7 @@ SchedulingAlgorithm::SchedulingAlgorithm() {
 
 SchedulingAlgorithm::SchedulingAlgorithm( vector<Pcb> processes ) {
 	this->processes = processes;
+	this->inactiveProcesses = processes;
 	this->time = 0;
 }
 
@@ -14,11 +15,13 @@ SchedulingAlgorithm::SchedulingAlgorithm( vector<Pcb> processes ) {
 int SchedulingAlgorithm::run() {
 	while( !allProcessesCompleted() ) {
 		startProcesses();
-		selectProcess();
-		//cpuBurst();
+		if(getReadyQueue().size() != 0){
+			selectProcess();
+		}
+		cpuBurst();
 		ioBurst();
 		setTime( getTime() + 1 );
-		cout << "\nTime: " << getTime() << "\n";
+		cout << inactiveProcesses.size() << "\n";
 	}
 	output();
 	return 0;
@@ -34,16 +37,19 @@ void SchedulingAlgorithm::startProcesses() {
 }
 
 void SchedulingAlgorithm::cpuBurst() {
-	currentProcess.getCpuBursts()[currentProcess.getCurrentCpuBurst()]--;
-	if(currentProcess.getCpuBursts()[currentProcess.getCurrentCpuBurst()] == 0){
-		if(currentProcess.getIoBursts().size() == currentProcess.getCurrentIoBurst() + 1){
-			completedProcesses.push_back(currentProcess);
-		}else{
-			Pcb tempCurrentProcess = currentProcess;
-			int tempCpuBurst = tempCurrentProcess.getCurrentCpuBurst();
-			tempCurrentProcess.setCurrentCpuBurst(++tempCpuBurst);
-			waitingQueue.push_back(tempCurrentProcess);
+	if(currentProcess.getCpuBursts().size() != 0){
+		currentProcess.getCpuBursts()[currentProcess.getCurrentCpuBurst()]--;
+		if(currentProcess.getCpuBursts()[currentProcess.getCurrentCpuBurst()] == 0){
+			if(currentProcess.getIoBursts().size() == currentProcess.getCurrentIoBurst() + 1){
+				completedProcesses.push_back(currentProcess);
+			}else{
+				Pcb tempCurrentProcess = currentProcess;
+				int tempCpuBurst = tempCurrentProcess.getCurrentCpuBurst();
+				tempCurrentProcess.setCurrentCpuBurst(++tempCpuBurst);
+				waitingQueue.push_back(tempCurrentProcess);
+			}
 		}
+		cout << "\n" << currentProcess.getCpuBursts()[currentProcess.getCurrentCpuBurst()] << "\n";
 	}
 }
 
