@@ -2,7 +2,6 @@
 
 ShortestPreviousBurst::ShortestPreviousBurst( vector<Pcb> processes, float weight ) : SchedulingAlgorithm(processes) {
 	this->weight = weight;
-	setWaitingQueue(processes);
 }
 
 int ShortestPreviousBurst::selectProcess() {

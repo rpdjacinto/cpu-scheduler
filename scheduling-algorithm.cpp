@@ -2,94 +2,119 @@
 
 using namespace std;
 
+/*
+ * Constructor definitions
+ */
 SchedulingAlgorithm::SchedulingAlgorithm() {
 }
 
 SchedulingAlgorithm::SchedulingAlgorithm( vector<Pcb> processes ) {
 	this->processes = processes;
 	this->inactiveProcesses = processes;
+	this->waitingQueue = processes;
 	this->time = 0;
 	verbose = 0;
 }
 
+/*
+ * Main run method to simulate scheduling algorithm
+ */
 int SchedulingAlgorithm::run() {
 	while( !allProcessesCompleted() ) {
+		
 		startProcesses();
-		if(getReadyQueue().size() != 0){
+		if(readyQueue.size() != 0){
 			selectProcess();
 		}
 		cpuBurst();
 		ioBurst();
-		setTime( getTime() + 1 );
+
+		this->time++;
 		
+		/*
 		printVerbose("How many cpu bursts: "); 
 		cout << getCurrentProcess().getCpuBursts()[getCurrentProcess().getCurrentCpuBurst()];
 		printVerbose("Waiting Queue Size: "); 
-		cout <<  getWaitingQueue().size();
+		cout <<  waitingQueue.size();
 		printVerbose("Ready Queue Size: "); 
 		cout <<  getReadyQueue().size();
 		printVerbose("Completed Queue Size: "); 
-		cout << getCompletedProcesses().size();
+		cout << completedProcesses.size();
+		*/
 	}
 	output();
 	return 0;
 }
 
+/*
+ * Method to determine when a process is ready to be put into the ready queue
+ */
 void SchedulingAlgorithm::startProcesses() {
+	
 	for( int i = 0; i < this->inactiveProcesses.size(); i++ ) {
-		if( this->time == inactiveProcesses[i].getTarq() ) {
-			this->readyQueue.push_back( inactiveProcesses[i] );
+		if( this->time == this->inactiveProcesses[i].getTarq() ) {
+			this->readyQueue.push_back( this->inactiveProcesses[i] );
 			this->inactiveProcesses.erase( this->inactiveProcesses.begin() + i );
 		}
 	}
 }
 
+/*
+ * Method to simulate a CPU burst
+ */
 void SchedulingAlgorithm::cpuBurst() {
-	//vector<int> tempCpuBursts;
+
 	if(currentProcess.getCpuBursts().size() != 0){
-		//tempCpuBursts = currentProcess.getCpuBursts();
-		//tempCpuBursts[currentProcess.getCurrentCpuBurst()]--;
-		//currentProcess.setCpuBursts(tempCpuBursts);
+
 		currentProcess.setCurrentCpuTime( currentProcess.getCurrentCpuTime() + 1 );
-		if(currentProcess.getCurrentCpuTime() == currentProcess.getCpuBursts()[currentProcess.getCurrentCpuBurst()]){
-			currentProcess.setCurrentCpuTime( 0 );
+
+		if( currentProcess.getCurrentCpuTime() == currentProcess.getCpuBurst(currentProcess.getCurrentCpuBurst()) ){
+			
+			currentProcess.setCurrentCpuTime(0);
+
 			if(currentProcess.getIoBursts().size() == currentProcess.getCurrentIoBurst()){
 				completedProcesses.push_back(currentProcess);
-			}else{
+			}
+			else{
 				Pcb tempCurrentProcess = currentProcess;
 				int tempCpuBurst = tempCurrentProcess.getCurrentCpuBurst();
 				tempCurrentProcess.setCurrentCpuBurst(++tempCpuBurst);
 				waitingQueue.push_back(tempCurrentProcess);
 			}
 		}
-		printVerbose("Current PID: "); cout << currentProcess.getPid();
+		printVerbose("Current PID: "); 
+		cout << currentProcess.getPid();
 	}
 }
 
+/*
+ * Method to simulate an IO burst
+ */
 void SchedulingAlgorithm::ioBurst() {
 	
-	vector<Pcb> waitingQueue = getWaitingQueue();
-	vector<Pcb> readyQueue = getReadyQueue();
-	//vector<int> tempIoBursts;
+	vector<Pcb> waitingQueue = this->waitingQueue;
+	vector<Pcb> readyQueue = this->readyQueue;
+
 	for( int i = 0; i < waitingQueue.size(); i++ ) {
-		//vector<int> ioBursts = tempWaitingQueue[i].getIoBursts();
-		//ioBursts[tempWaitingQueue[i].getCurrentIoBurst()]--;
-		//tempWaitingQueue[i].setIoBursts( ioBursts );
-		//printVerbose("IO Bursts: "); cout << ioBursts[tempWaitingQueue[i].getCurrentIoBurst()];
+
 		waitingQueue[i].setCurrentIoTime( waitingQueue[i].getCurrentIoTime() + 1 );
-		//if( waitingQueue[i].getIoBursts()[waitingQueue[i].getCurrentIoBurst()] == 0 ) {
+
 		if( waitingQueue[i].getCurrentCpuTime() == waitingQueue[i].getIoBursts()[waitingQueue[i].getCurrentIoBurst()] ) {
+			
 			waitingQueue[i].setCurrentIoBurst( waitingQueue[i].getCurrentIoBurst() + 1 );
 			waitingQueue[i].setCurrentIoTime( 0 );
 			readyQueue.push_back( waitingQueue[i] );
 			waitingQueue.erase( waitingQueue.begin() + i );
 		}
 
-		setWaitingQueue( waitingQueue );
-		setReadyQueue( readyQueue );
+		this->waitingQueue = waitingQueue;
+		this->readyQueue = readyQueue;
 	}
 }
 
+/* 
+ * TODO add code to display Gantt chart and show stats
+ */
 void SchedulingAlgorithm::output() {
 
 }
@@ -118,20 +143,8 @@ vector<Pcb> SchedulingAlgorithm::getProcesses() {
 	return this->processes;
 }
 
-vector<Pcb> SchedulingAlgorithm::getInactiveProcesses() {
-	return this->inactiveProcesses;
-}
-
 vector<Pcb> SchedulingAlgorithm::getReadyQueue() {
 	return this->readyQueue;
-}
-
-vector<Pcb> SchedulingAlgorithm::getWaitingQueue() {
-	return this->waitingQueue;
-}
-
-vector<Pcb> SchedulingAlgorithm::getCompletedProcesses() {
-	return this->completedProcesses;
 }
 
 Pcb SchedulingAlgorithm::getCurrentProcess(){
@@ -142,23 +155,11 @@ Pcb SchedulingAlgorithm::getCurrentProcess(){
  * Mutator methods
  */
 
-void SchedulingAlgorithm::setTime( int time ) { 
-	this->time = time;
-}
-/*
-void SchedulingAlgorithm::setInactiveProcesses(vector<Pcb> processes){
-	this->inactiveProcesses = processes;
-}
-*/
 void SchedulingAlgorithm::setReadyQueue(vector<Pcb> processes){
 	this->readyQueue = processes;
 }
 
-void SchedulingAlgorithm::setWaitingQueue(vector<Pcb> processes){
-	this->waitingQueue = processes;
-}
-
-void SchedulingAlgorithm::setcompletedProcesses(vector<Pcb> processes){
+void SchedulingAlgorithm::setCompletedProcesses(vector<Pcb> processes){
 	this->completedProcesses = processes;
 }
 

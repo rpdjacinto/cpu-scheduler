@@ -6,7 +6,6 @@ ImpatientPriority::ImpatientPriority() {
 }
 
 ImpatientPriority::ImpatientPriority( vector<Pcb> processes ) : SchedulingAlgorithm(processes) {
-	setWaitingQueue(processes);
 }
 
 int ImpatientPriority::selectProcess() {

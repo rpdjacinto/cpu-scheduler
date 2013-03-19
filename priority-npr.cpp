@@ -6,7 +6,6 @@ PriorityNpr::PriorityNpr() {
 }
 
 PriorityNpr::PriorityNpr( vector<Pcb> processes ) : SchedulingAlgorithm(processes) {
-	setWaitingQueue(processes);
 }
 
 int PriorityNpr::selectProcess() {

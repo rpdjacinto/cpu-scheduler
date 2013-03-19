@@ -1,4 +1,4 @@
-#include "pcb.h"
+# include "pcb.h"
 # include <iostream>
 # include <string>
 
@@ -8,28 +8,36 @@
 class SchedulingAlgorithm {
 
 public:
-	//Constructors
+	/*
+	 * Constructors
+	 */
 	SchedulingAlgorithm();
 	SchedulingAlgorithm( vector<Pcb> processes );
-	// Run Scheduling Simulation
+	
+	/* 
+	 * Main method to run scheduling simulation
+	 */
 	int run();
 
+	/* 
+	 * Getters
+	 */
 	int getTime();
 	vector<Pcb> getProcesses();
-	vector<Pcb> getInactiveProcesses();
 	vector<Pcb> getReadyQueue();
-	vector<Pcb> getWaitingQueue();
-	vector<Pcb> getCompletedProcesses();
 	Pcb getCurrentProcess();
 
-	void setTime( int time );
-	void setInactiveProcesses(vector<Pcb>);
+	/*
+	 * Setters
+	 */
 	void setReadyQueue(vector<Pcb>);
-	void setWaitingQueue(vector<Pcb>);
-	void setcompletedProcesses(vector<Pcb>);
+	void setCompletedProcesses(vector<Pcb>);
 	void setCurrentProcess(Pcb);
 
-	void printVerbose(string message);
+	/* 
+	 * Verbose logging method
+	 * Overriden by sub class
+	 */
 	void setVerbose();
 
 protected:
@@ -64,7 +72,7 @@ private:
 	virtual int selectProcess() = 0;
 	// Produce Gantt Chart
 	void output();
-
+	void printVerbose(string message);
 };
 
 #endif
