@@ -59,7 +59,9 @@ void FileParser::makePCBs(){
 		tempTnCpu = PCBData[pcbCount][3];
 		for(burstCount = 4 ; burstCount < PCBData[pcbCount].size() ; burstCount += 2){
 			tempCPUBursts.push_back(PCBData[pcbCount][burstCount]);
-			tempIOBursts.push_back(PCBData[pcbCount][burstCount + 1]);
+			if(PCBData[pcbCount].size() > burstCount + 1){
+				tempIOBursts.push_back(PCBData[pcbCount][burstCount + 1]);
+			}
 		}
 		pcbs.push_back(Pcb(tempPid, tempTarq, tempPriority, tempTnCpu, tempCPUBursts, tempIOBursts));
 	}
