@@ -49,17 +49,19 @@ void FileParser::makePCBs(){
 	int tempPid;
 	int tempPriority;
 	int tempTarq;
+	int tempTnCpu;
 	for(pcbCount = 0 ; pcbCount < getNumberOfPCBData() ; pcbCount++){
 		tempCPUBursts.clear();
 		tempIOBursts.clear();
 		tempPid = PCBData[pcbCount][0];
 		tempTarq = PCBData[pcbCount][1];
 		tempPriority = PCBData[pcbCount][2];
-		for(burstCount = 3 ; burstCount < PCBData[pcbCount].size() ; burstCount += 2){
+		tempTnCpu = PCBData[pcbCount][3];
+		for(burstCount = 4 ; burstCount < PCBData[pcbCount].size() ; burstCount += 2){
 			tempCPUBursts.push_back(PCBData[pcbCount][burstCount]);
 			tempIOBursts.push_back(PCBData[pcbCount][burstCount + 1]);
 		}
-		pcbs.push_back(Pcb(tempPid, tempTarq, tempPriority, tempCPUBursts, tempIOBursts));
+		pcbs.push_back(Pcb(tempPid, tempTarq, tempPriority, tempTnCpu, tempCPUBursts, tempIOBursts));
 	}
 };
 

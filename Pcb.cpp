@@ -11,6 +11,18 @@ Pcb::Pcb(int pid, int tarq, int priority, vector<int> cpuBursts, vector<int> ioB
 	this->ioBursts = ioBursts;
 	this->currentCpuBurst = 0;
 	this->currentIoBurst = 0;
+	this->tncpu = 0;
+};
+
+Pcb::Pcb(int pid, int tarq, int priority, int tncpu, vector<int> cpuBursts, vector<int> ioBursts){
+	this->pid = pid;
+	this->tarq = tarq;
+	this->priority = priority;
+	this->cpuBursts = cpuBursts;
+	this->ioBursts = ioBursts;
+	this->tncpu = tncpu;
+	this->currentCpuBurst = 0;
+	this->currentIoBurst = 0;
 };
 int Pcb::getPid() {
 	return this->pid;

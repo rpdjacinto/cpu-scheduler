@@ -11,6 +11,7 @@ class Pcb {
 public:
 	Pcb();
 	Pcb(int pid, int tarq, int priority, vector<int> cpuBursts, vector<int> ioBursts);
+	Pcb(int pid, int tarq, int priority, int tncpu, vector<int> cpuBursts, vector<int> ioBursts);
 
 	int getPid();
 	int getStatus();
@@ -41,6 +42,7 @@ private:
 	int status;
 	int tarq;
 	int priority;
+	int tncpu;
 	int age;
 	int currentCpuBurst;
 	int currentIoBurst;
