@@ -22,6 +22,15 @@ int FirstInFirstOut::selectProcess(){
 		tempReady.erase(tempReady.begin());
 		setReadyQueue(tempReady);
 	}
+
+	if(getCurrentProcess().getCpuBursts()[getCurrentProcess().getCurrentCpuBurst()] < 0){
+		if(getReadyQueue().size() != 0){
+			setCurrentProcess(getReadyQueue().front());
+			vector<Pcb> tempReady = getReadyQueue();
+			tempReady.erase(tempReady.begin());
+			setReadyQueue(tempReady);
+		}
+	}
 	
 	return -1;
 }

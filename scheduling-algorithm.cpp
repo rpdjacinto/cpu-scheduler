@@ -13,7 +13,7 @@ SchedulingAlgorithm::SchedulingAlgorithm( vector<Pcb> processes ) {
 
 
 int SchedulingAlgorithm::run() {
-	while( time < 20 ) {
+	while( !allProcessesCompleted() ) {
 		startProcesses();
 		if(getReadyQueue().size() != 0){
 			selectProcess();
@@ -21,7 +21,7 @@ int SchedulingAlgorithm::run() {
 		cpuBurst();
 		ioBurst();
 		setTime( getTime() + 1 );
-		cout << getCurrentProcess().getCpuBursts()[getCurrentProcess().getCurrentCpuBurst()] << "\n";
+		printVerbose("How many cpu bursts: "); cout << getCurrentProcess().getCpuBursts()[getCurrentProcess().getCurrentCpuBurst()];
 	}
 	output();
 	return 0;
@@ -52,7 +52,7 @@ void SchedulingAlgorithm::cpuBurst() {
 				waitingQueue.push_back(tempCurrentProcess);
 			}
 		}
-		printVerbose(""); cout << currentProcess.getPid();
+		printVerbose("Current PID: "); cout << currentProcess.getPid();
 	}
 }
 
@@ -61,7 +61,7 @@ void SchedulingAlgorithm::ioBurst() {
 	vector<Pcb> tempWaitingQueue = getWaitingQueue();
 	vector<Pcb> tempReadyQueue = getReadyQueue();
 	for( int i = 0; i < tempWaitingQueue.size(); i++ ) {
-		printVerbose("Starting Iteration");
+		//printVerbose("Starting Iteration");
 		printVerbose("Waiting Queue Size: "); cout <<  tempWaitingQueue.size();
 		vector<int> ioBursts = tempWaitingQueue[i].getIoBursts();
 		ioBursts[tempWaitingQueue[i].getCurrentIoBurst()]--;	

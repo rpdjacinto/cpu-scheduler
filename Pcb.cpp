@@ -57,9 +57,9 @@ void Pcb::setTarq( int tarq ) {
 void Pcb::setPriority( int priority ) {
 	this->priority = priority;
 }
-void Pcb::setPriority( int age ) {
-	this->age = age;
-}
+//void Pcb::setPriority( int age ) {
+//	this->age = age;
+//}
 void Pcb::setAverageBursts( float averageBursts ) {
 	this->averageBursts = averageBursts;
 }
