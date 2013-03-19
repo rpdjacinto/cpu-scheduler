@@ -31,8 +31,9 @@ int ShortestJobFirst::selectProcess()
 				indexOfProcessToBeRemoved = i;
 	                }
                 }
-
+		setCurrentProcess(readyQueue[indexOfProcessToBeRemoved]);
 		readyQueue.erase(readyQueue.begin() + indexOfProcessToBeRemoved);
+		setReadyQueue(readyQueue);
         }
 	return pidOfSelectedProcess;
 }
