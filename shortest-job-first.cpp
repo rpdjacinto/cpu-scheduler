@@ -1,4 +1,6 @@
 # include "shortest-job-first.h"
+# include "string.h"
+# include "string"
 
 ShortestJobFirst::ShortestJobFirst(vector<Pcb> processes)
 {
@@ -35,6 +37,10 @@ int ShortestJobFirst::selectProcess()
 		readyQueue.erase(readyQueue.begin() + indexOfProcessToBeRemoved);
 		setReadyQueue(readyQueue);
         }
+        else{
+        	cout << "No process in the Ready Queue";
+        }
+        
 	return pidOfSelectedProcess;
 }
 
