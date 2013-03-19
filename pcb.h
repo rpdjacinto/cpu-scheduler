@@ -11,10 +11,12 @@ class Pcb {
 public:
 	Pcb();
 	Pcb(int pid, int tarq, int priority, vector<int> cpuBursts, vector<int> ioBursts);
+
 	int getPid();
 	int getStatus();
 	int getTarq();
 	int getPriority();
+	int getAge();
 	float getAverageBursts();
 	int getCurrentCpuBurst();
 	int getCurrentIoBurst();
@@ -22,11 +24,11 @@ public:
 	vector<int> getIoBursts();
 	int getCpuBurst(int index);
 
-
 	void setPid( int pid );
 	void setStatus( int Status );
 	void setTarq( int tarq );
-	void setPriority( int setPriority );
+	void setPriority( int priority );
+	void setAge( int age );
 	void setAverageBursts( float averageBursts );
 	void setCurrentCpuBurst( int currentCpuBurst );
 	void setCurrentIoBurst( int ioBurst );
@@ -39,6 +41,7 @@ private:
 	int status;
 	int tarq;
 	int priority;
+	int age;
 	int currentCpuBurst;
 	int currentIoBurst;
 	float averageBursts;

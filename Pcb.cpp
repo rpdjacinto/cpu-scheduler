@@ -24,6 +24,9 @@ int Pcb::getTarq() {
 int Pcb::getPriority() {
 	return this->priority;
 }
+int Pcb::getAge() {
+	return this->age;
+}
 float Pcb::getAverageBursts() {
 	return this->averageBursts;
 }
@@ -53,6 +56,9 @@ void Pcb::setTarq( int tarq ) {
 }
 void Pcb::setPriority( int priority ) {
 	this->priority = priority;
+}
+void Pcb::setPriority( int age ) {
+	this->age = age;
 }
 void Pcb::setAverageBursts( float averageBursts ) {
 	this->averageBursts = averageBursts;
