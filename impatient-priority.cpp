@@ -27,3 +27,14 @@ int ImpatientPriority::selectProcess() {
 }
 
 
+/*
+ * @Override verbose function
+ */
+void ImpatientPriority::printVerbose(string message)
+{
+
+	if (verbose == 1)
+	{
+		cout << "\n[impatient-priority.cpp] " << message;
+	}
+}

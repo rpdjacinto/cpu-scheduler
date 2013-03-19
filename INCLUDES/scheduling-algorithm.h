@@ -39,9 +39,11 @@ public:
 	 * Overriden by sub class
 	 */
 	void setVerbose();
+	
 
 protected:
 	char verbose;
+	void printVerbose(string message);
 
 private:
 	
@@ -72,7 +74,7 @@ private:
 	virtual int selectProcess() = 0;
 	// Produce Gantt Chart
 	void output();
-	void printVerbose(string message);
+	
 };
 
 #endif

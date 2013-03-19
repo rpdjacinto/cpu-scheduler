@@ -39,3 +39,15 @@ int ShortestJobFirst::selectProcess()
 	return pidOfSelectedProcess;
 }
 
+
+/*
+ * @Override verbose function
+ */
+void ShortestJobFirst::printVerbose(string message)
+{
+
+	if (verbose == 1)
+	{
+		cout << "\n[shortest-job-first.cpp] " << message;
+	}
+}

@@ -25,3 +25,16 @@ int PriorityNpr::selectProcess() {
 		return 0;
 	} return -1;
 }
+
+
+/*
+ * @Override verbose function
+ */
+void PriorityNpr::printVerbose(string message)
+{
+
+	if (verbose == 1)
+	{
+		cout << "\n[priority-npr.cpp] " << message;
+	}
+}

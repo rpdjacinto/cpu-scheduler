@@ -9,6 +9,7 @@ class ShortestJobFirst : public SchedulingAlgorithm {
 	        ShortestJobFirst();
 	        ShortestJobFirst(vector<Pcb> processes);
 
+	        void printVerbose(string message);
 	private:
 	        int selectProcess();
 };

@@ -33,3 +33,15 @@ int PolitePriority::getTimeSlice() {
 void PolitePriority::setTimeSlice( int timeSlice ) {
 	this->timeSlice = timeSlice;
 }
+
+/*
+ * @Override verbose function
+ */
+void PolitePriority::printVerbose(string message)
+{
+
+	if (verbose == 1)
+	{
+		cout << "\n[polite-priority.cpp] " << message;
+	}
+}

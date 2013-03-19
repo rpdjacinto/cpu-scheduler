@@ -45,3 +45,16 @@ void ShortestPreviousBurst::setWeight( float weight ) {
 void ShortestPreviousBurst::calculateAverageBursts( int burstLength, Pcb &pcb ){
 	pcb.setAverageBursts( this->weight * burstLength + ( 1 - this->weight ) * pcb.getAverageBursts() );
 }
+
+
+/*
+ * @Override verbose function
+ */
+void ShortestPreviousBurst::printVerbose(string message)
+{
+
+	if (verbose == 1)
+	{
+		cout << "\n[shortest-previous-burst.cpp] " << message;
+	}
+}
