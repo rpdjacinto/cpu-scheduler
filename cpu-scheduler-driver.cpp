@@ -87,6 +87,7 @@ int main(int argc, char *argv[])
 			printVerbose("FIFO/FCFS selected");
 
 			FirstInFirstOut fifo(testParse.getPCBs());
+			fifo.run();
 		}
 		
 		if (scheduling_algorithm.compare("spb") == 0)

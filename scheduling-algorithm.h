@@ -18,6 +18,7 @@ public:
 	vector<Pcb> getReadyQueue();
 	vector<Pcb> getWaitingQueue();
 	vector<Pcb> getCompletedProcesses();
+	Pcb getCurrentProcess();
 
 	void setTime( int time );
 	void setProcesses(vector<Pcb>);
@@ -25,6 +26,7 @@ public:
 	void setReadyQueue(vector<Pcb>);
 	void setWaitingQueue(vector<Pcb>);
 	void setcompletedProcesses(vector<Pcb>);
+	void setCurrentProcess(Pcb);
 
 private:
 	

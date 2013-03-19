@@ -15,11 +15,10 @@ int SchedulingAlgorithm::run() {
 	while( !allProcessesCompleted() ) {
 		startProcesses();
 		selectProcess();
-		cpuBurst();
+		//cpuBurst();
 		ioBurst();
 		setTime( getTime() + 1 );
 		cout << "\nTime: " << getTime() << "\n";
-		
 	}
 	output();
 	return 0;
@@ -110,6 +109,10 @@ vector<Pcb> SchedulingAlgorithm::getCompletedProcesses() {
 	return this->completedProcesses;
 }
 
+Pcb SchedulingAlgorithm::getCurrentProcess(){
+	return this->currentProcess;
+}
+
 /*
  * Mutator methods
  */
@@ -136,4 +139,8 @@ void SchedulingAlgorithm::setWaitingQueue(vector<Pcb> processes){
 
 void SchedulingAlgorithm::setcompletedProcesses(vector<Pcb> processes){
 	this->completedProcesses = processes;
+}
+
+void SchedulingAlgorithm::setCurrentProcess(Pcb currentProcess){
+	this->currentProcess = currentProcess;
 }

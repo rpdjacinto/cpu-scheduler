@@ -29,7 +29,7 @@ int ShortestJobFirst::selectProcess()
 	                                shortestBurst = readyQueue[i].getCpuBurst(readyQueue[i].getCurrentCpuBurst());
 	                                pidOfSelectedProcess = readyQueue[i].getPid();
 	                        } // if
-							else if (readyQueue[i].getCpuBurst(readyQueue[i].getCurrentCpuBurst()) = shortestBurst ) {
+							else if (readyQueue[i].getCpuBurst(readyQueue[i].getCurrentCpuBurst()[i]) = shortestBurst ) {
 								pidOfEqualProcess = readyQueue[i].getPid();
 							} //else if
 			}

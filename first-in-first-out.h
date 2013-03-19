@@ -11,13 +11,8 @@ public:
 
 private:
 
-	void startProcesses();
 	int selectProcess();
-	void cpuBurst();
-	void ioBurst();
-	void output();
 
-	int timeCount;
 
 };
 

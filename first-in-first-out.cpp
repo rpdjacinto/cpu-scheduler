@@ -2,9 +2,7 @@
 
 FirstInFirstOut::FirstInFirstOut(vector<Pcb> processes){
 	setProcesses(processes);
-	setReadyQueue(processes);
-	setWaitingQueue(processes);
-	this->timeCount = 0;
+	setTime(0);
 }
 
 int FirstInFirstOut::selectProcess(){
