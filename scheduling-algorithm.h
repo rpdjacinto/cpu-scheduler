@@ -1,4 +1,6 @@
 #include "pcb.h"
+# include <iostream>
+# include <string>
 
 #ifndef SCHEDULINGALGORITHM_H
 #define SCHEDULINGALGORITHM_H
@@ -27,6 +29,8 @@ public:
 	void setWaitingQueue(vector<Pcb>);
 	void setcompletedProcesses(vector<Pcb>);
 	void setCurrentProcess(Pcb);
+
+	void printVerbose(string message);
 
 private:
 	

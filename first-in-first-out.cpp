@@ -14,7 +14,9 @@ int FirstInFirstOut::selectProcess(){
 		vector<Pcb> tempReady = getReadyQueue();
 		tempReady.erase(tempReady.begin());
 		setReadyQueue(tempReady);
-	}else if(getCurrentProcess().getCpuBursts()[getCurrentProcess().getCurrentCpuBurst()] == 0){
+	}
+	
+	if(getCurrentProcess().getCpuBursts()[getCurrentProcess().getCurrentCpuBurst()] == 0){
 		setCurrentProcess(getReadyQueue().front());
 		vector<Pcb> tempReady = getReadyQueue();
 		tempReady.erase(tempReady.begin());
@@ -22,4 +24,13 @@ int FirstInFirstOut::selectProcess(){
 	}
 	
 	return -1;
+}
+
+void FirstInFirstOut::printVerbose(string message)
+{
+
+	//if (verbose == 1)
+	//{
+		cout << "\n[first-in-first-out.cpp] " << message;
+	//}
 }

@@ -13,7 +13,7 @@ SchedulingAlgorithm::SchedulingAlgorithm( vector<Pcb> processes ) {
 
 
 int SchedulingAlgorithm::run() {
-	while( !allProcessesCompleted() ) {
+	while( time < 20 ) {
 		startProcesses();
 		if(getReadyQueue().size() != 0){
 			selectProcess();
@@ -21,7 +21,7 @@ int SchedulingAlgorithm::run() {
 		cpuBurst();
 		ioBurst();
 		setTime( getTime() + 1 );
-		cout << inactiveProcesses.size() << "\n";
+		cout << getCurrentProcess().getCpuBursts()[getCurrentProcess().getCurrentCpuBurst()] << "\n";
 	}
 	output();
 	return 0;
@@ -37,8 +37,11 @@ void SchedulingAlgorithm::startProcesses() {
 }
 
 void SchedulingAlgorithm::cpuBurst() {
+	vector<int> tempCpuBursts;
 	if(currentProcess.getCpuBursts().size() != 0){
-		currentProcess.getCpuBursts()[currentProcess.getCurrentCpuBurst()]--;
+		tempCpuBursts = currentProcess.getCpuBursts();
+		tempCpuBursts[currentProcess.getCurrentCpuBurst()]--;
+		currentProcess.setCpuBursts(tempCpuBursts);
 		if(currentProcess.getCpuBursts()[currentProcess.getCurrentCpuBurst()] == 0){
 			if(currentProcess.getIoBursts().size() == currentProcess.getCurrentIoBurst() + 1){
 				completedProcesses.push_back(currentProcess);
@@ -49,7 +52,7 @@ void SchedulingAlgorithm::cpuBurst() {
 				waitingQueue.push_back(tempCurrentProcess);
 			}
 		}
-		cout << "\n" << currentProcess.getCpuBursts()[currentProcess.getCurrentCpuBurst()] << "\n";
+		printVerbose(""); cout << currentProcess.getPid();
 	}
 }
 
@@ -58,11 +61,11 @@ void SchedulingAlgorithm::ioBurst() {
 	vector<Pcb> tempWaitingQueue = getWaitingQueue();
 	vector<Pcb> tempReadyQueue = getReadyQueue();
 	for( int i = 0; i < tempWaitingQueue.size(); i++ ) {
-		cout << "\nStarting Iteration\n";
-		cout << "\nWaiting Queue Size: " << tempWaitingQueue.size() << "\n";
+		printVerbose("Starting Iteration");
+		printVerbose("Waiting Queue Size: "); cout <<  tempWaitingQueue.size();
 		vector<int> ioBursts = tempWaitingQueue[i].getIoBursts();
 		ioBursts[tempWaitingQueue[i].getCurrentIoBurst()]--;	
-		cout << "\nIO Bursts: " << ioBursts[0] << "\n";
+		printVerbose("IO Bursts: "); cout << ioBursts[0]; 
 		tempWaitingQueue[i].setIoBursts( ioBursts );
 		
 		if( tempWaitingQueue[i].getIoBursts()[tempWaitingQueue[i].getCurrentIoBurst()] == 0 ) {
@@ -149,4 +152,12 @@ void SchedulingAlgorithm::setcompletedProcesses(vector<Pcb> processes){
 
 void SchedulingAlgorithm::setCurrentProcess(Pcb currentProcess){
 	this->currentProcess = currentProcess;
+}
+
+void SchedulingAlgorithm::printVerbose(string message)
+{
+	//if (verbose == 1)
+	//{
+		cout<<"\n[scheduling-algorithm.cpp] "<<message;
+	//}
 }
