@@ -5,11 +5,8 @@ using namespace std;
 ImpatientPriority::ImpatientPriority() {
 }
 
-ImpatientPriority::ImpatientPriority( vector<Pcb> processes ) {
-	setProcesses(processes);
-	setInactiveProcesses(processes);
+ImpatientPriority::ImpatientPriority( vector<Pcb> processes ) : SchedulingAlgorithm(processes) {
 	setWaitingQueue(processes);
-	setTime(0);
 }
 
 int ImpatientPriority::selectProcess() {
@@ -29,3 +26,5 @@ int ImpatientPriority::selectProcess() {
 		return 0;
 	} return -1;
 }
+
+

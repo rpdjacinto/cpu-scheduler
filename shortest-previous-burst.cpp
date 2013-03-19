@@ -1,11 +1,8 @@
 #include "shortest-previous-burst.h"
 
-ShortestPreviousBurst::ShortestPreviousBurst( vector<Pcb> processes, float weight ) {
+ShortestPreviousBurst::ShortestPreviousBurst( vector<Pcb> processes, float weight ) : SchedulingAlgorithm(processes) {
 	this->weight = weight;
-	setProcesses(processes);
-	setInactiveProcesses(processes);
 	setWaitingQueue(processes);
-	setTime(0);
 }
 
 int ShortestPreviousBurst::selectProcess() {

@@ -1,9 +1,6 @@
 #include "first-in-first-out.h"
 
-FirstInFirstOut::FirstInFirstOut(vector<Pcb> processes){
-	setProcesses(processes);
-	setInactiveProcesses(processes);
-	setTime(0);
+FirstInFirstOut::FirstInFirstOut(vector<Pcb> processes) : SchedulingAlgorithm(processes) {
 }
 
 int FirstInFirstOut::selectProcess(){
@@ -35,11 +32,14 @@ int FirstInFirstOut::selectProcess(){
 	return -1;
 }
 
+/*
+ * @Override verbose function
+ */
 void FirstInFirstOut::printVerbose(string message)
 {
 
-	//if (verbose == 1)
-	//{
+	if (verbose == 1)
+	{
 		cout << "\n[first-in-first-out.cpp] " << message;
-	//}
+	}
 }

@@ -5,11 +5,8 @@ using namespace std;
 PriorityNpr::PriorityNpr() {
 }
 
-PriorityNpr::PriorityNpr( vector<Pcb> processes ) {
-	setProcesses(processes);
-	setInactiveProcesses(processes);
+PriorityNpr::PriorityNpr( vector<Pcb> processes ) : SchedulingAlgorithm(processes) {
 	setWaitingQueue(processes);
-	setTime(0);
 }
 
 int PriorityNpr::selectProcess() {

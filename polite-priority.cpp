@@ -5,11 +5,8 @@ using namespace std;
 PolitePriority::PolitePriority() {
 }
 
-PolitePriority::PolitePriority( vector<Pcb> processes, int timeSlice ) {
-	setProcesses(processes);
-	setInactiveProcesses(processes);
+PolitePriority::PolitePriority( vector<Pcb> processes, int timeSlice ) : SchedulingAlgorithm(processes) {
 	setWaitingQueue(processes);
-	setTime(0);
 }
 
 int PolitePriority::selectProcess() {

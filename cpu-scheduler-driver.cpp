@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
 	scheduling_algorithm = options['a'];
 	parameter = options['p'];
 	help = (options['h'] == "1") ? 1 : 0;
-//	verbose = (options['v'] == "1") ? 1 : 0;
+	verbose = (options['v'] == "1") ? 1 : 0;
 
 	/* Print help information
 	 */

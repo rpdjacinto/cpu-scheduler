@@ -9,6 +9,7 @@ SchedulingAlgorithm::SchedulingAlgorithm( vector<Pcb> processes ) {
 	this->processes = processes;
 	this->inactiveProcesses = processes;
 	this->time = 0;
+	verbose = 0;
 }
 
 int SchedulingAlgorithm::run() {
@@ -20,10 +21,15 @@ int SchedulingAlgorithm::run() {
 		cpuBurst();
 		ioBurst();
 		setTime( getTime() + 1 );
-		printVerbose("How many cpu bursts: "); cout << getCurrentProcess().getCpuBursts()[getCurrentProcess().getCurrentCpuBurst()];
-		printVerbose("Waiting Queue Size: "); cout <<  getWaitingQueue().size();
-		printVerbose("Ready Queue Size: "); cout <<  getReadyQueue().size();
-		printVerbose("Completed Queue Size: "); cout << getCompletedProcesses().size();
+		
+		printVerbose("How many cpu bursts: "); 
+		cout << getCurrentProcess().getCpuBursts()[getCurrentProcess().getCurrentCpuBurst()];
+		printVerbose("Waiting Queue Size: "); 
+		cout <<  getWaitingQueue().size();
+		printVerbose("Ready Queue Size: "); 
+		cout <<  getReadyQueue().size();
+		printVerbose("Completed Queue Size: "); 
+		cout << getCompletedProcesses().size();
 	}
 	output();
 	return 0;
@@ -88,6 +94,11 @@ void SchedulingAlgorithm::output() {
 
 }
 
+
+/*
+ * Method to check if all processes have been completed
+ * @return bool value, true if all processes have been completed
+ */
 bool SchedulingAlgorithm::allProcessesCompleted() {
 	if( this->processes.size() == this->completedProcesses.size() ) return true;
 	else return false;
@@ -134,15 +145,11 @@ Pcb SchedulingAlgorithm::getCurrentProcess(){
 void SchedulingAlgorithm::setTime( int time ) { 
 	this->time = time;
 }
-
-void SchedulingAlgorithm::setProcesses(vector<Pcb> processes){
-	this->processes = processes;
-}
-
+/*
 void SchedulingAlgorithm::setInactiveProcesses(vector<Pcb> processes){
 	this->inactiveProcesses = processes;
 }
-
+*/
 void SchedulingAlgorithm::setReadyQueue(vector<Pcb> processes){
 	this->readyQueue = processes;
 }
@@ -159,10 +166,13 @@ void SchedulingAlgorithm::setCurrentProcess(Pcb currentProcess){
 	this->currentProcess = currentProcess;
 }
 
+/*
+ * Verbose function to print additional information if verbose is set
+ */
 void SchedulingAlgorithm::printVerbose(string message)
 {
-	//if (verbose == 1)
-	//{
-		cout<<"\n[scheduling-algorithm.cpp] "<<message;
-	//}
+	if (verbose == 1)
+	{
+		cout<<"\n"<<message;
+	}
 }

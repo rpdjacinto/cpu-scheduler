@@ -2,12 +2,9 @@
 # include "string.h"
 # include "string"
 
-ShortestJobFirst::ShortestJobFirst(vector<Pcb> processes)
+ShortestJobFirst::ShortestJobFirst(vector<Pcb> processes) : SchedulingAlgorithm(processes)
 {
-	        setProcesses(processes);
-	        setInactiveProcesses(processes);
 	        setWaitingQueue(processes);
-	        setTime(0);
 }
 
 

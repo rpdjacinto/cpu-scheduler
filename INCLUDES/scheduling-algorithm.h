@@ -23,7 +23,6 @@ public:
 	Pcb getCurrentProcess();
 
 	void setTime( int time );
-	void setProcesses(vector<Pcb>);
 	void setInactiveProcesses(vector<Pcb>);
 	void setReadyQueue(vector<Pcb>);
 	void setWaitingQueue(vector<Pcb>);
@@ -31,20 +30,18 @@ public:
 	void setCurrentProcess(Pcb);
 
 	void printVerbose(string message);
+	void setVerbose();
+
+protected:
+	char verbose;
 
 private:
 	
-	//All Processes
 	vector<Pcb> processes;
-	//List of inactive Processes;
 	vector<Pcb> inactiveProcesses;
-	//List of Processes in Ready Queue
 	vector<Pcb> readyQueue;
-	//List of Processes in Waiting Queue
 	vector<Pcb> waitingQueue;
-	//List of completed Processes
 	vector<Pcb> completedProcesses;
-	//Process in CPU
 	Pcb currentProcess;
 
 	// Time units elapsed
