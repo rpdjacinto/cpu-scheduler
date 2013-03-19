@@ -34,7 +34,8 @@ int ShortestPreviousBurst::selectProcess() {
 		setCurrentProcess( readyQueue[selectedProcessIndex] );
 		readyQueue.erase( readyQueue.begin() + selectedProcessIndex );
 		setReadyQueue( readyQueue );
-	}
+		return 0;
+	} return -1;
 }
 
 float ShortestPreviousBurst::getWeight() {

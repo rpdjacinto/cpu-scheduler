@@ -11,7 +11,6 @@ SchedulingAlgorithm::SchedulingAlgorithm( vector<Pcb> processes ) {
 	this->time = 0;
 }
 
-
 int SchedulingAlgorithm::run() {
 	while( !allProcessesCompleted() ) {
 		startProcesses();
@@ -40,12 +39,14 @@ void SchedulingAlgorithm::startProcesses() {
 }
 
 void SchedulingAlgorithm::cpuBurst() {
-	vector<int> tempCpuBursts;
+	//vector<int> tempCpuBursts;
 	if(currentProcess.getCpuBursts().size() != 0){
-		tempCpuBursts = currentProcess.getCpuBursts();
-		tempCpuBursts[currentProcess.getCurrentCpuBurst()]--;
-		currentProcess.setCpuBursts(tempCpuBursts);
-		if(currentProcess.getCpuBursts()[currentProcess.getCurrentCpuBurst()] == 0){
+		//tempCpuBursts = currentProcess.getCpuBursts();
+		//tempCpuBursts[currentProcess.getCurrentCpuBurst()]--;
+		//currentProcess.setCpuBursts(tempCpuBursts);
+		currentProcess.setCurrentCpuTime( currentProcess.getCurrentCpuTime() + 1 );
+		if(currentProcess.getCurrentCpuTime() == currentProcess.getCpuBursts()[currentProcess.getCurrentCpuBurst()]){
+			currentProcess.setCurrentCpuTime( 0 );
 			if(currentProcess.getIoBursts().size() == currentProcess.getCurrentIoBurst()){
 				completedProcesses.push_back(currentProcess);
 			}else{
@@ -61,22 +62,25 @@ void SchedulingAlgorithm::cpuBurst() {
 
 void SchedulingAlgorithm::ioBurst() {
 	
-	vector<Pcb> tempWaitingQueue = getWaitingQueue();
-	vector<Pcb> tempReadyQueue = getReadyQueue();
-	vector<int> tempIoBursts;
-	for( int i = 0; i < tempWaitingQueue.size(); i++ ) {
-		vector<int> ioBursts = tempWaitingQueue[i].getIoBursts();
-		ioBursts[tempWaitingQueue[i].getCurrentIoBurst()]--;
-		tempWaitingQueue[i].setIoBursts( ioBursts );
-		printVerbose("IO Bursts: "); cout << ioBursts[tempWaitingQueue[i].getCurrentIoBurst()]; 
-		if( tempWaitingQueue[i].getIoBursts()[tempWaitingQueue[i].getCurrentIoBurst()] == 0 ) {
-			tempWaitingQueue[i].setCurrentIoBurst( tempWaitingQueue[i].getCurrentIoBurst() + 1 );
-			tempReadyQueue.push_back( tempWaitingQueue[i] );
-			tempWaitingQueue.erase( tempWaitingQueue.begin() + i );
+	vector<Pcb> waitingQueue = getWaitingQueue();
+	vector<Pcb> readyQueue = getReadyQueue();
+	//vector<int> tempIoBursts;
+	for( int i = 0; i < waitingQueue.size(); i++ ) {
+		//vector<int> ioBursts = tempWaitingQueue[i].getIoBursts();
+		//ioBursts[tempWaitingQueue[i].getCurrentIoBurst()]--;
+		//tempWaitingQueue[i].setIoBursts( ioBursts );
+		//printVerbose("IO Bursts: "); cout << ioBursts[tempWaitingQueue[i].getCurrentIoBurst()];
+		waitingQueue[i].setCurrentIoTime( waitingQueue[i].getCurrentIoTime() + 1 );
+		//if( waitingQueue[i].getIoBursts()[waitingQueue[i].getCurrentIoBurst()] == 0 ) {
+		if( waitingQueue[i].getCurrentCpuTime() == waitingQueue[i].getIoBursts()[waitingQueue[i].getCurrentIoBurst()] ) {
+			waitingQueue[i].setCurrentIoBurst( waitingQueue[i].getCurrentIoBurst() + 1 );
+			waitingQueue[i].setCurrentIoTime( 0 );
+			readyQueue.push_back( waitingQueue[i] );
+			waitingQueue.erase( waitingQueue.begin() + i );
 		}
 
-		setWaitingQueue( tempWaitingQueue );
-		setReadyQueue( tempReadyQueue );
+		setWaitingQueue( waitingQueue );
+		setReadyQueue( readyQueue );
 	}
 }
 

@@ -19,6 +19,8 @@ public:
 	int getPriority();
 	int getAge();
 	float getAverageBursts();
+	int getCurrentCpuTime();
+	int getCurrentIoTime();
 	int getCurrentCpuBurst();
 	int getCurrentIoBurst();
 	vector<int> getCpuBursts();
@@ -31,6 +33,8 @@ public:
 	void setPriority( int priority );
 	void setAge( int age );
 	void setAverageBursts( float averageBursts );
+	void setCurrentCpuTime( int currentCpuTime );
+	void setCurrentIoTime( int currentIoTime );
 	void setCurrentCpuBurst( int currentCpuBurst );
 	void setCurrentIoBurst( int ioBurst );
 	void setCpuBursts( vector<int> cpuBursts );
@@ -44,6 +48,8 @@ private:
 	int priority;
 	int tncpu;
 	int age;
+	int currentCpuTime;
+	int currentIoTime;
 	int currentCpuBurst;
 	int currentIoBurst;
 	float averageBursts;
