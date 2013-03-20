@@ -45,6 +45,7 @@ public:
 protected:
 	char verbose;
 	void printVerbose(string message);
+	bool isCurrentProcessSet;
 
 private:
 	
