@@ -20,7 +20,7 @@ SchedulingAlgorithm::SchedulingAlgorithm( vector<Pcb> processes ) {
  * Main run method to simulate scheduling algorithm
  */
 int SchedulingAlgorithm::run() {
-	while( !allProcessesCompleted() && time < 50) {
+	while( !allProcessesCompleted()) {
 
 		cout<<"\n\n\n--------------------------------------------";
 		startProcesses();
@@ -29,6 +29,17 @@ int SchedulingAlgorithm::run() {
 		 * Suggests next process to be run
 		 */
 		selectProcess();
+
+		if (readyQueue.size() == 0 && isCurrentProcessSet == false)
+		{
+			gantt.put(-1);
+			cout<<"\n\nGANTT: -1";
+		}
+		else
+		{
+			gantt.put(currentProcess);
+			cout<<"\n\nGANTT: "<<currentProcess.getPid();
+		}
 
 		cout<<"\nBEFORE: ";
 		debug();
@@ -56,16 +67,7 @@ int SchedulingAlgorithm::run() {
 
 
 		
-		if (readyQueue.size() == 0 && isCurrentProcessSet == false)
-		{
-			gantt.put(-1);
-			cout<<"\n\nGANTT: -1";
-		}
-		else
-		{
-			gantt.put(currentProcess);
-			cout<<"\n\nGANTT: "<<currentProcess.getPid();
-		}
+		
 
 		this->time++;
 

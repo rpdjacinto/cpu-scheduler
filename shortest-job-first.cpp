@@ -1,4 +1,4 @@
-# include "shortest-job-first.h"
+# include "INCLUDES/shortest-job-first.h"
 # include "string.h"
 # include "string"
 
@@ -12,7 +12,7 @@ int ShortestJobFirst::selectProcess()
     
 	vector<Pcb> readyQueue = getReadyQueue();
 
-    int pidOfSelectedProcess; 
+    int pidOfSelectedProcess = 0; 
 
 	if (isCurrentProcessSet == false)
 	{
