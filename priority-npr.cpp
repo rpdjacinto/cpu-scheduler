@@ -5,11 +5,7 @@ using namespace std;
 PriorityNpr::PriorityNpr() {
 }
 
-PriorityNpr::PriorityNpr( vector<Pcb> processes ) {
-	setProcesses(processes);
-	setInactiveProcesses(processes);
-	setWaitingQueue(processes);
-	setTime(0);
+PriorityNpr::PriorityNpr( vector<Pcb> processes ) : SchedulingAlgorithm(processes) {
 }
 
 int PriorityNpr::selectProcess() {
@@ -28,4 +24,17 @@ int PriorityNpr::selectProcess() {
 		setReadyQueue( readyQueue );
 		return 0;
 	} return -1;
+}
+
+
+/*
+ * @Override verbose function
+ */
+void PriorityNpr::printVerbose(string message)
+{
+
+	if (verbose == 1)
+	{
+		cout << "\n[priority-npr.cpp] " << message;
+	}
 }

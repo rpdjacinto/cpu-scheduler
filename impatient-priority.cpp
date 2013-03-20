@@ -5,27 +5,36 @@ using namespace std;
 ImpatientPriority::ImpatientPriority() {
 }
 
-ImpatientPriority::ImpatientPriority( vector<Pcb> processes ) {
-	setProcesses(processes);
-	setInactiveProcesses(processes);
-	setWaitingQueue(processes);
-	setTime(0);
+ImpatientPriority::ImpatientPriority( vector<Pcb> processes ) : SchedulingAlgorithm(processes) {
 }
 
 int ImpatientPriority::selectProcess() {
 	vector<Pcb> readyQueue = getReadyQueue();
-	if( readyQueue.size() > 0 ) {
-		int highestPriority = readyQueue[0].getPriority();
-		int selectedProcessIndex = 0;
-		for( int i = 0; i < readyQueue.size(); i++ ) {
-			if( readyQueue[i].getPriority() < highestPriority ) {
-				highestPriority = readyQueue[i].getPriority();
-				selectedProcessIndex = i;
-			}
+	int highestPriority = readyQueue[0].getPriority();
+	int selectedProcessIndex = 0;
+	for( int i = 0; i < readyQueue.size(); i++ ) {
+		if( readyQueue[i].getPriority() < highestPriority ) {
+			highestPriority = readyQueue[i].getPriority();
+			selectedProcessIndex = i;
 		}
+	}
+	if( readyQueue[selectedProcessIndex].getPriority() < getCurrentProcess().getPriority() ) {
 		setCurrentProcess( readyQueue[selectedProcessIndex] );
 		readyQueue.erase( readyQueue.begin() + selectedProcessIndex );
 		setReadyQueue( readyQueue );
-		return 0;
-	} return -1;
+	}
+	return 0;
+}
+
+
+/*
+ * @Override verbose function
+ */
+void ImpatientPriority::printVerbose(string message)
+{
+
+	if (verbose == 1)
+	{
+		cout << "\n[impatient-priority.cpp] " << message;
+	}
 }

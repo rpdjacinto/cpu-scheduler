@@ -11,6 +11,9 @@ public:
 	float getWeight();
 	void setWeight( float weight );
 
+protected:
+	void printVerbose(string message);
+
 private:
 	float weight;
 	float currentBurst;

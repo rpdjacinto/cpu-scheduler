@@ -11,6 +11,10 @@ public:
 	int getTimeSlice();
 	void setTimeSlice( int timeSlice );
 
+protected:
+	void printVerbose(string message);
+
+	
 private:
 	int timeSlice;
 	int selectProcess();
