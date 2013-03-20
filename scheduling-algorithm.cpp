@@ -19,7 +19,7 @@ SchedulingAlgorithm::SchedulingAlgorithm( vector<Pcb> processes ) {
  * Main run method to simulate scheduling algorithm
  */
 int SchedulingAlgorithm::run() {
-	while( !allProcessesCompleted() ) {
+	while( !allProcessesCompleted() && time < 50) {
 		debug();
 		
 		startProcesses();
@@ -85,7 +85,7 @@ void SchedulingAlgorithm::cpuBurst() {
 
 		if( currentProcess.getCurrentCpuTime() == currentProcess.getCpuBurst(currentProcess.getCurrentCpuBurst()) ) {
 			
-			if ( currentProcess.getIoBursts().size() == currentProcess.getCurrentIoBurst() + 1 )
+			if ( currentProcess.getIoBursts().size() == currentProcess.getCurrentIoBurst()  )
 				completedProcesses.push_back(currentProcess);
 			else
 				waitingQueue.push_back(currentProcess);
