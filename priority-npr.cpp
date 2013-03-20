@@ -1,4 +1,4 @@
-#include "priority-npr.h"
+#include "INCLUDES/priority-npr.h"
 
 using namespace std;
 
@@ -10,20 +10,24 @@ PriorityNpr::PriorityNpr( vector<Pcb> processes ) : SchedulingAlgorithm(processe
 
 int PriorityNpr::selectProcess() {
 	vector<Pcb> readyQueue = getReadyQueue();
-	if( readyQueue.size() > 0 ) {
-		int highestPriority = readyQueue[0].getPriority();
-		int selectedProcessIndex = 0;
-		for( int i = 0; i < readyQueue.size(); i++ ) {
-			if( readyQueue[i].getPriority() < highestPriority ) {
-				highestPriority = readyQueue[i].getPriority();
-				selectedProcessIndex = i;
+	if (isCurrentProcessSet == false){
+		if( readyQueue.size() > 0 ) {
+			int highestPriority = readyQueue[0].getPriority();
+			int selectedProcessIndex = 0;
+			for( int i = 0; i < readyQueue.size(); i++ ) {
+				if( readyQueue[i].getPriority() < highestPriority ) {
+					highestPriority = readyQueue[i].getPriority();
+					selectedProcessIndex = i;
+				}
 			}
-		}
-		setCurrentProcess( readyQueue[selectedProcessIndex] );
-		readyQueue.erase( readyQueue.begin() + selectedProcessIndex );
-		setReadyQueue( readyQueue );
-		return 0;
-	} return -1;
+			setCurrentProcess( readyQueue[selectedProcessIndex] );
+			readyQueue.erase( readyQueue.begin() + selectedProcessIndex );
+			setReadyQueue( readyQueue );
+			isCurrentProcessSet = true;
+			return 0;
+		} 
+	}
+	return -1;
 }
 
 
