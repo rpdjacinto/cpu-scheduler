@@ -135,6 +135,36 @@ int main(int argc, char *argv[])
 			primpat.run();
 		}
 
+		if (scheduling_algorithm.compare("rr") == 0)
+		{
+			printVerbose("Round Robin selected");
+
+			// RoundRobin rr(testParse.getPCBs());
+			// rr.run();
+		}
+
+		if (scheduling_algorithm.compare("all") == 0)
+		{
+			printVerbose("Simulating all algorithms:");
+
+			FirstInFirstOut fifo(testParse.getPCBs());
+			fifo.run();
+			ShortestPreviousBurst spb(testParse.getPCBs(), 0.5);
+			spb.run();
+			ShortestJobFirst sjf(testParse.getPCBs());
+			sjf.run();
+			PriorityNpr prnpr(testParse.getPCBs());
+			prnpr.run();
+			PolitePriority polpr(testParse.getPCBs());
+			polpr.run();
+			ImpatientPriority primpat(testParse.getPCBs());
+			primpat.run();
+			// RoundRobin rr(testParse.getPCBs());
+			// rr.run();
+
+			// TODO add code to print aggregate results
+		}
+
 		/* End of program
 		 */
 		cout<<"\n\nAlas! This is the end. Press any key to continue..";	
@@ -207,13 +237,14 @@ void commandLine(int argc, char *argv[])
 		cout<<"\n5. Impatient Priority (pr-impat)";
 		cout<<"\n6. Polite Priority (pr-pol)";
 		cout<<"\n7. Non Preemptive Priority (npr-pri)";
+		cout<<"\n8. You can also simulate all of the above in one go (all)";
 		cout<<"\n\nTo select an algorithm, enter the code provided for it here: ";
 		cin>>options['a'];
 
 		while (	!(options['a'].compare("rr") == 0) && !(options['a'].compare("fifo") == 0) && 
 				!(options['a'].compare("sjf") == 0) && !(options['a'].compare("npr-pri") == 0) && 
 				!(options['a'].compare("spb") == 0) && !(options['a'].compare("pr-pol") == 0) && 
-				!(options['a'].compare("pr-impat") == 0)	) {
+				!(options['a'].compare("pr-impat") == 0) && !(options['a'].compare("all") == 0)	) {
 			
 			cout<<"\n\nThat code doesn't exist. Enter again: ";
 			cin>>options['a'];
