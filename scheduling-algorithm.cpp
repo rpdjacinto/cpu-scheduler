@@ -132,9 +132,7 @@ void SchedulingAlgorithm::output() {
  * @return bool value, true if all processes have been completed
  */
 bool SchedulingAlgorithm::allProcessesCompleted() {
-	// if( this->processes.size() == this->completedProcesses.size() ) return true;
-	// else return false;
-	if ((readyQueue.size() == 0 && waitingQueue.size() ==0) && time != 0) return true;
+	if( this->processes.size() == this->completedProcesses.size() ) return true;
 	else return false;
 
 }
