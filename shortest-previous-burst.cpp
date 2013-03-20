@@ -17,8 +17,6 @@ int ShortestPreviousBurst::selectProcess() {
 		}
 		calculateAverageBursts( burst, readyQueue[i] );
 	}
-
-	if( readyQueue.size() > 0 ) {
 		int selectedProcessIndex = 0;
 		float shortestBurst = readyQueue.front().getAverageBursts();
 		for( int i = 0; i < readyQueue.size(); i++) {
@@ -27,11 +25,12 @@ int ShortestPreviousBurst::selectProcess() {
 				selectedProcessIndex = i;
 			}
 		}
-		setCurrentProcess( readyQueue[selectedProcessIndex] );
-		readyQueue.erase( readyQueue.begin() + selectedProcessIndex );
-		setReadyQueue( readyQueue );
+		if( getCurrentProcess().getCurrentCpuTime == getCurrentProcess().getCpuBursts()[getCurrentProcess().getCurrentCpuBurst()] ) {
+			setCurrentProcess( readyQueue[selectedProcessIndex] );
+			readyQueue.erase( readyQueue.begin() + selectedProcessIndex );
+			setReadyQueue( readyQueue );
+		}
 		return 0;
-	} return -1;
 }
 
 float ShortestPreviousBurst::getWeight() {
