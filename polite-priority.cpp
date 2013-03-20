@@ -10,6 +10,9 @@ PolitePriority::PolitePriority( vector<Pcb> processes, int timeSlice ) : Schedul
 
 int PolitePriority::selectProcess() {
 	vector<Pcb> readyQueue = getReadyQueue();
+	if( getCurrentProcess().getCurrentCpuTime() == this->timeSlice ) {
+		readyQueue.push_back( getCurrentProcess() );
+	}
 	if( readyQueue.size() > 0 ) {
 		int highestPriority = readyQueue[0].getPriority();
 		int selectedProcessIndex = 0;
@@ -21,9 +24,9 @@ int PolitePriority::selectProcess() {
 		}
 		setCurrentProcess( readyQueue[selectedProcessIndex] );
 		readyQueue.erase( readyQueue.begin() + selectedProcessIndex );
-		setReadyQueue( readyQueue );
-		return 0;
-	} return -1;
+	}
+	setReadyQueue( readyQueue );
+	return 0;
 }
 
 int PolitePriority::getTimeSlice() { 
