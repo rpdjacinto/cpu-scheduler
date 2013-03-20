@@ -1,4 +1,4 @@
-#include "INCLUDES/scheduling-algorithm.h"
+#include "scheduling-algorithm.h"
 
 #ifndef	ROUNDROBIN_H
 #define ROUNDROBIN_H

@@ -2,6 +2,7 @@
 # include <string>
 # include <string.h>
 # include <iostream>
+# include <stdlib.h>
 # include <fstream>
 # include <map>
 # include "INCLUDES/file-parser.h"
@@ -13,7 +14,7 @@
 # include "INCLUDES/impatient-priority.h"
 # include "INCLUDES/pcb.h"
 # include "INCLUDES/gantt.h"
-# include "round-robin.h"
+# include "INCLUDES/round-robin.h"
 
 
 using namespace std;
@@ -100,7 +101,7 @@ int main(int argc, char *argv[])
 		{
 			printVerbose("Shortest Previous Burst (SPB) selected");
 
-			ShortestPreviousBurst spb(testParse.getPCBs(), 0.5);
+			ShortestPreviousBurst spb(testParse.getPCBs(), atof(options['p'].c_str()));
 			spb.run();
 		}	
 	
@@ -124,7 +125,7 @@ int main(int argc, char *argv[])
 		{
 			printVerbose("Preemptive Polite Priority selected");
 
-			PolitePriority polpr(testParse.getPCBs(), 4);
+			PolitePriority polpr(testParse.getPCBs(), atoi(options['p'].c_str()));
 			polpr.run();
 		}
 
@@ -140,8 +141,8 @@ int main(int argc, char *argv[])
 		{
 			printVerbose("Round Robin selected");
 
-			 RoundRobin rr(testParse.getPCBs(), 4);
-			 rr.run();
+//			 RoundRobin rr(testParse.getPCBs(), atoi(options['p'].c_str()));
+//			 rr.run();
 		}
 
 		if (scheduling_algorithm.compare("all") == 0)
@@ -150,18 +151,18 @@ int main(int argc, char *argv[])
 
 			FirstInFirstOut fifo(testParse.getPCBs());
 			fifo.run();
-			ShortestPreviousBurst spb(testParse.getPCBs(), 0.5);
+			ShortestPreviousBurst spb(testParse.getPCBs(), atof(options['p'].c_str()));
 			spb.run();
 			ShortestJobFirst sjf(testParse.getPCBs());
 			sjf.run();
 			PriorityNpr prnpr(testParse.getPCBs());
 			prnpr.run();
-			PolitePriority polpr(testParse.getPCBs());
+			PolitePriority polpr(testParse.getPCBs(), atoi(options['p'].c_str()));
 			polpr.run();
 			ImpatientPriority primpat(testParse.getPCBs());
 			primpat.run();
-			// RoundRobin rr(testParse.getPCBs());
-			// rr.run();
+//			RoundRobin rr(testParse.getPCBs(), atoi(options['p'].c_str()));
+//			rr.run();
 
 			// TODO add code to print aggregate results
 		}
@@ -251,9 +252,32 @@ void commandLine(int argc, char *argv[])
 			cin>>options['a'];
 		}
 
+		if (options['a'].compare("rr") == 0 || options['a'].compare("pr-pol") == 0)
+		{
+			cout<<"\n\nI think this algorithm needs a timeslice input. What is your preferred timeslice? ";
+			cin>>options['p'];
 
+			while (atoi(options['p'].c_str()) <= 0)
+			{
+				cout<<"\nPlease enter a timeslice value of greater than 0: ";
+				cin>>options['p'];
+			}
+		}
 
-		cout<<"\nWould you like to turn verbose on? (y/n) : ";
+		if (options['a'].compare("spb") == 0)
+		{
+			cout<<"\nExcellent choice! What is the weight? ";
+			cin>>options['p'];
+
+			while (atof(options['p'].c_str()) <= 0 || atof(options['p'].c_str()) > 1)
+			{
+				cout<<"\nWeight should be in this range (0, 1]. Enter a valid weight: ";
+				cin>>options['p'];
+			}
+
+		}
+
+		cout<<"\n\nWould you like to turn verbose on? (y/n) : ";
 		char choice;
 		cin>>choice;
 		if (choice == 'y' || choice == 'Y') verbose = 1;
