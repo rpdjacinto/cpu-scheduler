@@ -11,7 +11,6 @@ SchedulingAlgorithm::SchedulingAlgorithm() {
 SchedulingAlgorithm::SchedulingAlgorithm( vector<Pcb> processes ) {
 	this->processes = processes;
 	this->inactiveProcesses = processes;
-//	this->waitingQueue = processes;
 	this->time = 0;
 	verbose = 0;
 }
@@ -22,27 +21,27 @@ SchedulingAlgorithm::SchedulingAlgorithm( vector<Pcb> processes ) {
 int SchedulingAlgorithm::run() {
 	while( !allProcessesCompleted() && time < 50) {
 		debug();
+		
 		startProcesses();
+
 		/* 
 		 * Suggests next process to be run
 		 */
 		selectProcess();
+
+		/* Increment CPU time of current process
+		 */
+		currentProcess.setCurrentCpuTime( currentProcess.getCurrentCpuTime() + 1 );
+		/* Increment IO time of waitingQueue processes
+		 */
+		for( int i = 0; i < waitingQueue.size(); i++ ) 
+			waitingQueue[i].setCurrentIoTime( waitingQueue[i].getCurrentIoTime() + 1 );
 		
 		cpuBurst();
 		ioBurst();
 
 		this->time++;
 		
-		/*
-		printVerbose("How many cpu bursts: "); 
-		cout << getCurrentProcess().getCpuBursts()[getCurrentProcess().getCurrentCpuBurst()];
-		printVerbose("Waiting Queue Size: "); 
-		cout <<  waitingQueue.size();
-		printVerbose("Ready Queue Size: "); 
-		cout <<  getReadyQueue().size();
-		printVerbose("Completed Queue Size: "); 
-		cout << completedProcesses.size();
-		*/
 	}
 	output();
 	return 0;
@@ -73,6 +72,8 @@ void SchedulingAlgorithm::debug()
 	for (int i = 0; i< waitingQueue.size(); i++){
 		cout<<" "<<waitingQueue[i].getPid();
 	}
+	cout<<"\tCompleted processes: ";
+	cout<<completedProcesses.size();
 }
 
 /*
@@ -82,29 +83,14 @@ void SchedulingAlgorithm::cpuBurst() {
 
 	if(currentProcess.getCpuBursts().size() != 0){
 
-		currentProcess.setCurrentCpuTime( currentProcess.getCurrentCpuTime() + 1 );
-
-		if( currentProcess.getCurrentCpuTime() == currentProcess.getCpuBurst(currentProcess.getCurrentCpuBurst()) ){
+		if( currentProcess.getCurrentCpuTime() == currentProcess.getCpuBurst(currentProcess.getCurrentCpuBurst()) ) {
 			
-			//currentProcess.setCurrentCpuTime(0);
-			//currentProcess.setCurrentCpuBurst(currentProcess.getCurrentCpuBurst() + 1);
-
-
-			if(currentProcess.getIoBursts().size() == currentProcess.getCurrentIoBurst()) {
+			if ( currentProcess.getIoBursts().size() == currentProcess.getCurrentIoBurst() )
 				completedProcesses.push_back(currentProcess);
-			}
 			else
-			{
 				waitingQueue.push_back(currentProcess);
-			}
-			// else{
-			// 	Pcb tempCurrentProcess = currentProcess;
-			// 	int tempCpuBurst = tempCurrentProcess.getCurrentCpuBurst();
-			// 	tempCurrentProcess.setCurrentCpuBurst(++tempCpuBurst);
-			// 	waitingQueue.push_back(tempCurrentProcess);
-			// }
 		}
-		printVerbose("Current PID: "); 
+
 		cout << "\nCurrent PID "<< currentProcess.getPid();
 	}
 }
@@ -114,23 +100,22 @@ void SchedulingAlgorithm::cpuBurst() {
  */
 void SchedulingAlgorithm::ioBurst() {
 	
-	vector<Pcb> waitingQueue = this->waitingQueue;
-	vector<Pcb> readyQueue = this->readyQueue;
 
 	for( int i = 0; i < waitingQueue.size(); i++ ) {
 
-		waitingQueue[i].setCurrentIoTime( waitingQueue[i].getCurrentIoTime() + 1 );
-
-		if( waitingQueue[i].getCurrentCpuTime() == waitingQueue[i].getIoBursts()[waitingQueue[i].getCurrentIoBurst()] ) {
+		if( waitingQueue[i].getCurrentIoTime() == waitingQueue[i].getIoBursts()[waitingQueue[i].getCurrentIoBurst()] ) {
 			
 			waitingQueue[i].setCurrentIoBurst( waitingQueue[i].getCurrentIoBurst() + 1 );
 			waitingQueue[i].setCurrentIoTime( 0 );
-			readyQueue.push_back( waitingQueue[i] );
+
+			if ( (waitingQueue[i].getCpuBursts().size() == waitingQueue[i].getCurrentCpuBurst()) && (waitingQueue[i].getIoBursts().size() == waitingQueue[i].getCurrentIoBurst()) )
+				completedProcesses.push_back(waitingQueue[i]);
+			else
+				readyQueue.push_back( waitingQueue[i] );
+			
 			waitingQueue.erase( waitingQueue.begin() + i );
 		}
 
-		this->waitingQueue = waitingQueue;
-		this->readyQueue = readyQueue;
 	}
 }
 
@@ -147,8 +132,11 @@ void SchedulingAlgorithm::output() {
  * @return bool value, true if all processes have been completed
  */
 bool SchedulingAlgorithm::allProcessesCompleted() {
-	if( this->processes.size() == this->completedProcesses.size() ) return true;
+	// if( this->processes.size() == this->completedProcesses.size() ) return true;
+	// else return false;
+	if ((readyQueue.size() == 0 && waitingQueue.size() ==0) && time != 0) return true;
 	else return false;
+
 }
 
 
