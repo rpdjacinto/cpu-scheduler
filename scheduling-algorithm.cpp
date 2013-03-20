@@ -20,14 +20,16 @@ SchedulingAlgorithm::SchedulingAlgorithm( vector<Pcb> processes ) {
  */
 int SchedulingAlgorithm::run() {
 	while( !allProcessesCompleted() && time < 50) {
-		debug();
-		
+	
+		cout<<"\n\n\n--------------------------------------------";
 		startProcesses();
-
 		/* 
 		 * Suggests next process to be run
 		 */
 		selectProcess();
+
+		cout<<"\nBEFORE: ";
+		debug();
 
 		/* Increment CPU time of current process
 		 */
@@ -40,8 +42,12 @@ int SchedulingAlgorithm::run() {
 		cpuBurst();
 		ioBurst();
 
+		cout<<"\n\nAFTER: ";
+		debug();
+
 		this->time++;
-		
+
+		gantt.put(currentProcess);
 	}
 	output();
 	return 0;
@@ -54,7 +60,7 @@ void SchedulingAlgorithm::startProcesses() {
 	
 	for( int i = 0; i < this->inactiveProcesses.size(); i++ ) {
 		if( this->time == this->inactiveProcesses[i].getTarq() ) {
-			cout<<"\nAdded: "<<this->inactiveProcesses[i].getPid();
+			cout<<"\nAdded: "<<this->inactiveProcesses[i].getPid()<<"\n";
 			this->readyQueue.push_back( this->inactiveProcesses[i] );
 			this->inactiveProcesses.erase( this->inactiveProcesses.begin() + i );
 		}
@@ -63,7 +69,7 @@ void SchedulingAlgorithm::startProcesses() {
 
 void SchedulingAlgorithm::debug()
 {
-	cout<<"\n\n\nAt time: "<<time<<"\nReady Queue: ";
+	cout<<"\nAt time: "<<time<<"\nReady Queue: ";
 	for (int i = 0; i< readyQueue.size(); i++){
 		cout<<" "<<readyQueue[i].getPid();
 	}
@@ -85,13 +91,18 @@ void SchedulingAlgorithm::cpuBurst() {
 
 		if( currentProcess.getCurrentCpuTime() == currentProcess.getCpuBurst(currentProcess.getCurrentCpuBurst()) ) {
 			
+
+			currentProcess.setCurrentCpuTime(0);
+			currentProcess.setCurrentCpuBurst(currentProcess.getCurrentCpuBurst() + 1);
+
+
 			if ( currentProcess.getIoBursts().size() == currentProcess.getCurrentIoBurst() )
 				completedProcesses.push_back(currentProcess);
 			else
 				waitingQueue.push_back(currentProcess);
 		}
 
-		cout << "\nCurrent PID "<< currentProcess.getPid();
+		cout << "\n\nCurrent PID "<< currentProcess.getPid();
 	}
 }
 
@@ -123,7 +134,7 @@ void SchedulingAlgorithm::ioBurst() {
  * TODO add code to display Gantt chart and show stats
  */
 void SchedulingAlgorithm::output() {
-
+	gantt.print();
 }
 
 

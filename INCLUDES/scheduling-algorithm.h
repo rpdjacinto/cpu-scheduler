@@ -1,4 +1,5 @@
 # include "pcb.h"
+# include "gantt.h"
 # include <iostream>
 # include <string>
 
@@ -62,7 +63,8 @@ private:
 	float throughput;
 	// Average turnaround time for a process?
 	float turnaround;
-
+	// Gantt object to get stats
+	Gantt gantt;
 
 	// Check if all processes terminated
 	bool allProcessesCompleted();
