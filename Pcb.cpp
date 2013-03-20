@@ -1,40 +1,37 @@
 #include "INCLUDES/pcb.h"
 
-
+/*
+ * Contructors
+ */
 Pcb::Pcb() {
 }
-Pcb::Pcb(int pid, int tarq, int priority, vector<int> cpuBursts, vector<int> ioBursts){
-	this->pid = pid;
-	this->tarq = tarq;
-	this->priority = priority;
-	this->cpuBursts = cpuBursts;
-	this->ioBursts = ioBursts;
-	this->currentCpuBurst = 0;
-	this->currentIoBurst = 0;
-	this->currentCpuTime = 0;
-	this->currentIoTime = 0;
-	this->tncpu = 0;
-	this->age = 0;
-};
 
 Pcb::Pcb(int pid, int tarq, int priority, int tncpu, vector<int> cpuBursts, vector<int> ioBursts){
+	
+	/* From workload file
+	 */
 	this->pid = pid;
 	this->tarq = tarq;
 	this->priority = priority;
 	this->cpuBursts = cpuBursts;
 	this->ioBursts = ioBursts;
 	this->tncpu = tncpu;
+
+	/* Initialize
+	 */
 	this->currentCpuBurst = 0;
 	this->currentIoBurst = 0;
 	this->currentCpuTime = 0;
 	this->currentIoTime = 0;
 	this->age = 0;
 };
+
+
+/*
+ * Accessors
+ */
 int Pcb::getPid() {
 	return this->pid;
-}
-int Pcb::getStatus() {
-	return this->status;
 }
 int Pcb::getTarq() {
 	return this->tarq;
@@ -69,21 +66,10 @@ vector<int> Pcb::getIoBursts() {
 int Pcb::getCpuBurst(int index) {
 	return this->cpuBursts[index];
 }
-void Pcb::setPid( int pid ) {
-	this->pid = pid;
-}
-void Pcb::setStatus( int status ) {
-	this->status = status;
-}
-void Pcb::setTarq( int tarq ) {
-	this->tarq = tarq;
-}
-void Pcb::setPriority( int priority ) {
-	this->priority = priority;
-}
-void Pcb::setAge( int age ) {
-	this->age = age;
-}
+
+/*
+ * Mutators
+ */
 void Pcb::setAverageBursts( float averageBursts ) {
 	this->averageBursts = averageBursts;
 }
