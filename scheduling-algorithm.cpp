@@ -64,7 +64,7 @@ void SchedulingAlgorithm::startProcesses() {
 
 void SchedulingAlgorithm::debug()
 {
-	cout<<"\n\n\nReady Queue: ";
+	cout<<"\n\n\nAt time: "<<time<<"\nReady Queue: ";
 	for (int i = 0; i< readyQueue.size(); i++){
 		cout<<" "<<readyQueue[i].getPid();
 	}
@@ -86,17 +86,23 @@ void SchedulingAlgorithm::cpuBurst() {
 
 		if( currentProcess.getCurrentCpuTime() == currentProcess.getCpuBurst(currentProcess.getCurrentCpuBurst()) ){
 			
-			currentProcess.setCurrentCpuTime(0);
+			//currentProcess.setCurrentCpuTime(0);
+			//currentProcess.setCurrentCpuBurst(currentProcess.getCurrentCpuBurst() + 1);
 
-			if(currentProcess.getIoBursts().size() == currentProcess.getCurrentIoBurst()){
+
+			if(currentProcess.getIoBursts().size() == currentProcess.getCurrentIoBurst()) {
 				completedProcesses.push_back(currentProcess);
 			}
-			else{
-				Pcb tempCurrentProcess = currentProcess;
-				int tempCpuBurst = tempCurrentProcess.getCurrentCpuBurst();
-				tempCurrentProcess.setCurrentCpuBurst(++tempCpuBurst);
-				waitingQueue.push_back(tempCurrentProcess);
+			else
+			{
+				waitingQueue.push_back(currentProcess);
 			}
+			// else{
+			// 	Pcb tempCurrentProcess = currentProcess;
+			// 	int tempCpuBurst = tempCurrentProcess.getCurrentCpuBurst();
+			// 	tempCurrentProcess.setCurrentCpuBurst(++tempCpuBurst);
+			// 	waitingQueue.push_back(tempCurrentProcess);
+			// }
 		}
 		printVerbose("Current PID: "); 
 		cout << "\nCurrent PID "<< currentProcess.getPid();
