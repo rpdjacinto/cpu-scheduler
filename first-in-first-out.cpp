@@ -8,6 +8,7 @@ int FirstInFirstOut::selectProcess(){
 	
 	
 	if(getCurrentProcess().getCpuBursts().size() == 0){
+		
 		setCurrentProcess(getReadyQueue().front());
 		vector<Pcb> tempReady = getReadyQueue();
 		tempReady.erase(tempReady.begin());

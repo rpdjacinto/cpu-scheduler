@@ -11,7 +11,7 @@ SchedulingAlgorithm::SchedulingAlgorithm() {
 SchedulingAlgorithm::SchedulingAlgorithm( vector<Pcb> processes ) {
 	this->processes = processes;
 	this->inactiveProcesses = processes;
-	this->waitingQueue = processes;
+//	this->waitingQueue = processes;
 	this->time = 0;
 	verbose = 0;
 }
@@ -20,12 +20,14 @@ SchedulingAlgorithm::SchedulingAlgorithm( vector<Pcb> processes ) {
  * Main run method to simulate scheduling algorithm
  */
 int SchedulingAlgorithm::run() {
-	while( !allProcessesCompleted() ) {
-		
+	while( !allProcessesCompleted() && time < 50) {
+		debug();
 		startProcesses();
-		if(readyQueue.size() != 0){
-			selectProcess();
-		}
+		/* 
+		 * Suggests next process to be run
+		 */
+		selectProcess();
+		
 		cpuBurst();
 		ioBurst();
 
@@ -53,9 +55,23 @@ void SchedulingAlgorithm::startProcesses() {
 	
 	for( int i = 0; i < this->inactiveProcesses.size(); i++ ) {
 		if( this->time == this->inactiveProcesses[i].getTarq() ) {
+			cout<<"\nAdded: "<<this->inactiveProcesses[i].getPid();
 			this->readyQueue.push_back( this->inactiveProcesses[i] );
 			this->inactiveProcesses.erase( this->inactiveProcesses.begin() + i );
 		}
+	}
+}
+
+void SchedulingAlgorithm::debug()
+{
+	cout<<"\n\n\nReady Queue: ";
+	for (int i = 0; i< readyQueue.size(); i++){
+		cout<<" "<<readyQueue[i].getPid();
+	}
+
+	cout<<"\tWaiting Queue: ";
+	for (int i = 0; i< waitingQueue.size(); i++){
+		cout<<" "<<waitingQueue[i].getPid();
 	}
 }
 
@@ -83,7 +99,7 @@ void SchedulingAlgorithm::cpuBurst() {
 			}
 		}
 		printVerbose("Current PID: "); 
-		cout << currentProcess.getPid();
+		cout << "\nCurrent PID "<< currentProcess.getPid();
 	}
 }
 

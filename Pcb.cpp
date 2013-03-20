@@ -11,6 +11,8 @@ Pcb::Pcb(int pid, int tarq, int priority, vector<int> cpuBursts, vector<int> ioB
 	this->ioBursts = ioBursts;
 	this->currentCpuBurst = 0;
 	this->currentIoBurst = 0;
+	this->currentCpuTime = 0;
+	this->currentIoTime = 0;
 	this->tncpu = 0;
 	this->age = 0;
 };
@@ -24,6 +26,8 @@ Pcb::Pcb(int pid, int tarq, int priority, int tncpu, vector<int> cpuBursts, vect
 	this->tncpu = tncpu;
 	this->currentCpuBurst = 0;
 	this->currentIoBurst = 0;
+	this->currentCpuTime = 0;
+	this->currentIoTime = 0;
 	this->age = 0;
 };
 int Pcb::getPid() {
@@ -84,10 +88,10 @@ void Pcb::setAverageBursts( float averageBursts ) {
 	this->averageBursts = averageBursts;
 }
 void Pcb::setCurrentCpuTime( int currentCpuTime ) {
-	this->currentCpuBurst = currentCpuTime;
+	this->currentCpuTime = currentCpuTime;
 }
 void Pcb::setCurrentIoTime( int currentIoTime ) {
-	this->currentIoBurst = currentIoTime;
+	this->currentIoTime = currentIoTime;
 }
 void Pcb::setCurrentCpuBurst( int currentCpuBurst ) {
 	this->currentCpuBurst = currentCpuBurst;

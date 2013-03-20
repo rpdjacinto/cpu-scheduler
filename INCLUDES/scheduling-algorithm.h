@@ -39,7 +39,7 @@ public:
 	 * Overriden by sub class
 	 */
 	void setVerbose();
-	
+	void debug();
 
 protected:
 	char verbose;
@@ -62,6 +62,8 @@ private:
 	float throughput;
 	// Average turnaround time for a process?
 	float turnaround;
+
+
 	// Check if all processes terminated
 	bool allProcessesCompleted();
 	// Add inactive processes to ready queue
@@ -72,7 +74,7 @@ private:
 	void ioBurst();
 	// Select next process to run
 	virtual int selectProcess() = 0;
-	// Produce Gantt Chart
+	// Generate output for simulation
 	void output();
 	
 };
