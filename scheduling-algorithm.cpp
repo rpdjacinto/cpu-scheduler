@@ -54,17 +54,21 @@ int SchedulingAlgorithm::run() {
 		cout<<"\n\nAFTER: ";
 		debug();
 
+
+		
+		if (readyQueue.size() == 0 && isCurrentProcessSet == false)
+		{
+			gantt.put(-1);
+			cout<<"\n\nGANTT: -1";
+		}
+		else
+		{
+			gantt.put(currentProcess);
+			cout<<"\n\nGANTT: "<<currentProcess.getPid();
+		}
+
 		this->time++;
 
-		/* If CPU is idle, gantt shows -1
-		 */
-		if (!allProcessesCompleted())
-		{
-			if (isCurrentProcessSet == false && readyQueue.size() == 0)
-				gantt.put(-1);
-			else
-				gantt.put(currentProcess);
-		}
 	}
 	output();
 	return 0;

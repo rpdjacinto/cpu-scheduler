@@ -25,7 +25,7 @@ int ShortestPreviousBurst::selectProcess() {
 				selectedProcessIndex = i;
 			}
 		}
-		if( getCurrentProcess().getCurrentCpuTime == getCurrentProcess().getCpuBursts()[getCurrentProcess().getCurrentCpuBurst()] ) {
+		if( getCurrentProcess().getCurrentCpuTime() == getCurrentProcess().getCpuBursts()[getCurrentProcess().getCurrentCpuBurst()] ) {
 			setCurrentProcess( readyQueue[selectedProcessIndex] );
 			readyQueue.erase( readyQueue.begin() + selectedProcessIndex );
 			setReadyQueue( readyQueue );
