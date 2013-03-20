@@ -9,6 +9,9 @@ public:
 	PriorityNpr();
 	PriorityNpr( vector<Pcb> processes );
 
+protected:
+	void printVerbose(string message);
+	
 private:
 	int selectProcess();
 };

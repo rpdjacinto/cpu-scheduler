@@ -5,6 +5,7 @@
 # include <map>
 # include "file-parser.h"
 # include "shortest-previous-burst.h"
+# include "shortest-job-first.h"
 # include "first-in-first-out.h"
 # include "pcb.h"
 # include "gantt.h"
@@ -52,7 +53,7 @@ int main(int argc, char *argv[])
 	scheduling_algorithm = options['a'];
 	parameter = options['p'];
 	help = (options['h'] == "1") ? 1 : 0;
-//	verbose = (options['v'] == "1") ? 1 : 0;
+	verbose = (options['v'] == "1") ? 1 : 0;
 
 	/* Print help information
 	 */
@@ -98,6 +99,14 @@ int main(int argc, char *argv[])
 			spb.run();
 		}	
 	
+		if (scheduling_algorithm.compare("sjf") == 0)
+		{
+			printVerbose("Shortest Job First (SJF) selected");
+
+			ShortestJobFirst sjf(testParse.getPCBs());
+			sjf.run();
+		}	
+	
 
 		/* End of program
 		 */
@@ -118,14 +127,14 @@ int main(int argc, char *argv[])
 
 void printHelp()
 {
-        cout<<"\ncpu-scheduler: A post-mortem utility designed to analyze the quality of CPU-scheduling algorithms.";
-        cout<<"\nUsage:";
+    cout<<"\ncpu-scheduler: A post-mortem utility designed to analyze the quality of CPU-scheduling algorithms.";
+    cout<<"\nUsage:";
 	cout<<"\n\tcpusched";
 	cout<<"\n\t\twhen no arguments are provided, program will interactively ask for information";
-        cout<<"\n\n\tcpusched -w [text file with workload] -a [scheduling algorithm]";
-        cout<<"\n\t\t[-p] parameter for algorithm (if required)";
-        cout<<"\n\t\t[-h] print help";
-        cout<<"\n\t\t[-v] verbose";
+    cout<<"\n\n\tcpusched -w [text file with workload] -a [scheduling algorithm]";
+    cout<<"\n\t\t[-p] parameter for algorithm (if required)";
+    cout<<"\n\t\t[-h] print help";
+    cout<<"\n\t\t[-v] verbose";
 
 }
 
@@ -140,9 +149,9 @@ void commandLine(int argc, char *argv[])
 	char *argOptions = "awp";
 
 	/* Set default
-         */
-        options['v'] = "0";
-        options['h'] = "0";
+     */
+    options['v'] = "0";
+    options['h'] = "0";
 	options['w'] = "";
 	options['a'] = "";
 	options['p'] = "";
@@ -170,19 +179,19 @@ void commandLine(int argc, char *argv[])
         	{
                 	if (argv[i][0] == '-')
                 	{
-				char c = argv[i][1];
-				if (strchr(setOptions, c))
-				{
-					options[c] = "1";
-				}
-				else if (strchr(argOptions, c))
-				{
-					if (argv[i+1] != NULL)
-					{
-						options[c] = argv[i+1];
-					}
+						char c = argv[i][1];
+						if (strchr(setOptions, c))
+						{
+							options[c] = "1";
+						}
+						else if (strchr(argOptions, c))
+						{
+							if (argv[i+1] != NULL)
+							{
+								options[c] = argv[i+1];
+							}
 
-				}
+						}
                 	}
         	}
 

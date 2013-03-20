@@ -1,11 +1,7 @@
 #include "shortest-previous-burst.h"
 
-ShortestPreviousBurst::ShortestPreviousBurst( vector<Pcb> processes, float weight ) {
+ShortestPreviousBurst::ShortestPreviousBurst( vector<Pcb> processes, float weight ) : SchedulingAlgorithm(processes) {
 	this->weight = weight;
-	setProcesses(processes);
-	setInactiveProcesses(processes);
-	setWaitingQueue(processes);
-	setTime(0);
 }
 
 int ShortestPreviousBurst::selectProcess() {
@@ -21,8 +17,6 @@ int ShortestPreviousBurst::selectProcess() {
 		}
 		calculateAverageBursts( burst, readyQueue[i] );
 	}
-
-	if( readyQueue.size() > 0 ) {
 		int selectedProcessIndex = 0;
 		float shortestBurst = readyQueue.front().getAverageBursts();
 		for( int i = 0; i < readyQueue.size(); i++) {
@@ -31,11 +25,12 @@ int ShortestPreviousBurst::selectProcess() {
 				selectedProcessIndex = i;
 			}
 		}
-		setCurrentProcess( readyQueue[selectedProcessIndex] );
-		readyQueue.erase( readyQueue.begin() + selectedProcessIndex );
-		setReadyQueue( readyQueue );
+		if( getCurrentProcess().getCurrentCpuTime == getCurrentProcess().getCpuBursts()[getCurrentProcess().getCurrentCpuBurst()] ) {
+			setCurrentProcess( readyQueue[selectedProcessIndex] );
+			readyQueue.erase( readyQueue.begin() + selectedProcessIndex );
+			setReadyQueue( readyQueue );
+		}
 		return 0;
-	} return -1;
 }
 
 float ShortestPreviousBurst::getWeight() {
@@ -48,4 +43,17 @@ void ShortestPreviousBurst::setWeight( float weight ) {
 
 void ShortestPreviousBurst::calculateAverageBursts( int burstLength, Pcb &pcb ){
 	pcb.setAverageBursts( this->weight * burstLength + ( 1 - this->weight ) * pcb.getAverageBursts() );
+}
+
+
+/*
+ * @Override verbose function
+ */
+void ShortestPreviousBurst::printVerbose(string message)
+{
+
+	if (verbose == 1)
+	{
+		cout << "\n[shortest-previous-burst.cpp] " << message;
+	}
 }
