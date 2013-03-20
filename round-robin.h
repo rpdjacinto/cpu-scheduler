@@ -1,19 +1,23 @@
-#include "scheduling-algorithm.h"
+#include "INCLUDES/scheduling-algorithm.h"
 
-#ifndef ROUNDROBIN_H
+#ifndef	ROUNDROBIN_H
 #define ROUNDROBIN_H
 
-class RoundRobin: public SchedulingAlgorithm{
-  
-public: 
-	RoundRobin();
-	RoundRobin( vector <Pcb> processes, int quantumTime);
+class RoundRobin : public SchedulingAlgorithm {
 
+public:
+	RoundRobin();
+	RoundRobin( vector<Pcb> processes, int timeSlice = 0 );
+	int getTimeSlice();
+	void setTimeSlice( int timeSlice );
+
+protected:
+	void printVerbose(string message);
+
+	
 private:
-	int quantumTime;
-	int SelectProcess();
-	int getQuantumTime();
-	void setQuantumTime(int quantumTime);
+	int timeSlice;
+	int selectProcess();
 };
 
 #endif

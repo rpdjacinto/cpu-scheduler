@@ -13,6 +13,7 @@
 # include "INCLUDES/impatient-priority.h"
 # include "INCLUDES/pcb.h"
 # include "INCLUDES/gantt.h"
+# include "round-robin.h"
 
 
 using namespace std;
@@ -139,8 +140,8 @@ int main(int argc, char *argv[])
 		{
 			printVerbose("Round Robin selected");
 
-			// RoundRobin rr(testParse.getPCBs());
-			// rr.run();
+			 RoundRobin rr(testParse.getPCBs(), 4);
+			 rr.run();
 		}
 
 		if (scheduling_algorithm.compare("all") == 0)

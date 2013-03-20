@@ -1,43 +1,47 @@
 #include "round-robin.h"
 
-RoundRobin::RoundRobin(vector<Pcb> processes, int quantumTime){
-  setProcesses(processes);
-	setInactiveProcesses(processes);
-	setWaitingQueue(processes);
-	setTime(0);
-};
+using namespace std;
 
-int RoundRobin::SelectProcess(){
-	vector <Pcb> readyQueue = getReadyQueue();
-	float timeSlice = (1.0 / (readyQueue.size()));
-	float CpuBurst;
-	//setCurrentProcess(getReadyQueue().front());
+RoundRobin::RoundRobin() {
+}
 
-	while(readyQueue.size() > 0){
-		setCurrentProcess(getReadyQueue().front());
-		for (int i = 0; i < readyQueue.size(); i++){
-			if  (readyQueue[i].getCpuBurst(readyQueue[i].getCurrentCpuBurst()) <= quantumTime){
-				readyQueue.erase(readyQueue.begin());
-				setReadyQueue(readyQueue);
-			}//if
-			else{
-				readyQueue[i].getCpuBurst(readyQueue[i].getCurrentCpuBurst()) = CpuBurst;
-				CpuBurst = CpuBurst - timeSlice;
-				readyQueue.push_back(readyQueue.begin());
-				setReadyQueue(readyQueue);
-			}//else
-		}//for
- 
+RoundRobin::RoundRobin( vector<Pcb> processes, int timeSlice ) : SchedulingAlgorithm(processes) {
+	this->timeSlice = timeSlice;
+}
 
-	}//if
-} //select process
+int RoundRobin::selectProcess() {
+	vector<Pcb> readyQueue = getReadyQueue();
+	if( getCurrentProcess().getCurrentCpuTime() == this->timeSlice ) {
+		readyQueue.push_back( getCurrentProcess() );
+		isCurrentProcessSet = false;
+	}
+	if(isCurrentProcessSet == false){
+		if( readyQueue.size() > 0 ) {
+			setCurrentProcess( readyQueue[0] );
+			readyQueue.erase( readyQueue.begin() );
+			isCurrentProcessSet = true;
+		}
+	}
+	setReadyQueue( readyQueue );
+	return 0;
+}
 
+int RoundRobin::getTimeSlice() { 
+	return this->timeSlice;
+}
 
-int RoundRobin::getQuantumTime() { 
-	return this->quantumTime;
-}//int
+void RoundRobin::setTimeSlice( int timeSlice ) {
+	this->timeSlice = timeSlice;
+}
 
-void RoundRobin::setQuantumTime( int quantumTime ) {
-	this->quantumTime = quantumTime;
-} //void
+/*
+ * @Override verbose function
+ */
+void RoundRobin::printVerbose(string message)
+{
 
+	if (verbose == 1)
+	{
+		cout << "\n[polite-priority.cpp] " << message;
+	}
+}
