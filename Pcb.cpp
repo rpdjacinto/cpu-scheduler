@@ -86,10 +86,10 @@ void Pcb::setAverageBursts( float averageBursts ) {
 	this->averageBursts = averageBursts;
 }
 void Pcb::setCurrentCpuTime( int currentCpuTime ) {
-	this->currentCpuBurst = currentCpuTime;
+	this->currentCpuTime = currentCpuTime;
 }
 void Pcb::setCurrentIoTime( int currentIoTime ) {
-	this->currentIoBurst = currentIoTime;
+	this->currentIoTime = currentIoTime;
 }
 void Pcb::setCurrentCpuBurst( int currentCpuBurst ) {
 	this->currentCpuBurst = currentCpuBurst;
