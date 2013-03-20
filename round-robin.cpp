@@ -11,7 +11,7 @@ RoundRobin::RoundRobin( vector<Pcb> processes, int timeSlice ) : SchedulingAlgor
 
 int RoundRobin::selectProcess() {
 	vector<Pcb> readyQueue = getReadyQueue();
-	if( getCurrentProcess().getCurrentCpuTime() == this->timeSlice ) {
+	if( (getCurrentProcess().getCurrentCpuTime() >= this->timeSlice) && (getCurrentProcess().getCurrentCpuTime() % this->timeSlice == 0)) {
 		readyQueue.push_back( getCurrentProcess() );
 		isCurrentProcessSet = false;
 	}
