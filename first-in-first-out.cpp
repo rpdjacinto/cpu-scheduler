@@ -4,6 +4,7 @@ FirstInFirstOut::FirstInFirstOut(vector<Pcb> processes){
 	setProcesses(processes);
 	setInactiveProcesses(processes);
 	setTime(0);
+	
 }
 
 int FirstInFirstOut::selectProcess(){
@@ -16,14 +17,14 @@ int FirstInFirstOut::selectProcess(){
 		setReadyQueue(tempReady);
 	}
 	
-	if(getCurrentProcess().getCpuBursts()[getCurrentProcess().getCurrentCpuBurst()] == 0){
+	if(getCurrentProcess().getCpuBursts()[getCurrentProcess().getCurrentCpuBurst()] == getCurrentProcess().getCurrentCpuTime()){
 		setCurrentProcess(getReadyQueue().front());
 		vector<Pcb> tempReady = getReadyQueue();
 		tempReady.erase(tempReady.begin());
 		setReadyQueue(tempReady);
 	}
 
-	if(getCurrentProcess().getCpuBursts()[getCurrentProcess().getCurrentCpuBurst()] < 0){
+	if(getCurrentProcess().getCpuBursts()[getCurrentProcess().getCurrentCpuBurst()] < getCurrentProcess().getCurrentCpuTime()){
 		if(getReadyQueue().size() != 0){
 			setCurrentProcess(getReadyQueue().front());
 			vector<Pcb> tempReady = getReadyQueue();
