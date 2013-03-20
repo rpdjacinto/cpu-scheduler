@@ -1,4 +1,4 @@
-#include "scheduling-algorithm.h"
+#include "INCLUDES/scheduling-algorithm.h"
 
 using namespace std;
 
@@ -19,7 +19,7 @@ SchedulingAlgorithm::SchedulingAlgorithm( vector<Pcb> processes ) {
  * Main run method to simulate scheduling algorithm
  */
 int SchedulingAlgorithm::run() {
-	while( !allProcessesCompleted() && time < 50) {
+	while( !allProcessesCompleted() ) {
 		debug();
 		
 		startProcesses();
@@ -85,7 +85,7 @@ void SchedulingAlgorithm::cpuBurst() {
 
 		if( currentProcess.getCurrentCpuTime() == currentProcess.getCpuBurst(currentProcess.getCurrentCpuBurst()) ) {
 			
-			if ( currentProcess.getIoBursts().size() == currentProcess.getCurrentIoBurst() )
+			if ( currentProcess.getIoBursts().size() == currentProcess.getCurrentIoBurst() + 1 )
 				completedProcesses.push_back(currentProcess);
 			else
 				waitingQueue.push_back(currentProcess);
