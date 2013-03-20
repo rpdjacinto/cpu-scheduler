@@ -1,4 +1,4 @@
-#include "shortest-previous-burst.h"
+#include "INCLUDES/shortest-previous-burst.h"
 
 ShortestPreviousBurst::ShortestPreviousBurst( vector<Pcb> processes, float weight ) : SchedulingAlgorithm(processes) {
 	this->weight = weight;
@@ -6,31 +6,28 @@ ShortestPreviousBurst::ShortestPreviousBurst( vector<Pcb> processes, float weigh
 
 int ShortestPreviousBurst::selectProcess() {
 	vector<Pcb> readyQueue = getReadyQueue();
-
-	//TODO: Clean up this monstrosity.
 	for( int i = 0; i < readyQueue.size(); i++ ) {
-		int burst = 0;
-		vector<Pcb> processes = getProcesses();
-		for( int j = 0; j < processes.size(); j++ ) {
-			if( processes[j].getPid() == readyQueue[i].getPid() )
-				burst = processes[j].getCpuBursts()[processes[j].getCurrentCpuBurst()];
-		}
-		calculateAverageBursts( burst, readyQueue[i] );
+		calculateAverageBursts( readyQueue[i].getCpuBursts()[readyQueue[i].getCurrentCpuBurst()], readyQueue[i] );
 	}
-		int selectedProcessIndex = 0;
-		float shortestBurst = readyQueue.front().getAverageBursts();
-		for( int i = 0; i < readyQueue.size(); i++) {
-			if( readyQueue[i].getAverageBursts() < shortestBurst ) {
-				shortestBurst = readyQueue[i].getAverageBursts();
-				selectedProcessIndex = i;
+	if (isCurrentProcessSet == false){
+		if( readyQueue.size() > 0 ) {
+			int shortestBurst = readyQueue[0].getCpuBursts()[readyQueue[0].getCurrentCpuBurst()];
+			int selectedProcessIndex = 0;
+			for( int i = 0; i < readyQueue.size(); i++ ) {
+				if( readyQueue[i].getCpuBursts()[readyQueue[i].getCurrentCpuBurst()] < shortestBurst ) {
+					shortestBurst = readyQueue[i].getCpuBursts()[readyQueue[i].getCurrentCpuBurst()];
+					selectedProcessIndex = i;
+				}
 			}
-		}
-		if( getCurrentProcess().getCurrentCpuTime() == getCurrentProcess().getCpuBursts()[getCurrentProcess().getCurrentCpuBurst()] ) {
 			setCurrentProcess( readyQueue[selectedProcessIndex] );
 			readyQueue.erase( readyQueue.begin() + selectedProcessIndex );
 			setReadyQueue( readyQueue );
-		}
-		return 0;
+			isCurrentProcessSet = true;
+			return 0;
+		} 
+	}
+	return -1;
+
 }
 
 float ShortestPreviousBurst::getWeight() {
