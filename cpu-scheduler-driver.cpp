@@ -4,15 +4,15 @@
 # include <iostream>
 # include <fstream>
 # include <map>
-# include "file-parser.h"
-# include "shortest-previous-burst.h"
-# include "shortest-job-first.h"
-# include "first-in-first-out.h"
-# include "priority-npr.h"
-# include "polite-priority.h"
-# include "impatient-priority.h"
-# include "pcb.h"
-# include "gantt.h"
+# include "INCLUDES/file-parser.h"
+# include "INCLUDES/shortest-previous-burst.h"
+# include "INCLUDES/shortest-job-first.h"
+# include "INCLUDES/first-in-first-out.h"
+# include "INCLUDES/priority-npr.h"
+# include "INCLUDES/polite-priority.h"
+# include "INCLUDES/impatient-priority.h"
+# include "INCLUDES/pcb.h"
+# include "INCLUDES/gantt.h"
 
 
 using namespace std;
@@ -123,7 +123,7 @@ int main(int argc, char *argv[])
 		{
 			printVerbose("Preemptive Polite Priority selected");
 
-			PolitePriority polpr(testParse.getPCBs());
+			PolitePriority polpr(testParse.getPCBs(), 4);
 			polpr.run();
 		}
 

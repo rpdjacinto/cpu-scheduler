@@ -6,7 +6,7 @@ PolitePriority::PolitePriority() {
 }
 
 PolitePriority::PolitePriority( vector<Pcb> processes, int timeSlice ) : SchedulingAlgorithm(processes) {
-	this->timeSlice = 4;
+	this->timeSlice = timeSlice;
 }
 
 int PolitePriority::selectProcess() {
