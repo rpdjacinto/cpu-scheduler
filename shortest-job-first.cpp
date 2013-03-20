@@ -6,42 +6,45 @@ ShortestJobFirst::ShortestJobFirst(vector<Pcb> processes) : SchedulingAlgorithm(
 }
 
 
+
 int ShortestJobFirst::selectProcess() 
 {
-    vector<Pcb> readyQueue = getReadyQueue();
-
-    int pidOfSelectedProcess = -1; 
-
-
-	if( readyQueue.size() > 0 ) 
-	{
-		/* Default values
-		 */
-		pidOfSelectedProcess = 0;
-		int indexOfProcessToBeRemoved = 0;
-
-		/* Finding process with shortest next cpu burst
-		 */
-		int shortestBurst = readyQueue.front().getCpuBurst(readyQueue.front().getCurrentCpuBurst());
-		               
-			for( int i = 0; i < readyQueue.size(); i++) 
-			{
-		        	if( readyQueue[i].getCpuBurst(readyQueue[i].getCurrentCpuBurst()) < shortestBurst ) 
-					{
-		                	shortestBurst = readyQueue[i].getCpuBurst(readyQueue[i].getCurrentCpuBurst());
-		                    pidOfSelectedProcess = readyQueue[i].getPid();
-							indexOfProcessToBeRemoved = i;
-		            }
-	        }
-
-		setCurrentProcess(readyQueue[indexOfProcessToBeRemoved]);
-		readyQueue.erase(readyQueue.begin() + indexOfProcessToBeRemoved);
-		setReadyQueue(readyQueue);
-	}
     
-	    
+	vector<Pcb> readyQueue = getReadyQueue();
 
-    cout<<"\nselectProcess: "<<pidOfSelectedProcess<<"\n";
+    int pidOfSelectedProcess; 
+
+	if (isCurrentProcessSet == false)
+	{
+		if (readyQueue.size() != 0)
+		{
+			/* Default values
+			 */
+			pidOfSelectedProcess = 0;
+			int indexOfProcessToBeRemoved = 0;
+
+			/* Finding process with shortest next cpu burst
+			 */
+			int shortestBurst = readyQueue.front().getCpuBurst(readyQueue.front().getCurrentCpuBurst());
+			               
+				for( int i = 0; i < readyQueue.size(); i++) 
+				{
+			        	if( readyQueue[i].getCpuBurst(readyQueue[i].getCurrentCpuBurst()) < shortestBurst ) 
+						{
+			                	shortestBurst = readyQueue[i].getCpuBurst(readyQueue[i].getCurrentCpuBurst());
+			                    pidOfSelectedProcess = readyQueue[i].getPid();
+								indexOfProcessToBeRemoved = i;
+			            }
+		        }
+
+			setCurrentProcess(readyQueue[indexOfProcessToBeRemoved]);
+			readyQueue.erase(readyQueue.begin() + indexOfProcessToBeRemoved);
+			setReadyQueue(readyQueue);
+
+			isCurrentProcessSet = true;
+		}
+	}
+
 
 	return pidOfSelectedProcess;
 }

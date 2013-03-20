@@ -1,4 +1,5 @@
 # include "pcb.h"
+# include "gantt.h"
 # include <iostream>
 # include <string>
 
@@ -44,6 +45,7 @@ public:
 protected:
 	char verbose;
 	void printVerbose(string message);
+	bool isCurrentProcessSet;
 
 private:
 	
@@ -62,7 +64,8 @@ private:
 	float throughput;
 	// Average turnaround time for a process?
 	float turnaround;
-
+	// Gantt object to get stats
+	Gantt gantt;
 
 	// Check if all processes terminated
 	bool allProcessesCompleted();

@@ -13,6 +13,7 @@ SchedulingAlgorithm::SchedulingAlgorithm( vector<Pcb> processes ) {
 	this->inactiveProcesses = processes;
 	this->time = 0;
 	verbose = 0;
+	isCurrentProcessSet = false;
 }
 
 /*
@@ -20,14 +21,18 @@ SchedulingAlgorithm::SchedulingAlgorithm( vector<Pcb> processes ) {
  */
 int SchedulingAlgorithm::run() {
 	while( !allProcessesCompleted() && time < 50) {
-		debug();
-		
+
+		cout<<"\n\n\n--------------------------------------------";
 		startProcesses();
 
 		/* 
 		 * Suggests next process to be run
 		 */
 		selectProcess();
+
+		cout<<"\nBEFORE: ";
+		debug();
+
 
 		/* Increment CPU time of current process
 		 */
@@ -36,12 +41,30 @@ int SchedulingAlgorithm::run() {
 		 */
 		for( int i = 0; i < waitingQueue.size(); i++ ) 
 			waitingQueue[i].setCurrentIoTime( waitingQueue[i].getCurrentIoTime() + 1 );
-		
-		cpuBurst();
+
+		if (isCurrentProcessSet)
+		{	
+			cpuBurst();
+		}
+
 		ioBurst();
 
+
+
+		cout<<"\n\nAFTER: ";
+		debug();
+
 		this->time++;
-		
+
+		/* If CPU is idle, gantt shows -1
+		 */
+		if (!allProcessesCompleted())
+		{
+			if (isCurrentProcessSet == false && readyQueue.size() == 0)
+				gantt.put(-1);
+			else
+				gantt.put(currentProcess);
+		}
 	}
 	output();
 	return 0;
@@ -51,10 +74,10 @@ int SchedulingAlgorithm::run() {
  * Method to determine when a process is ready to be put into the ready queue
  */
 void SchedulingAlgorithm::startProcesses() {
-	
+
 	for( int i = 0; i < this->inactiveProcesses.size(); i++ ) {
 		if( this->time == this->inactiveProcesses[i].getTarq() ) {
-			cout<<"\nAdded: "<<this->inactiveProcesses[i].getPid();
+			cout<<"\nAdded: "<<this->inactiveProcesses[i].getPid()<<"\n";
 			this->readyQueue.push_back( this->inactiveProcesses[i] );
 			this->inactiveProcesses.erase( this->inactiveProcesses.begin() + i );
 		}
@@ -63,7 +86,7 @@ void SchedulingAlgorithm::startProcesses() {
 
 void SchedulingAlgorithm::debug()
 {
-	cout<<"\n\n\nAt time: "<<time<<"\nReady Queue: ";
+	cout<<"\nAt time: "<<time<<"\nReady Queue: ";
 	for (int i = 0; i< readyQueue.size(); i++){
 		cout<<" "<<readyQueue[i].getPid();
 	}
@@ -74,6 +97,8 @@ void SchedulingAlgorithm::debug()
 	}
 	cout<<"\tCompleted processes: ";
 	cout<<completedProcesses.size();
+	cout<<"\tisCurrentSet: ";
+	cout<<isCurrentProcessSet;
 }
 
 /*
@@ -81,38 +106,48 @@ void SchedulingAlgorithm::debug()
  */
 void SchedulingAlgorithm::cpuBurst() {
 
-	if(currentProcess.getCpuBursts().size() != 0){
 
-		if( currentProcess.getCurrentCpuTime() == currentProcess.getCpuBurst(currentProcess.getCurrentCpuBurst()) ) {
-			
-			if ( currentProcess.getIoBursts().size() == currentProcess.getCurrentIoBurst()  )
-				completedProcesses.push_back(currentProcess);
-			else
-				waitingQueue.push_back(currentProcess);
+		if(currentProcess.getCpuBursts().size() != 0){
+
+			if( currentProcess.getCurrentCpuTime() >= currentProcess.getCpuBurst(currentProcess.getCurrentCpuBurst()) ) {
+
+
+				currentProcess.setCurrentCpuTime(0);
+				if (currentProcess.getCurrentCpuBurst() < currentProcess.getCpuBursts().size())
+					currentProcess.setCurrentCpuBurst(currentProcess.getCurrentCpuBurst() + 1);
+
+
+				if ( currentProcess.getIoBursts().size() <= currentProcess.getCurrentIoBurst() )
+				{
+					isCurrentProcessSet = false;
+					completedProcesses.push_back(currentProcess);
+				}
+				else
+				{
+					isCurrentProcessSet = false;
+					waitingQueue.push_back(currentProcess);
+				}
+			}
+
+			cout << "\n\nCurrent PID "<< currentProcess.getPid();
 		}
-
-		cout << "\nCurrent PID "<< currentProcess.getPid();
-	}
 }
 
 /*
  * Method to simulate an IO burst
  */
 void SchedulingAlgorithm::ioBurst() {
-	
+
 
 	for( int i = 0; i < waitingQueue.size(); i++ ) {
 
-		if( waitingQueue[i].getCurrentIoTime() == waitingQueue[i].getIoBursts()[waitingQueue[i].getCurrentIoBurst()] ) {
-			
-			waitingQueue[i].setCurrentIoBurst( waitingQueue[i].getCurrentIoBurst() + 1 );
-			waitingQueue[i].setCurrentIoTime( 0 );
+		if( waitingQueue[i].getCurrentIoTime() >= waitingQueue[i].getIoBursts()[waitingQueue[i].getCurrentIoBurst()] ) {
 
-			if ( (waitingQueue[i].getCpuBursts().size() == waitingQueue[i].getCurrentCpuBurst()) && (waitingQueue[i].getIoBursts().size() == waitingQueue[i].getCurrentIoBurst()) )
-				completedProcesses.push_back(waitingQueue[i]);
-			else
-				readyQueue.push_back( waitingQueue[i] );
-			
+			waitingQueue[i].setCurrentIoTime( 0 );
+			if (waitingQueue[i].getCurrentIoBurst() < waitingQueue[i].getIoBursts().size())
+				waitingQueue[i].setCurrentIoBurst( waitingQueue[i].getCurrentIoBurst() + 1 );
+
+			readyQueue.push_back( waitingQueue[i] );
 			waitingQueue.erase( waitingQueue.begin() + i );
 		}
 
@@ -123,7 +158,7 @@ void SchedulingAlgorithm::ioBurst() {
  * TODO add code to display Gantt chart and show stats
  */
 void SchedulingAlgorithm::output() {
-
+	gantt.print();
 }
 
 
@@ -172,6 +207,7 @@ void SchedulingAlgorithm::setCompletedProcesses(vector<Pcb> processes){
 }
 
 void SchedulingAlgorithm::setCurrentProcess(Pcb currentProcess){
+	isCurrentProcessSet = true;
 	this->currentProcess = currentProcess;
 }
 

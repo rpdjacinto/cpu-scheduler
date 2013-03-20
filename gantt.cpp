@@ -37,19 +37,16 @@ bool Gantt::printGantt ()
 bool Gantt::printStats()
 {
 
-
-
-
-
-
 	return true;
 }
 
 
 bool Gantt::print()
 {
+	cout << "\n\n---------------------------------------------------------";
+	cout <<"\nRESULTS FOR SIMULATION\n";
 	printGantt();
 	printStats();
-
+	cout<< "\n\n---------------------------------------------------------\n";
 	return true;
 }
