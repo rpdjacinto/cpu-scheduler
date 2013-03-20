@@ -19,6 +19,8 @@ class Gantt
 		bool printStats();
 		bool print();
 
+	protected:
+	void printVerbose(string message);
 	
 	private:
 		vector<int> pidList;

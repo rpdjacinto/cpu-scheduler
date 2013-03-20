@@ -11,6 +11,7 @@ public:
 
 	FirstInFirstOut(vector<Pcb> processes);
 
+protected:
 	void printVerbose(string message);
 
 private:

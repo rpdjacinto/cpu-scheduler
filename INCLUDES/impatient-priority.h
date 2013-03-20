@@ -9,6 +9,9 @@ public:
 	ImpatientPriority();
 	ImpatientPriority( vector<Pcb> processes );
 
+protected:
+	void printVerbose(string message);
+	
 private:
 	int selectProcess();
 };

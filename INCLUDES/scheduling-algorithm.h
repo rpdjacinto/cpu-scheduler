@@ -1,4 +1,5 @@
-#include "pcb.h"
+# include "pcb.h"
+# include "gantt.h"
 # include <iostream>
 # include <string>
 
@@ -8,43 +9,51 @@
 class SchedulingAlgorithm {
 
 public:
-	//Constructors
+	/*
+	 * Constructors
+	 */
 	SchedulingAlgorithm();
 	SchedulingAlgorithm( vector<Pcb> processes );
-	// Run Scheduling Simulation
+	
+	/* 
+	 * Main method to run scheduling simulation
+	 */
 	int run();
 
+	/* 
+	 * Getters
+	 */
 	int getTime();
 	vector<Pcb> getProcesses();
-	vector<Pcb> getInactiveProcesses();
 	vector<Pcb> getReadyQueue();
-	vector<Pcb> getWaitingQueue();
-	vector<Pcb> getCompletedProcesses();
 	Pcb getCurrentProcess();
 
-	void setTime( int time );
-	void setProcesses(vector<Pcb>);
-	void setInactiveProcesses(vector<Pcb>);
+	/*
+	 * Setters
+	 */
 	void setReadyQueue(vector<Pcb>);
-	void setWaitingQueue(vector<Pcb>);
-	void setcompletedProcesses(vector<Pcb>);
+	void setCompletedProcesses(vector<Pcb>);
 	void setCurrentProcess(Pcb);
 
+	/* 
+	 * Verbose logging method
+	 * Overriden by sub class
+	 */
+	void setVerbose();
+	void debug();
+
+protected:
+	char verbose;
 	void printVerbose(string message);
+	bool isCurrentProcessSet;
 
 private:
 	
-	//All Processes
 	vector<Pcb> processes;
-	//List of inactive Processes;
 	vector<Pcb> inactiveProcesses;
-	//List of Processes in Ready Queue
 	vector<Pcb> readyQueue;
-	//List of Processes in Waiting Queue
 	vector<Pcb> waitingQueue;
-	//List of completed Processes
 	vector<Pcb> completedProcesses;
-	//Process in CPU
 	Pcb currentProcess;
 
 	// Time units elapsed
@@ -55,6 +64,9 @@ private:
 	float throughput;
 	// Average turnaround time for a process?
 	float turnaround;
+	// Gantt object to get stats
+	Gantt gantt;
+
 	// Check if all processes terminated
 	bool allProcessesCompleted();
 	// Add inactive processes to ready queue
@@ -65,9 +77,9 @@ private:
 	void ioBurst();
 	// Select next process to run
 	virtual int selectProcess() = 0;
-	// Produce Gantt Chart
+	// Generate output for simulation
 	void output();
-
+	
 };
 
 #endif

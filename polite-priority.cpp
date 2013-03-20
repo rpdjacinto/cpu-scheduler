@@ -5,15 +5,14 @@ using namespace std;
 PolitePriority::PolitePriority() {
 }
 
-PolitePriority::PolitePriority( vector<Pcb> processes, int timeSlice ) {
-	setProcesses(processes);
-	setInactiveProcesses(processes);
-	setWaitingQueue(processes);
-	setTime(0);
+PolitePriority::PolitePriority( vector<Pcb> processes, int timeSlice ) : SchedulingAlgorithm(processes) {
 }
 
 int PolitePriority::selectProcess() {
 	vector<Pcb> readyQueue = getReadyQueue();
+	if( getCurrentProcess().getCurrentCpuTime() == this->timeSlice ) {
+		readyQueue.push_back( getCurrentProcess() );
+	}
 	if( readyQueue.size() > 0 ) {
 		int highestPriority = readyQueue[0].getPriority();
 		int selectedProcessIndex = 0;
@@ -25,9 +24,9 @@ int PolitePriority::selectProcess() {
 		}
 		setCurrentProcess( readyQueue[selectedProcessIndex] );
 		readyQueue.erase( readyQueue.begin() + selectedProcessIndex );
-		setReadyQueue( readyQueue );
-		return 0;
-	} return -1;
+	}
+	setReadyQueue( readyQueue );
+	return 0;
 }
 
 int PolitePriority::getTimeSlice() { 
@@ -36,4 +35,16 @@ int PolitePriority::getTimeSlice() {
 
 void PolitePriority::setTimeSlice( int timeSlice ) {
 	this->timeSlice = timeSlice;
+}
+
+/*
+ * @Override verbose function
+ */
+void PolitePriority::printVerbose(string message)
+{
+
+	if (verbose == 1)
+	{
+		cout << "\n[polite-priority.cpp] " << message;
+	}
 }

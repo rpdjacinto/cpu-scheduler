@@ -1,7 +1,10 @@
-#include "scheduling-algorithm.h"
+#include "INCLUDES/scheduling-algorithm.h"
 
 using namespace std;
 
+/*
+ * Constructor definitions
+ */
 SchedulingAlgorithm::SchedulingAlgorithm() {
 }
 
@@ -9,88 +12,170 @@ SchedulingAlgorithm::SchedulingAlgorithm( vector<Pcb> processes ) {
 	this->processes = processes;
 	this->inactiveProcesses = processes;
 	this->time = 0;
+	verbose = 0;
+	isCurrentProcessSet = false;
 }
 
+/*
+ * Main run method to simulate scheduling algorithm
+ */
 int SchedulingAlgorithm::run() {
-	while( !allProcessesCompleted() ) {
+	while( !allProcessesCompleted()) {
+
+		cout<<"\n\n\n--------------------------------------------";
 		startProcesses();
-		if(getReadyQueue().size() != 0){
-			selectProcess();
+
+		/* 
+		 * Suggests next process to be run
+		 */
+		selectProcess();
+
+		if (readyQueue.size() == 0 && isCurrentProcessSet == false)
+		{
+			gantt.put(-1);
+			cout<<"\n\nGANTT: -1";
 		}
-		cpuBurst();
+		else
+		{
+			gantt.put(currentProcess);
+			cout<<"\n\nGANTT: "<<currentProcess.getPid();
+		}
+
+		cout<<"\nBEFORE: ";
+		debug();
+
+
+		/* Increment CPU time of current process
+		 */
+		currentProcess.setCurrentCpuTime( currentProcess.getCurrentCpuTime() + 1 );
+		/* Increment IO time of waitingQueue processes
+		 */
+		for( int i = 0; i < waitingQueue.size(); i++ ) 
+			waitingQueue[i].setCurrentIoTime( waitingQueue[i].getCurrentIoTime() + 1 );
+
+		if (isCurrentProcessSet)
+		{	
+			cpuBurst();
+		}
+
 		ioBurst();
-		setTime( getTime() + 1 );
-		printVerbose("How many cpu bursts: "); cout << getCurrentProcess().getCpuBursts()[getCurrentProcess().getCurrentCpuBurst()];
-		printVerbose("Waiting Queue Size: "); cout <<  getWaitingQueue().size();
-		printVerbose("Ready Queue Size: "); cout <<  getReadyQueue().size();
-		printVerbose("Completed Queue Size: "); cout << getCompletedProcesses().size();
+
+
+
+		cout<<"\n\nAFTER: ";
+		debug();
+
+
+		
+		
+
+		this->time++;
+
 	}
 	output();
 	return 0;
 }
 
+/*
+ * Method to determine when a process is ready to be put into the ready queue
+ */
 void SchedulingAlgorithm::startProcesses() {
+
 	for( int i = 0; i < this->inactiveProcesses.size(); i++ ) {
-		if( this->time == inactiveProcesses[i].getTarq() ) {
-			this->readyQueue.push_back( inactiveProcesses[i] );
+		if( this->time == this->inactiveProcesses[i].getTarq() ) {
+			cout<<"\nAdded: "<<this->inactiveProcesses[i].getPid()<<"\n";
+			this->readyQueue.push_back( this->inactiveProcesses[i] );
 			this->inactiveProcesses.erase( this->inactiveProcesses.begin() + i );
 		}
 	}
 }
 
-void SchedulingAlgorithm::cpuBurst() {
-	//vector<int> tempCpuBursts;
-	if(currentProcess.getCpuBursts().size() != 0){
-		//tempCpuBursts = currentProcess.getCpuBursts();
-		//tempCpuBursts[currentProcess.getCurrentCpuBurst()]--;
-		//currentProcess.setCpuBursts(tempCpuBursts);
-		currentProcess.setCurrentCpuTime( currentProcess.getCurrentCpuTime() + 1 );
-		if(currentProcess.getCurrentCpuTime() == currentProcess.getCpuBursts()[currentProcess.getCurrentCpuBurst()]){
-			currentProcess.setCurrentCpuTime( 0 );
-			if(currentProcess.getIoBursts().size() == currentProcess.getCurrentIoBurst()){
-				completedProcesses.push_back(currentProcess);
-			}else{
-				Pcb tempCurrentProcess = currentProcess;
-				int tempCpuBurst = tempCurrentProcess.getCurrentCpuBurst();
-				tempCurrentProcess.setCurrentCpuBurst(++tempCpuBurst);
-				waitingQueue.push_back(tempCurrentProcess);
-			}
-		}
-		printVerbose("Current PID: "); cout << currentProcess.getPid();
+void SchedulingAlgorithm::debug()
+{
+	cout<<"\nAt time: "<<time<<"\nReady Queue: ";
+	for (int i = 0; i< readyQueue.size(); i++){
+		cout<<" "<<readyQueue[i].getPid();
 	}
+
+	cout<<"\tWaiting Queue: ";
+	for (int i = 0; i< waitingQueue.size(); i++){
+		cout<<" "<<waitingQueue[i].getPid();
+	}
+	cout<<"\tCompleted processes: ";
+	cout<<completedProcesses.size();
+	cout<<"\tisCurrentSet: ";
+	cout<<isCurrentProcessSet;
 }
 
+/*
+ * Method to simulate a CPU burst
+ */
+void SchedulingAlgorithm::cpuBurst() {
+
+
+		if(currentProcess.getCpuBursts().size() != 0){
+
+			if( currentProcess.getCurrentCpuTime() >= currentProcess.getCpuBurst(currentProcess.getCurrentCpuBurst()) ) {
+
+
+				currentProcess.setCurrentCpuTime(0);
+				if (currentProcess.getCurrentCpuBurst() < currentProcess.getCpuBursts().size())
+					currentProcess.setCurrentCpuBurst(currentProcess.getCurrentCpuBurst() + 1);
+
+
+				if ( currentProcess.getIoBursts().size() <= currentProcess.getCurrentIoBurst() )
+				{
+					isCurrentProcessSet = false;
+					completedProcesses.push_back(currentProcess);
+				}
+				else
+				{
+					isCurrentProcessSet = false;
+					waitingQueue.push_back(currentProcess);
+				}
+			}
+
+			cout << "\n\nCurrent PID "<< currentProcess.getPid();
+		}
+}
+
+/*
+ * Method to simulate an IO burst
+ */
 void SchedulingAlgorithm::ioBurst() {
-	
-	vector<Pcb> waitingQueue = getWaitingQueue();
-	vector<Pcb> readyQueue = getReadyQueue();
-	//vector<int> tempIoBursts;
+
+
 	for( int i = 0; i < waitingQueue.size(); i++ ) {
-		//vector<int> ioBursts = tempWaitingQueue[i].getIoBursts();
-		//ioBursts[tempWaitingQueue[i].getCurrentIoBurst()]--;
-		//tempWaitingQueue[i].setIoBursts( ioBursts );
-		//printVerbose("IO Bursts: "); cout << ioBursts[tempWaitingQueue[i].getCurrentIoBurst()];
-		waitingQueue[i].setCurrentIoTime( waitingQueue[i].getCurrentIoTime() + 1 );
-		//if( waitingQueue[i].getIoBursts()[waitingQueue[i].getCurrentIoBurst()] == 0 ) {
-		if( waitingQueue[i].getCurrentCpuTime() == waitingQueue[i].getIoBursts()[waitingQueue[i].getCurrentIoBurst()] ) {
-			waitingQueue[i].setCurrentIoBurst( waitingQueue[i].getCurrentIoBurst() + 1 );
+
+		if( waitingQueue[i].getCurrentIoTime() >= waitingQueue[i].getIoBursts()[waitingQueue[i].getCurrentIoBurst()] ) {
+
 			waitingQueue[i].setCurrentIoTime( 0 );
+			if (waitingQueue[i].getCurrentIoBurst() < waitingQueue[i].getIoBursts().size())
+				waitingQueue[i].setCurrentIoBurst( waitingQueue[i].getCurrentIoBurst() + 1 );
+
 			readyQueue.push_back( waitingQueue[i] );
 			waitingQueue.erase( waitingQueue.begin() + i );
 		}
 
-		setWaitingQueue( waitingQueue );
-		setReadyQueue( readyQueue );
 	}
 }
 
+/* 
+ * TODO add code to display Gantt chart and show stats
+ */
 void SchedulingAlgorithm::output() {
-
+	gantt.print();
 }
 
+
+/*
+ * Method to check if all processes have been completed
+ * @return bool value, true if all processes have been completed
+ */
 bool SchedulingAlgorithm::allProcessesCompleted() {
 	if( this->processes.size() == this->completedProcesses.size() ) return true;
 	else return false;
+
 }
 
 
@@ -107,20 +192,8 @@ vector<Pcb> SchedulingAlgorithm::getProcesses() {
 	return this->processes;
 }
 
-vector<Pcb> SchedulingAlgorithm::getInactiveProcesses() {
-	return this->inactiveProcesses;
-}
-
 vector<Pcb> SchedulingAlgorithm::getReadyQueue() {
 	return this->readyQueue;
-}
-
-vector<Pcb> SchedulingAlgorithm::getWaitingQueue() {
-	return this->waitingQueue;
-}
-
-vector<Pcb> SchedulingAlgorithm::getCompletedProcesses() {
-	return this->completedProcesses;
 }
 
 Pcb SchedulingAlgorithm::getCurrentProcess(){
@@ -131,38 +204,26 @@ Pcb SchedulingAlgorithm::getCurrentProcess(){
  * Mutator methods
  */
 
-void SchedulingAlgorithm::setTime( int time ) { 
-	this->time = time;
-}
-
-void SchedulingAlgorithm::setProcesses(vector<Pcb> processes){
-	this->processes = processes;
-}
-
-void SchedulingAlgorithm::setInactiveProcesses(vector<Pcb> processes){
-	this->inactiveProcesses = processes;
-}
-
 void SchedulingAlgorithm::setReadyQueue(vector<Pcb> processes){
 	this->readyQueue = processes;
 }
 
-void SchedulingAlgorithm::setWaitingQueue(vector<Pcb> processes){
-	this->waitingQueue = processes;
-}
-
-void SchedulingAlgorithm::setcompletedProcesses(vector<Pcb> processes){
+void SchedulingAlgorithm::setCompletedProcesses(vector<Pcb> processes){
 	this->completedProcesses = processes;
 }
 
 void SchedulingAlgorithm::setCurrentProcess(Pcb currentProcess){
+	isCurrentProcessSet = true;
 	this->currentProcess = currentProcess;
 }
 
+/*
+ * Verbose function to print additional information if verbose is set
+ */
 void SchedulingAlgorithm::printVerbose(string message)
 {
-	//if (verbose == 1)
-	//{
-		cout<<"\n[scheduling-algorithm.cpp] "<<message;
-	//}
+	if (verbose == 1)
+	{
+		cout<<"\n"<<message;
+	}
 }
