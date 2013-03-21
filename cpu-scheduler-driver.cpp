@@ -142,9 +142,9 @@ int main(int argc, char *argv[])
 
 		if (scheduling_algorithm.compare("rr") == 0)
 		{
-//			 RoundRobin rr(testParse.getPCBs(), atoi(options['p'].c_str()));
-//			 if (verbose == 1) rr.setVerbose();
-//		     rr.run();
+			 RoundRobin rr(testParse.getPCBs(), atoi(options['p'].c_str()));
+			 if (verbose == 1) rr.setVerbose();
+		     rr.run();
 		}
 
 		if (scheduling_algorithm.compare("all") == 0)
