@@ -12,7 +12,7 @@ PolitePriority::PolitePriority( vector<Pcb> processes, int timeSlice ) : Schedul
 
 int PolitePriority::selectProcess() {
 	vector<Pcb> readyQueue = getReadyQueue();
-	if( getCurrentProcess().getCurrentCpuTime() == this->timeSlice ) {
+	if( (getCurrentProcess().getCurrentCpuTime() >= this->timeSlice) && (getCurrentProcess().getCurrentCpuTime() % this->timeSlice == 0) ) {
 		readyQueue.push_back( getCurrentProcess() );
 		isCurrentProcessSet = false;
 	}
