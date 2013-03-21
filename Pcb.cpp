@@ -19,6 +19,7 @@ Pcb::Pcb(int pid, int tarq, int priority, int tncpu, vector<int> cpuBursts, vect
 
 	/* Initialize
 	 */
+	this->averageBursts = cpuBursts[0];
 	this->currentCpuBurst = 0;
 	this->currentIoBurst = 0;
 	this->currentCpuTime = 0;
