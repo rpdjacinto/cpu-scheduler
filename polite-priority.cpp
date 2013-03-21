@@ -20,9 +20,10 @@ int PolitePriority::selectProcess() {
 		if( readyQueue[i].getCurrentWaitingTime() >= this->threshold ) {
 			this->vipQueue.push_back( readyQueue[i] );
 			readyQueue.erase( readyQueue.begin() + i );
+			setReadyQueue( readyQueue );
 		}
 	}
-	if(isCurrentProcessSet == false){
+	if (isCurrentProcessSet == false){
 		if( this->vipQueue.size() > 0 ) {
 			int highestPriority = this->vipQueue[0].getPriority();
 			int selectedProcessIndex = 0;
@@ -49,11 +50,12 @@ int PolitePriority::selectProcess() {
 			readyQueue[selectedProcessIndex].setCurrentWaitingTime(0);
 			setCurrentProcess( readyQueue[selectedProcessIndex] );
 			readyQueue.erase( readyQueue.begin() + selectedProcessIndex );
+			setReadyQueue( readyQueue );
 			isCurrentProcessSet = true;
-		}
+			return 0;
+		} 
 	}
-	setReadyQueue( readyQueue );
-	return 0;
+	return -1;
 }
 
 int PolitePriority::getTimeSlice() { 
