@@ -8,7 +8,7 @@ ShortestPreviousBurst::ShortestPreviousBurst( vector<Pcb> processes, float weigh
 int ShortestPreviousBurst::selectProcess() {
 	vector<Pcb> readyQueue = getReadyQueue();
 	for( int i = 0; i < readyQueue.size(); i++ ) {
-		calculateAverageBursts( readyQueue[i].getCpuBursts()[readyQueue[i].getCurrentCpuBurst()], readyQueue[i] );
+		calculateAverageBursts( readyQueue[i].getCpuBurst(readyQueue[i].getCurrentCpuBurst()), readyQueue[i] );
 	}
 	if (isCurrentProcessSet == false){
 		if( readyQueue.size() > 0 ) {
@@ -16,7 +16,7 @@ int ShortestPreviousBurst::selectProcess() {
 			int selectedProcessIndex = 0;
 			for( int i = 0; i < readyQueue.size(); i++ ) {
 				if( readyQueue[i].getCpuBursts()[readyQueue[i].getCurrentCpuBurst()] < shortestBurst ) {
-					shortestBurst = readyQueue[i].getCpuBursts()[readyQueue[i].getCurrentCpuBurst()];
+					shortestBurst = readyQueue[i].getCpuBurst(readyQueue[i].getCurrentCpuBurst());
 					selectedProcessIndex = i;
 				}
 			}
