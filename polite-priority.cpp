@@ -3,22 +3,41 @@
 using namespace std;
 
 PolitePriority::PolitePriority() {
-	algorithmName = "POLITE PRIORITY";
+	this->timeSlice = 4;
 }
 
 PolitePriority::PolitePriority( vector<Pcb> processes, int timeSlice ) : SchedulingAlgorithm(processes) {
 	this->timeSlice = timeSlice;
-	algorithmName = "POLITE PRIORITY";
 }
 
 int PolitePriority::selectProcess() {
 	vector<Pcb> readyQueue = getReadyQueue();
-	if( (getCurrentProcess().getCurrentCpuTime() >= this->timeSlice) && (getCurrentProcess().getCurrentCpuTime() % this->timeSlice == 0) ) {
+	if( getCurrentProcess().getCurrentCpuTime() == this->timeSlice ) {
 		readyQueue.push_back( getCurrentProcess() );
 		isCurrentProcessSet = false;
 	}
+	for( int i = 0; i < readyQueue.size(); i++ ) {
+		if( readyQueue[i].getCurrentWaitingTime() >= this->threshold ) {
+			this->vipQueue.push_back( readyQueue[i] );
+			readyQueue.erase( readyQueue.begin() + i );
+		}
+	}
 	if(isCurrentProcessSet == false){
-		if( readyQueue.size() > 0 ) {
+		if( this->vipQueue.size() > 0 ) {
+			int highestPriority = this->vipQueue[0].getPriority();
+			int selectedProcessIndex = 0;
+			for( int i = 0; i < this->vipQueue.size(); i++ ) {
+				if( this->vipQueue[i].getPriority() < highestPriority ) {
+					highestPriority = this->vipQueue[i].getPriority();
+					selectedProcessIndex = i;
+				}
+			}
+			this->vipQueue[selectedProcessIndex].setCurrentWaitingTime(0);
+			setCurrentProcess( this->vipQueue[selectedProcessIndex] );
+			this->vipQueue.erase( this->vipQueue.begin() + selectedProcessIndex );
+			isCurrentProcessSet = true;
+			return 0;
+		} else if( readyQueue.size() > 0 ) {
 			int highestPriority = readyQueue[0].getPriority();
 			int selectedProcessIndex = 0;
 			for( int i = 0; i < readyQueue.size(); i++ ) {
@@ -27,6 +46,7 @@ int PolitePriority::selectProcess() {
 					selectedProcessIndex = i;
 				}
 			}
+			readyQueue[selectedProcessIndex].setCurrentWaitingTime(0);
 			setCurrentProcess( readyQueue[selectedProcessIndex] );
 			readyQueue.erase( readyQueue.begin() + selectedProcessIndex );
 			isCurrentProcessSet = true;
