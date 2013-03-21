@@ -47,6 +47,9 @@ protected:
 	void printVerbose(string message);
 	bool isCurrentProcessSet;
 
+	// string to keep track of what algorithm this is
+	string algorithmName;
+
 private:
 	
 	vector<Pcb> processes;
@@ -66,6 +69,7 @@ private:
 	float turnaround;
 	// Gantt object to get stats
 	Gantt gantt;
+
 
 	// Check if all processes terminated
 	bool allProcessesCompleted();

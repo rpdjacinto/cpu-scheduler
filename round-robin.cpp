@@ -3,10 +3,12 @@
 using namespace std;
 
 RoundRobin::RoundRobin() {
+	algorithmName = "ROUND ROBIN";
 }
 
 RoundRobin::RoundRobin( vector<Pcb> processes, int timeSlice ) : SchedulingAlgorithm(processes) {
 	this->timeSlice = timeSlice;
+	algorithmName = "ROUND ROBIN";
 }
 
 int RoundRobin::selectProcess() {

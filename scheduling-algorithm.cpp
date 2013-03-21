@@ -14,6 +14,7 @@ SchedulingAlgorithm::SchedulingAlgorithm( vector<Pcb> processes ) {
 	this->time = 0;
 	verbose = 0;
 	isCurrentProcessSet = false;
+	algorithmName = "NOT AVAILABLE";
 }
 
 /*
@@ -177,6 +178,7 @@ void SchedulingAlgorithm::ioBurst() {
  * TODO add code to display Gantt chart and show stats
  */
 void SchedulingAlgorithm::output() {
+	gantt.setAlgorithmName(algorithmName);
 	gantt.analyze(completedProcesses);
 	gantt.print();
 }

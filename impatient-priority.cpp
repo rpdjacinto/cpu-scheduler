@@ -6,6 +6,7 @@ ImpatientPriority::ImpatientPriority() {
 }
 
 ImpatientPriority::ImpatientPriority( vector<Pcb> processes ) : SchedulingAlgorithm(processes) {
+	algorithmName = "IMPATIENT PRIORITY";
 }
 
 int ImpatientPriority::selectProcess() {

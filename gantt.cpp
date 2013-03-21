@@ -1,6 +1,9 @@
 # include "INCLUDES/gantt.h"
 
-
+void Gantt::setAlgorithmName(string name) 
+{
+	algorithmName = name;
+}
 
 bool Gantt::put (Pcb pcb)
 {
@@ -37,6 +40,7 @@ bool Gantt::printGantt ()
 bool Gantt::printStats()
 {
 	float averageWaitingTime = 0;
+	float averageExecutionTime = 0;
 
 	if (completedProcesses.size() != 0) {
 
@@ -47,13 +51,16 @@ bool Gantt::printStats()
 			cout<<"\nTotal Waiting Time: "<<completedProcesses[i].getWaitingTime();
 			cout<<"\nTotal Execution Time: "<<completedProcesses[i].getExecutionTime()<<"\n";
 
-			averageWaitingTime+=completedProcesses[i].getWaitingTime();
+			averageWaitingTime += completedProcesses[i].getWaitingTime();
+			averageExecutionTime += completedProcesses[i].getExecutionTime();
 		}
 
 
 		cout<<"\n\nMetrics for the entire simulation: ";
-		averageWaitingTime/=completedProcesses.size();
+		averageWaitingTime /= completedProcesses.size();
 		cout<<"\nAverage Waiting Time: "<<averageWaitingTime;
+		averageExecutionTime /= completedProcesses.size();
+		cout<<"\nTurnaround Time (avg. execution time of processes): "<<averageExecutionTime;
 	}
 	else
 	{
@@ -66,7 +73,7 @@ bool Gantt::printStats()
 bool Gantt::print()
 {
 	cout << "\n\n---------------------------------------------------------";
-	cout <<"\nRESULTS FOR SIMULATION\n";
+	cout <<"\nRESULTS FOR SIMULATING "<<algorithmName<<"\n";
 	printGantt();
 	printStats();
 	cout<< "\n\n---------------------------------------------------------\n";
