@@ -38,7 +38,7 @@ int ShortestPreviousBurst::selectProcess() {
 					selectedProcessIndex = i;
 				}
 			}
-			cout << endl << "Selected Process: " << vipQueue[selectedProcessIndex].getPid() << endl;
+			//cout << endl << "Selected Process: " << vipQueue[selectedProcessIndex].getPid() << endl;
 			setCurrentProcess( vipQueue[selectedProcessIndex] );
 			vipQueue.erase( vipQueue.begin() + selectedProcessIndex );
 
@@ -54,7 +54,7 @@ int ShortestPreviousBurst::selectProcess() {
 					selectedProcessIndex = i;
 				}
 			}
-			cout << endl << "Selected Process: " << readyQueue[selectedProcessIndex].getPid() << endl;
+			//cout << endl << "Selected Process: " << readyQueue[selectedProcessIndex].getPid() << endl;
 			setCurrentProcess( readyQueue[selectedProcessIndex] );
 			readyQueue.erase( readyQueue.begin() + selectedProcessIndex );
 			setReadyQueue( readyQueue );

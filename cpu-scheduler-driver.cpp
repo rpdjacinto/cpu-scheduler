@@ -175,9 +175,9 @@ int main(int argc, char *argv[])
 			if (verbose == 1) primpat.setVerbose();
 			primpat.run();
 
-//			RoundRobin rr(testParse.getPCBs(), 4);
-//			if (verbose == 1) rr.setVerbose();
-//			rr.run();
+			RoundRobin rr(testParse.getPCBs(), 4);
+			if (verbose == 1) rr.setVerbose();
+			rr.run();
 
 			// TODO add code to print aggregate results
 		}
