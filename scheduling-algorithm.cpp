@@ -183,7 +183,7 @@ void SchedulingAlgorithm::ioBurst() {
  */
 void SchedulingAlgorithm::output() {
 	gantt.setAlgorithmName(algorithmName);
-	gantt.analyze(completedProcesses);
+	gantt.analyze(completedProcesses, time);
 	gantt.print();
 }
 

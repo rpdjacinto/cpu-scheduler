@@ -22,7 +22,7 @@ class Gantt
 		bool printStats();
 		bool print();
 
-		void analyze(vector<Pcb>);
+		void analyze(vector<Pcb>, int time);
 
 	protected:
 		void printVerbose(string message);
@@ -31,6 +31,7 @@ class Gantt
 		vector<int> pidList;
 		vector<Pcb> completedProcesses;
 		string algorithmName;
+		int totalTimeTaken;
 
 };
 

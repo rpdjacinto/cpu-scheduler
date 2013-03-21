@@ -57,10 +57,12 @@ bool Gantt::printStats()
 
 
 		cout<<"\n\nMetrics for the entire simulation: ";
+		cout<<"\nNumber of Processes Completed: "<<completedProcesses.size();
 		averageWaitingTime /= completedProcesses.size();
 		cout<<"\nAverage Waiting Time: "<<averageWaitingTime;
 		averageExecutionTime /= completedProcesses.size();
 		cout<<"\nTurnaround Time (avg. execution time of processes): "<<averageExecutionTime;
+		cout<<"\nThroughput: "<<((float) completedProcesses.size())/totalTimeTaken;
 	}
 	else
 	{
@@ -80,7 +82,8 @@ bool Gantt::print()
 	return true;
 }
 
-void Gantt::analyze(vector<Pcb> processes) 
+void Gantt::analyze(vector<Pcb> processes, int time) 
 {
 	completedProcesses = processes;
+	totalTimeTaken = time;
 }
