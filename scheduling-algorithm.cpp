@@ -52,6 +52,7 @@ int SchedulingAlgorithm::run() {
 		 */
 		for (int i = 0; i<readyQueue.size(); i++)
 		{
+			readyQueue[i].setCurrentWaitingTime(readyQueue[i].getCurrentWaitingTime() + 1);
 			readyQueue[i].setWaitingTime(readyQueue[i].getWaitingTime() + 1);
 			readyQueue[i].setExecutionTime(readyQueue[i].getExecutionTime() + 1);
 		}
