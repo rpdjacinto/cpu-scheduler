@@ -3,10 +3,12 @@
 using namespace std;
 
 PriorityNpr::PriorityNpr() {
+	this->threshold = 10;
 	algorithmName = "NON PREEMPTIVE PRIORITY";
 }
 
 PriorityNpr::PriorityNpr( vector<Pcb> processes ) : SchedulingAlgorithm(processes) {
+	this->threshold = 10;
 	algorithmName = "NON PREEMPTIVE PRIORITY";
 }
 
