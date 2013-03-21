@@ -17,6 +17,7 @@ public:
 	int getPriority();
 	int getAge();
 	float getAverageBursts();
+	int getCurrentWaitingTime();
 	int getCurrentCpuTime();
 	int getCurrentIoTime();
 	int getCurrentCpuBurst();
@@ -25,8 +26,8 @@ public:
 	vector<int> getIoBursts();
 	int getCpuBurst(int index);
 
-
 	void setAverageBursts( float averageBursts );
+	void setCurrentWaitingTime( int currentWaitingTime );
 	void setCurrentCpuTime( int currentCpuTime );
 	void setCurrentIoTime( int currentIoTime );
 	void setCurrentCpuBurst( int currentCpuBurst );
@@ -54,6 +55,7 @@ private:
 
 	/* Required for simulation
 	 */
+	int currentWaitingTime;
 	int currentCpuTime;
 	int currentIoTime;
 	int currentCpuBurst;

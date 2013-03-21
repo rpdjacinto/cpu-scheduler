@@ -3,43 +3,56 @@
 using namespace std;
 
 ImpatientPriority::ImpatientPriority() {
+	this->threshold = 10;
 }
 
 ImpatientPriority::ImpatientPriority( vector<Pcb> processes ) : SchedulingAlgorithm(processes) {
+	this->threshold = 10;
 	algorithmName = "IMPATIENT PRIORITY";
 }
 
 int ImpatientPriority::selectProcess() {
 	vector<Pcb> readyQueue = getReadyQueue();
-	int selectedProcessIndex = 0;
-	selectedProcessIndex = 0;
-	int highestPriority;
-	if(readyQueue.size() != 0){
-		highestPriority = readyQueue[0].getPriority();
-	
-		for( int i = 0; i < readyQueue.size(); i++ ) {
-			if( readyQueue[i].getPriority() < highestPriority ) {
-				highestPriority = readyQueue[i].getPriority();
-				selectedProcessIndex = i;
-			}
-		}
-
-		if( readyQueue[selectedProcessIndex].getPriority() < getCurrentProcess().getPriority() || isCurrentProcessSet == false) {
-
-			if(isCurrentProcessSet != false)
-				readyQueue.push_back( getCurrentProcess() );
-			setCurrentProcess( readyQueue[selectedProcessIndex] );
-			readyQueue.erase( readyQueue.begin() + selectedProcessIndex );
-			isCurrentProcessSet = true;
-		
+	for( int i = 0; i < readyQueue.size(); i++ ) {
+		if( readyQueue[i].getCurrentWaitingTime() >= this->threshold ) {
+			this->vipQueue.push_back( readyQueue[i] );
+			readyQueue.erase( readyQueue.begin() + i );
+			setReadyQueue( readyQueue );
 		}
 	}
-	
-	
-
-	setReadyQueue( readyQueue );
-
-	return 0;
+	if (isCurrentProcessSet == false) {
+		if( this->vipQueue.size() > 0 ) {
+			int highestPriority = this->vipQueue[0].getPriority();
+			int selectedProcessIndex = 0;
+			for( int i = 0; i < this->vipQueue.size(); i++ ) {
+				if( this->vipQueue[i].getPriority() < highestPriority ) {
+					highestPriority = this->vipQueue[i].getPriority();
+					selectedProcessIndex = i;
+				}
+			}
+			this->vipQueue[selectedProcessIndex].setCurrentWaitingTime(0);
+			setCurrentProcess( this->vipQueue[selectedProcessIndex] );
+			this->vipQueue.erase( this->vipQueue.begin() + selectedProcessIndex );
+			isCurrentProcessSet = true;
+			return 0;
+		} else if( readyQueue.size() > 0 ) {
+			int highestPriority = readyQueue[0].getPriority();
+			int selectedProcessIndex = 0;
+			for( int i = 0; i < readyQueue.size(); i++ ) {
+				if( readyQueue[i].getPriority() < highestPriority ) {
+					highestPriority = readyQueue[i].getPriority();
+					selectedProcessIndex = i;
+				}
+			}
+			readyQueue[selectedProcessIndex].setCurrentWaitingTime(0);
+			setCurrentProcess( readyQueue[selectedProcessIndex] );
+			readyQueue.erase( readyQueue.begin() + selectedProcessIndex );
+			setReadyQueue( readyQueue );
+			isCurrentProcessSet = true;
+			return 0;
+		} 
+	}
+	return -1;
 }
 
 

@@ -19,6 +19,8 @@ private:
 	float currentBurst;
 	int selectProcess();
 	void calculateAverageBursts(  int burstLength, Pcb &pcb );
+	int threshold;
+	vector<Pcb> vipQueue;
 };
 
 #endif

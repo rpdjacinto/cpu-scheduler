@@ -63,6 +63,13 @@ bool Gantt::printStats()
 		averageExecutionTime /= completedProcesses.size();
 		cout<<"\nTurnaround Time (avg. execution time of processes): "<<averageExecutionTime;
 		cout<<"\nThroughput: "<<((float) completedProcesses.size())/totalTimeTaken;
+		
+		int nonIdleCycles = 0;
+		for (int i = 0; i < pidList.size(); i++)
+		{
+			if (pidList[i] != -1) nonIdleCycles++;	
+		}
+		cout<<"\nCPU Utilization: "<< (((float) nonIdleCycles)/pidList.size())*100;
 	}
 	else
 	{

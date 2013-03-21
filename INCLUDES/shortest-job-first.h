@@ -14,6 +14,8 @@ class ShortestJobFirst : public SchedulingAlgorithm {
 
 	private:
 	        int selectProcess();
+	        int threshold;
+			vector<Pcb> vipQueue;
 };
 
 #endif

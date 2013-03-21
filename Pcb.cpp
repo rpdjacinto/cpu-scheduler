@@ -20,6 +20,7 @@ Pcb::Pcb(int pid, int tarq, int priority, int tncpu, vector<int> cpuBursts, vect
 	/* Initialize
 	 */
 	this->averageBursts = cpuBursts[0];
+	this->currentWaitingTime = 0;
 	this->currentCpuBurst = 0;
 	this->currentIoBurst = 0;
 	this->currentCpuTime = 0;
@@ -49,6 +50,9 @@ int Pcb::getAge() {
 float Pcb::getAverageBursts() {
 	return this->averageBursts;
 }
+int Pcb::getCurrentWaitingTime() {
+	return this->currentWaitingTime;
+}
 int Pcb::getCurrentCpuTime() {
 	return this->currentCpuTime;
 }
@@ -76,6 +80,9 @@ int Pcb::getCpuBurst(int index) {
  */
 void Pcb::setAverageBursts( float averageBursts ) {
 	this->averageBursts = averageBursts;
+}
+void Pcb::setCurrentWaitingTime( int currentWaitingTime ) {
+	this->currentWaitingTime = currentWaitingTime;
 }
 void Pcb::setCurrentCpuTime( int currentCpuTime ) {
 	this->currentCpuTime = currentCpuTime;
