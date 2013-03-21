@@ -23,7 +23,8 @@ SchedulingAlgorithm::SchedulingAlgorithm( vector<Pcb> processes ) {
 int SchedulingAlgorithm::run() {
 	while( !allProcessesCompleted()) {
 
-		cout<<"\n\n\n--------------------------------------------";
+		if (verbose == 1) cout<<"\n\n\n--------------------------------------------";
+		
 		startProcesses();
 
 		/* 
@@ -34,16 +35,18 @@ int SchedulingAlgorithm::run() {
 		if (readyQueue.size() == 0 && isCurrentProcessSet == false)
 		{
 			gantt.put(-1);
-			cout<<"\n\nGANTT: -1";
+			if (verbose == 1) cout<<"\n\nGANTT: -1";
 		}
 		else
 		{
 			gantt.put(currentProcess);
-			cout<<"\n\nGANTT: "<<currentProcess.getPid();
+			if (verbose == 1) cout<<"\n\nGANTT: "<<currentProcess.getPid();
 		}
 
-		cout<<"\nBEFORE: ";
-		debug();
+		if (verbose == 1) {
+			cout<<"\nBEFORE: ";
+			debug();
+		}
 
 		/* Update metric stats for each process
 		 */
@@ -75,9 +78,10 @@ int SchedulingAlgorithm::run() {
 		ioBurst();
 
 
-
-		cout<<"\n\nAFTER: ";
-		debug();
+		if (verbose == 1) {
+			cout<<"\n\nAFTER: ";
+			debug();
+		}	
 
 
 		
@@ -97,7 +101,7 @@ void SchedulingAlgorithm::startProcesses() {
 
 	for( int i = 0; i < this->inactiveProcesses.size(); i++ ) {
 		if( this->time == this->inactiveProcesses[i].getTarq() ) {
-			cout<<"\nAdded: "<<this->inactiveProcesses[i].getPid()<<"\n";
+			if (verbose == 1) cout<<"\nAdded: "<<this->inactiveProcesses[i].getPid()<<"\n";
 			this->readyQueue.push_back( this->inactiveProcesses[i] );
 			this->inactiveProcesses.erase( this->inactiveProcesses.begin() + i );
 		}
@@ -149,7 +153,7 @@ void SchedulingAlgorithm::cpuBurst() {
 				}
 			}
 
-			cout << "\n\nCurrent PID "<< currentProcess.getPid();
+			if (verbose == 1) cout << "\n\nCurrent PID "<< currentProcess.getPid();
 		}
 }
 
@@ -189,7 +193,11 @@ void SchedulingAlgorithm::output() {
  * @return bool value, true if all processes have been completed
  */
 bool SchedulingAlgorithm::allProcessesCompleted() {
-	if( this->processes.size() == this->completedProcesses.size() ) return true;
+	if( this->processes.size() == this->completedProcesses.size() ) 
+		{
+			if (verbose == 1) cout<<"\nAll processes completed!";
+			return true;
+		}
 	else return false;
 
 }
@@ -242,4 +250,9 @@ void SchedulingAlgorithm::printVerbose(string message)
 	{
 		cout<<"\n"<<message;
 	}
+}
+
+void SchedulingAlgorithm::setVerbose()
+{
+	verbose = 1;
 }
