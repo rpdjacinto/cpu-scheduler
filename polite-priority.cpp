@@ -3,10 +3,12 @@
 using namespace std;
 
 PolitePriority::PolitePriority() {
+	algorithmName = "POLITE PRIORITY";
 }
 
 PolitePriority::PolitePriority( vector<Pcb> processes, int timeSlice ) : SchedulingAlgorithm(processes) {
 	this->timeSlice = timeSlice;
+	algorithmName = "POLITE PRIORITY";
 }
 
 int PolitePriority::selectProcess() {

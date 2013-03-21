@@ -3,9 +3,11 @@
 using namespace std;
 
 PriorityNpr::PriorityNpr() {
+	algorithmName = "NON PREEMPTIVE PRIORITY";
 }
 
 PriorityNpr::PriorityNpr( vector<Pcb> processes ) : SchedulingAlgorithm(processes) {
+	algorithmName = "NON PREEMPTIVE PRIORITY";
 }
 
 int PriorityNpr::selectProcess() {

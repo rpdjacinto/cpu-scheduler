@@ -25,6 +25,9 @@ Pcb::Pcb(int pid, int tarq, int priority, int tncpu, vector<int> cpuBursts, vect
 	this->currentCpuTime = 0;
 	this->currentIoTime = 0;
 	this->age = 0;
+
+	this->waitingTime = 0;
+	this->executionTime = 0;
 };
 
 
@@ -94,4 +97,19 @@ void Pcb::setIoBursts( vector<int> ioBursts ) {
 }
 void Pcb::setCpuBurst(int burst, int index) {
 	this->cpuBursts[index] = burst;
+}
+
+/* Result methods
+ */
+void Pcb::setWaitingTime(int time) {
+	this->waitingTime = time;
+}
+int Pcb::getWaitingTime() {
+	return this->waitingTime;
+}
+void Pcb::setExecutionTime(int time) {
+	this->executionTime = time;
+}
+int Pcb::getExecutionTime() {
+	return executionTime;
 }

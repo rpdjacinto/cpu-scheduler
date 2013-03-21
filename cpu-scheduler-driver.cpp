@@ -91,77 +91,92 @@ int main(int argc, char *argv[])
 		 */
 		if (scheduling_algorithm.compare("fifo") == 0 || scheduling_algorithm.compare("fcfs") == 0)
 		{
-			printVerbose("FIFO/FCFS selected");
+
 
 			FirstInFirstOut fifo(testParse.getPCBs());
+			if (verbose == 1) fifo.setVerbose();
 			fifo.run();
 		}
 		
 		if (scheduling_algorithm.compare("spb") == 0)
 		{
-			printVerbose("Shortest Previous Burst (SPB) selected");
+
 
 			ShortestPreviousBurst spb(testParse.getPCBs(), atof(options['p'].c_str()));
+			if (verbose == 1) spb.setVerbose();
 			spb.run();
 		}	
 	
 		if (scheduling_algorithm.compare("sjf") == 0)
 		{
-			printVerbose("Shortest Job First (SJF) selected");
+
 
 			ShortestJobFirst sjf(testParse.getPCBs());
+			if (verbose == 1) sjf.setVerbose();
 			sjf.run();
 		}	
 
 		if (scheduling_algorithm.compare("npr-pri") == 0)
 		{
-			printVerbose("Non Preemptive Priority selected");
 
 			PriorityNpr prnpr(testParse.getPCBs());
+			if (verbose == 1) prnpr.setVerbose();
 			prnpr.run();
 		}
 
 		if (scheduling_algorithm.compare("pr-pol") == 0)
 		{
-			printVerbose("Preemptive Polite Priority selected");
 
 			PolitePriority polpr(testParse.getPCBs(), atoi(options['p'].c_str()));
+			if (verbose == 1) polpr.setVerbose();
 			polpr.run();
 		}
 
 		if (scheduling_algorithm.compare("pr-impat") == 0)
 		{
-			printVerbose("Impatient Priority selected");
 
 			ImpatientPriority primpat(testParse.getPCBs());
+			if (verbose == 1) primpat.setVerbose();
 			primpat.run();
 		}
 
 		if (scheduling_algorithm.compare("rr") == 0)
 		{
-			printVerbose("Round Robin selected");
-
 //			 RoundRobin rr(testParse.getPCBs(), atoi(options['p'].c_str()));
-//			 rr.run();
+//			 if (verbose == 1) rr.setVerbose();
+//		     rr.run();
 		}
 
 		if (scheduling_algorithm.compare("all") == 0)
 		{
-			printVerbose("Simulating all algorithms:");
+			cout<<"\n\n---------------------------------------------------------"; 			
 
 			FirstInFirstOut fifo(testParse.getPCBs());
+			if (verbose == 1) fifo.setVerbose();
 			fifo.run();
-			ShortestPreviousBurst spb(testParse.getPCBs(), atof(options['p'].c_str()));
+
+			ShortestPreviousBurst spb(testParse.getPCBs(), 0.5);
+			if (verbose == 1) spb.setVerbose();
 			spb.run();
+
 			ShortestJobFirst sjf(testParse.getPCBs());
+			if (verbose == 1) sjf.setVerbose();
 			sjf.run();
+
 			PriorityNpr prnpr(testParse.getPCBs());
+			if (verbose == 1) prnpr.setVerbose();
 			prnpr.run();
-			PolitePriority polpr(testParse.getPCBs(), atoi(options['p'].c_str()));
+
+			PolitePriority polpr(testParse.getPCBs(), 4);
+			if (verbose == 1) polpr.setVerbose();
 			polpr.run();
+
 			ImpatientPriority primpat(testParse.getPCBs());
+			if (verbose == 1) primpat.setVerbose();
 			primpat.run();
-//			RoundRobin rr(testParse.getPCBs(), atoi(options['p'].c_str()));
+
+//			RoundRobin rr(testParse.getPCBs(), 4);
+//			if (verbose == 1) rr.setVerbose();
 //			rr.run();
 
 			// TODO add code to print aggregate results
@@ -194,6 +209,18 @@ void printHelp()
     cout<<"\n\t\t[-p] parameter for algorithm (if required)";
     cout<<"\n\t\t[-h] print help";
     cout<<"\n\t\t[-v] verbose";
+    cout<<"\n\nThe algorithm choices, and any additional info required by them are:";
+	cout<<"\n\tFirst Come First Serve (fifo)";
+	cout<<"\n\tRound Robin (rr)";
+	cout<<" - Requires timeslice input";
+	cout<<"\n\tShortest Job First (sjf)";
+	cout<<"\n\tShortest Previous Burst (spb)";
+	cout<<" - Requires weight input";
+	cout<<"\n\tImpatient Priority (pr-impat)";
+	cout<<"\n\tPolite Priority (pr-pol)";
+	cout<<" - Requires timeslice input";
+	cout<<"\n\tNon Preemptive Priority (npr-pri)";
+	cout<<"\n\tYou can also simulate all of the above in one go (all)";
 
 }
 
@@ -280,7 +307,10 @@ void commandLine(int argc, char *argv[])
 		cout<<"\n\nWould you like to turn verbose on? (y/n) : ";
 		char choice;
 		cin>>choice;
-		if (choice == 'y' || choice == 'Y') verbose = 1;
+		if (choice == 'y' || choice == 'Y') {
+			options['v'] = "1";
+			cout<<"\nTurning Verbose on";
+		}
 
 
 	}

@@ -2,6 +2,7 @@
 
 
 FirstInFirstOut::FirstInFirstOut(vector<Pcb> processes) : SchedulingAlgorithm(processes) {
+	algorithmName = "FIRST IN FIRST OUT";
 }
 
 int FirstInFirstOut::selectProcess(){

@@ -3,10 +3,12 @@
 using namespace std;
 
 RoundRobin::RoundRobin() {
+	algorithmName = "ROUND ROBIN";
 }
 
 RoundRobin::RoundRobin( vector<Pcb> processes, int timeSlice ) : SchedulingAlgorithm(processes) {
 	this->timeSlice = timeSlice;
+	algorithmName = "ROUND ROBIN";
 }
 
 int RoundRobin::selectProcess() {
@@ -42,6 +44,6 @@ void RoundRobin::printVerbose(string message)
 
 	if (verbose == 1)
 	{
-		cout << "\n[polite-priority.cpp] " << message;
+		cout << "\n[round-robin.cpp] " << message;
 	}
 }

@@ -3,6 +3,7 @@
 # include "string"
 
 ShortestJobFirst::ShortestJobFirst(vector<Pcb> processes) : SchedulingAlgorithm(processes) {
+	algorithmName = "SHORTEST JOB FIRST";
 }
 
 
