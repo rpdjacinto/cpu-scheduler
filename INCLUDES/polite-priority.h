@@ -19,6 +19,7 @@ private:
 	int threshold;
 	int timeSlice;
 	int selectProcess();
+	vector<Pcb> vipQueue;
 };
 
 #endif
