@@ -148,20 +148,27 @@ int main(int argc, char *argv[])
 		if (scheduling_algorithm.compare("all") == 0)
 		{
 			printVerbose("Simulating all algorithms:");
-
+ 			
+			cout<<"\n\nRunning First Come First Serve...\n";
 			FirstInFirstOut fifo(testParse.getPCBs());
 			fifo.run();
-			ShortestPreviousBurst spb(testParse.getPCBs(), atof(options['p'].c_str()));
+			cout<<"\n\nRunning Shortest Previous Burst with a default weight of 0.5...\n";
+			ShortestPreviousBurst spb(testParse.getPCBs(), 0.5);
 			spb.run();
+			cout<<"\n\nRunning Shortest Job First...\n";
 			ShortestJobFirst sjf(testParse.getPCBs());
 			sjf.run();
+			cout<<"\n\nRunning Non Preemptive Priority...\n";
 			PriorityNpr prnpr(testParse.getPCBs());
 			prnpr.run();
-			PolitePriority polpr(testParse.getPCBs(), atoi(options['p'].c_str()));
+			cout<<"\n\nRunning Polite Priority with a default timeslice of 4...\n";
+			PolitePriority polpr(testParse.getPCBs(), 4);
 			polpr.run();
+			cout<<"\n\nRunning Impatient Priority...\n";
 			ImpatientPriority primpat(testParse.getPCBs());
 			primpat.run();
-//			RoundRobin rr(testParse.getPCBs(), atoi(options['p'].c_str()));
+			cout<<"\n\nRunning Round Robin with a default timeslice of 4...\n";
+//			RoundRobin rr(testParse.getPCBs(), 4);
 //			rr.run();
 
 			// TODO add code to print aggregate results

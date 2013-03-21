@@ -19,12 +19,14 @@ class Gantt
 		bool printStats();
 		bool print();
 
+		void analyze(vector<Pcb>);
+
 	protected:
 	void printVerbose(string message);
 	
 	private:
 		vector<int> pidList;
-
+		vector<Pcb> completedProcesses;
 
 };
 

@@ -35,6 +35,11 @@ public:
 	void setIoBursts( vector<int> cpuBursts );
 	void setCpuBurst (int burst, int index);
 
+	void setWaitingTime(int time);
+	int getWaitingTime();
+	void setExecutionTime(int time);
+	int getExecutionTime();
+	
 private:
 	
 	/* From workload file
@@ -54,6 +59,11 @@ private:
 	int currentCpuBurst;
 	int currentIoBurst;
 	float averageBursts;
+
+	/* Result variables
+	 */
+	int waitingTime;
+	int executionTime;
 
 };
 

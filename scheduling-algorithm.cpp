@@ -44,6 +44,19 @@ int SchedulingAlgorithm::run() {
 		cout<<"\nBEFORE: ";
 		debug();
 
+		/* Update metric stats for each process
+		 */
+		for (int i = 0; i<readyQueue.size(); i++)
+		{
+			readyQueue[i].setWaitingTime(readyQueue[i].getWaitingTime() + 1);
+			readyQueue[i].setExecutionTime(readyQueue[i].getExecutionTime() + 1);
+		}
+		for (int i = 0; i<waitingQueue.size(); i++)
+		{
+			waitingQueue[i].setExecutionTime(waitingQueue[i].getExecutionTime() + 1);
+		}
+		currentProcess.setExecutionTime(currentProcess.getExecutionTime() + 1);
+
 
 		/* Increment CPU time of current process
 		 */
@@ -164,6 +177,7 @@ void SchedulingAlgorithm::ioBurst() {
  * TODO add code to display Gantt chart and show stats
  */
 void SchedulingAlgorithm::output() {
+	gantt.analyze(completedProcesses);
 	gantt.print();
 }
 

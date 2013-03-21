@@ -42,6 +42,6 @@ void RoundRobin::printVerbose(string message)
 
 	if (verbose == 1)
 	{
-		cout << "\n[polite-priority.cpp] " << message;
+		cout << "\n[round-robin.cpp] " << message;
 	}
 }
