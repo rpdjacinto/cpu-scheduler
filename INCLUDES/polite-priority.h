@@ -16,6 +16,7 @@ protected:
 
 	
 private:
+	int threshold;
 	int timeSlice;
 	int selectProcess();
 };
